@@ -1,0 +1,3860 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/eco-ontology#"
+     xml:base="http://www.semanticweb.org/eco-ontology"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:www="http://www.semanticweb.org/"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:webprotege="http://webprotege.stanford.edu/"
+     xmlns:eco-ontology="http://www.semanticweb.org/eco-ontology#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/eco-ontology">
+        <terms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-01-20</terms:created>
+        <terms:creator>EcoPlatform Team</terms:creator>
+        <terms:description>Ontology for ecological events, campaigns, sponsors, donations, blogs, and user management</terms:description>
+        <terms:title>Complete Ecological Platform Ontology</terms:title>
+        <owl:versionInfo>3.0</owl:versionInfo>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/created -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/created"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/creator -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/creator"/>
+    
+<li className="nav-item">
+            <Link to="/locations" className="nav-link">Volunteer</Link>
+          </li>
+          
+
+    <!-- http://purl.org/dc/terms/description -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/description"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/title -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/title"/>
+    
+
+
+    <!-- http://www.semanticweb.org/className -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/className"/>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Link -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/eco-ontology#Link"/>
+    
+
+
+    <!-- FOAF Organization removed: Sponsor is modeled as subclass of eco:User -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reviewOf -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/eco-ontology#reviewOf"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/2001/XMLSchema#date -->
+
+    <rdfs:Datatype rdf:about="http://www.w3.org/2001/XMLSchema#date"/>
+    
+
+
+    <!-- http://www.w3.org/2001/XMLSchema#duration -->
+
+    <rdfs:Datatype rdf:about="http://www.w3.org/2001/XMLSchema#duration"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://webprotege.stanford.edu/R7hfXkjoyWBAEmQX3pSjIZl -->
+
+    <owl:ObjectProperty rdf:about="http://webprotege.stanford.edu/R7hfXkjoyWBAEmQX3pSjIZl">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:label>Asseignment type</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R8r5yxVXnZfa0TwP5biVHiL -->
+
+    <owl:ObjectProperty rdf:about="http://webprotege.stanford.edu/R8r5yxVXnZfa0TwP5biVHiL">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:comment>Une réservation est pour un événement spécifique</rdfs:comment>
+        <rdfs:label>for Event</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R9fN3rSebkcnWAlWHlFYNVE -->
+
+    <owl:ObjectProperty rdf:about="http://webprotege.stanford.edu/R9fN3rSebkcnWAlWHlFYNVE">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:label>Asseigned by</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RBNk0vvVsRh8FjaWPGT0XCO -->
+
+    <owl:ObjectProperty rdf:about="http://webprotege.stanford.edu/RBNk0vvVsRh8FjaWPGT0XCO">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:label>is User</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RBqttmTqH5uyTK64wj0hDiD -->
+
+    <owl:ObjectProperty rdf:about="http://webprotege.stanford.edu/RBqttmTqH5uyTK64wj0hDiD">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:label>Asseigned to</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RiyZWbkaQvVXDCQwALka3y -->
+
+    <owl:ObjectProperty rdf:about="http://webprotege.stanford.edu/RiyZWbkaQvVXDCQwALka3y">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:comment>Un événement est créé par un utilisateur</rdfs:comment>
+        <rdfs:label>createdBy</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#awardedTo -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#awardedTo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Certification"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:comment>Certification is awarded to user</rdfs:comment>
+        <rdfs:label>awarded to</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#belongsToUser -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#belongsToUser">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:comment>Reservation belongs to user</rdfs:comment>
+        <rdfs:label>belongs to user</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#confirmedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#confirmedBy">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:comment>Reservation is confirmed by admin user</rdfs:comment>
+        <rdfs:label>confirmed by</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#fundsEvent -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#fundsEvent">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Donation"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:comment>Donation is allocated to specific event</rdfs:comment>
+        <rdfs:label>funds event</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#hasCampaign -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#hasCampaign">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/eco-ontology#requiresResource"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdfs:comment>Resource is used by campaign</rdfs:comment>
+        <rdfs:label>has campaign</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#hasCertification -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#hasCertification">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:comment>Une réservation peut generer une certification</rdfs:comment>
+        <rdfs:label>has certification</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#hasReservation -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#hasReservation">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <rdfs:comment>Un événement peut avoir plusieurs réservations</rdfs:comment>
+        <rdfs:label>has reservations</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#hasSponsor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#hasSponsor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#Sponsor"/>
+        <rdfs:comment>Event has one or multiple sponsors</rdfs:comment>
+        <rdfs:label>has sponsor</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#hasSponsorshipLevel -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#hasSponsorshipLevel">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Sponsor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#SponsorshipLevel"/>
+        <rdfs:comment>Sponsor commits to specific sponsorship level</rdfs:comment>
+        <rdfs:label>has sponsorship level</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#isLocatedAt -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#isLocatedAt">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:comment>Event is located at specific location</rdfs:comment>
+        <rdfs:label>is located at</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#isOrganizedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#isOrganizedBy">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:comment>Event is organized by user</rdfs:comment>
+        <rdfs:label>is organized by</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#isPartOfCampaign -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#isPartOfCampaign">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdfs:comment>Event is part of campaign</rdfs:comment>
+        <rdfs:label>is part of campaign</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#issuedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#issuedBy">
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:comment>Certification is issued by user</rdfs:comment>
+        <rdfs:label>issued by</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#makesDonation -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#makesDonation">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Sponsor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#Donation"/>
+        <rdfs:comment>Sponsor makes one or more donations</rdfs:comment>
+        <rdfs:label>makes donation</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#requiresResource -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#requiresResource">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <rdfs:comment>Campaign requires specific resources</rdfs:comment>
+        <rdfs:label>requires resource</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#wroteBlog -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#wroteBlog">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+        <rdfs:comment>User wrote blog post</rdfs:comment>
+        <rdfs:label>wrote blog</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#wroteReview -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/eco-ontology#wroteReview">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/eco-ontology#Review"/>
+        <rdfs:comment>User wrote review</rdfs:comment>
+        <rdfs:label>wrote review</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://webprotege.stanford.edu/R7QgAmvOpBSpwRmRrDZL8VE -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/R7QgAmvOpBSpwRmRrDZL8VE">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:comment>Le numéro de siège de la réservation</rdfs:comment>
+        <rdfs:label>has seat number</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R87Pglsh3VGkOtG8wdzlPqi -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/R87Pglsh3VGkOtG8wdzlPqi">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:label>Asseignement start</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R8BxRbqkCT2nIQCr5UoVlXD -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/R8BxRbqkCT2nIQCr5UoVlXD">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>emergency contact</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R95V73FuwIP1JEd2uctpT7M -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/R95V73FuwIP1JEd2uctpT7M">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>experience level</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R9F95BAS8WtbTv8ZGBaPe42 -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/R9F95BAS8WtbTv8ZGBaPe42">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>medical conditions</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R9PW79FzwQKWuQYdTdYlHzN -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/R9PW79FzwQKWuQYdTdYlHzN">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>bio</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R9QGoktbkOBbsLkvgjicNA8 -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/R9QGoktbkOBbsLkvgjicNA8">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:comment>Le code unique du certificat</rdfs:comment>
+        <rdfs:label>certificate code</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R9gsGMKtVBKEAd4d8I75UkC -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/R9gsGMKtVBKEAd4d8I75UkC">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:comment>Le nombre de points gagnés</rdfs:comment>
+        <rdfs:label>has points earned</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R9tdW5crNU837y5TemwdNfR -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/R9tdW5crNU837y5TemwdNfR">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>volunteer  previous experience</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R9wdyKGFoajnFCFN4oqnwHr -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/R9wdyKGFoajnFCFN4oqnwHr">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:comment>Le statut de la réservation (pending, confirmed, cancelled)</rdfs:comment>
+        <rdfs:label>has status</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RBPJvon09P5n1GLdLbu2esV -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/RBPJvon09P5n1GLdLbu2esV">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:comment>Le type de certification</rdfs:comment>
+        <rdfs:label>has type</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RBqpxvMVBnwM1Wb6OhzTpHf -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/RBqpxvMVBnwM1Wb6OhzTpHf">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>skill volunteer</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RCHqvY6cUdoI8XfAt441VX0 -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/RCHqvY6cUdoI8XfAt441VX0">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>status Volunteer</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RCVJpIZYc9hYiWlQj0crPUx -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/RCVJpIZYc9hYiWlQj0crPUx">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:label>volunteer registration date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RCxW58hZN5YubcE8RrXif1Y -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/RCxW58hZN5YubcE8RrXif1Y">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:label>End date Asseignment</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RD3Wor03BEPInfzUaMNVPC7 -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/RD3Wor03BEPInfzUaMNVPC7">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:label>start date Assignment</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RDT3XEARggTy1BIBKDXXrmx -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/RDT3XEARggTy1BIBKDXXrmx">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Statut de l&apos;assignation (approuvé/non approuvé)</rdfs:comment>
+        <rdfs:label>status</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+    <!-- http://webprotege.stanford.edu/RRatingAssignment -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/RRatingAssignment">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:comment>Note de l'assignation (entre 1 et 5)</rdfs:comment>
+        <rdfs:label>rating</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RRatingAssignment -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/RRatingAssignment">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:comment>Note de l&apos;assignation (entre 1 et 5)</rdfs:comment>
+        <rdfs:label>rating</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RXzg1eKoCWK7S9zHsFoTFC -->
+
+    <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/RXzg1eKoCWK7S9zHsFoTFC">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>volunteer motivation</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Blog_description -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#Blog_description">
+        <rdfs:domain>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/eco-ontology#EventBlog"/>
+            </owl:Restriction>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#address -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#address">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>address</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#amount -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#amount">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#FinancialDonation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:label>amount</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#benefits -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#benefits">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#SponsorshipLevel"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>benefits</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#blogContent -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#blogContent">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>blog content</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#blogTitle -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#blogTitle">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>blog title</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#campaignDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#campaignDescription">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>campaign description</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#campaignName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#campaignName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>campaign name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#campaignStatus -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#campaignStatus">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>campaign status</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#capacity -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#capacity">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>capacity</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#category -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#category">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>category</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#certificationName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#certificationName">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>certification name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#city -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#city">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>city</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#companyName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#companyName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Sponsor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>company name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#contactEmail -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#contactEmail">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Sponsor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>contact email</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#country -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#country">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>country</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#currency -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#currency">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#FinancialDonation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>currency</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#dateDonated -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#dateDonated">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Donation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:label>date donated</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#duration -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#duration">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+        <rdfs:label>duration</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#email -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#email">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>email</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#endDate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#endDate">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:label>end date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#equipmentType -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#equipmentType">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#EquipmentResource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#estimatedValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#estimatedValue">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#MaterialDonation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:label>estimated value</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#eventDate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#eventDate">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:label>event date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#eventDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#eventDescription">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>event description</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#eventImages -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#eventImages">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>event images</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#eventStatus -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#eventStatus">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>event status</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#eventTitle -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#eventTitle">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>event title</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#expirationDate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#expirationDate">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:label>expiration date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#firstName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#firstName">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>first name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#fundsRaised -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#fundsRaised">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#FundingCampaign"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#goal -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#goal">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>goal</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#hoursDonated -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#hoursDonated">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#ServiceDonation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:label>hours donated</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#inRepair -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#inRepair">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:label>in repair</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#industry -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#industry">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Sponsor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>industry</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#issueDate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#issueDate">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:label>issue date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#issuingAuthority -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#issuingAuthority">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>issuing authority</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#itemDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#itemDescription">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#MaterialDonation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>item description</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#lastName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#lastName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>last name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#latitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#latitude">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:label>latitude</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#levelName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#levelName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#SponsorshipLevel"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>level name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#locationDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#locationDescription">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>location description</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#locationImages -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#locationImages">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>location images</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#locationName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#locationName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>location name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#longitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#longitude">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:label>longitude</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#materialType -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#materialType">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#MaterialResource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#maxParticipants -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#maxParticipants">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>maximum participants</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#minAmount -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#minAmount">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#SponsorshipLevel"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:label>minimum amount</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#note -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#note">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Donation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>note</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#numberOfTickets -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#numberOfTickets">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>number of tickets</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#password -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#password">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>password</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#paymentMethod -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#paymentMethod">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#FinancialDonation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>payment method</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#phone -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#phone">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>phone</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#phoneNumber -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#phoneNumber">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Sponsor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>phone number</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#platformURL -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#platformURL">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#VirtualPlatform"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>platform URL</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#price -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#price">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:label>price</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#publicationDate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#publicationDate">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:label>publication date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#quantity -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#quantity">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#MaterialDonation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>quantity</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#quantityAvailable -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#quantityAvailable">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>quantity available</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#rating -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#rating">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Review"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>rating</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#registrationDate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#registrationDate">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:label>registration date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reservationDate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#reservationDate">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:label>reservation date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reservationStatus -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#reservationStatus">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>reservation status</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reserved -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#reserved">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:label>reserved</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#resourceCategory -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#resourceCategory">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>resource category</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#resourceDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#resourceDescription">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>resource description</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#resourceName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#resourceName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>resource name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reviewDate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#reviewDate">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Review"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:label>review date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reviewText -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#reviewText">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Review"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>review text</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#role -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#role">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>role</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#serviceDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#serviceDescription">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#ServiceDonation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>service description</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#skillLevel -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#skillLevel">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#HumanResource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#startDate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#startDate">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:label>start date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#targetAmount -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#targetAmount">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#FundingCampaign"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#targetParticipants -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#targetParticipants">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#EventCampaign"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#unitCost -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#unitCost">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:label>unit cost</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#website -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/eco-ontology#website">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/eco-ontology#Sponsor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>website</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://webprotege.stanford.edu/R8bwmUAV7gNYsSUpfOU5uQg -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/R8bwmUAV7gNYsSUpfOU5uQg">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Certification"/>
+        <rdfs:comment>Certificat de participation à un événement</rdfs:comment>
+        <rdfs:label>ParticipationCertificate</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R8dt7jjrpNol9D2m4S4xcDD -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/R8dt7jjrpNol9D2m4S4xcDD">
+        <rdfs:subClassOf rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <rdfs:comment>Assignation en Attente</rdfs:comment>
+        <rdfs:label>PendingAssignment</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R8g60C5ZJ3vbKUzcQsfcpFq -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/R8g60C5ZJ3vbKUzcQsfcpFq">
+        <rdfs:subClassOf rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <rdfs:comment>Volontaire Intermédiaire</rdfs:comment>
+        <rdfs:label>IntermediateVolunteer</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R8rBNMoqxEtKBlOj5vGayf3 -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/R8rBNMoqxEtKBlOj5vGayf3">
+        <rdfs:subClassOf rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <rdfs:comment>Volontaire Débutant</rdfs:comment>
+        <rdfs:label>BeginnerVolunteer</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R90IfjzVgEXGCvImTazhgOR -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/R90IfjzVgEXGCvImTazhgOR">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <rdfs:comment>Réservation en attente de confirmation</rdfs:comment>
+        <rdfs:label>PendingReservation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R935emy2UeTmLiVbQUDng62 -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/R935emy2UeTmLiVbQUDng62">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <rdfs:comment>Réservation confirmée</rdfs:comment>
+        <rdfs:label>ConfirmedReservation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R9iWAnNpIaOSQjxlhYQzGFK -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/R9iWAnNpIaOSQjxlhYQzGFK">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Certification"/>
+        <rdfs:comment>Certificat pour points écologiques gagnés</rdfs:comment>
+        <rdfs:label>EcoPointsCertificate</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/R9kS0ilIGn9gMoNofBDXyHQ -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/R9kS0ilIGn9gMoNofBDXyHQ">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Certification"/>
+        <rdfs:comment>Certificat pour accomplissements spéciaux</rdfs:comment>
+        <rdfs:label>AchievementCertificate</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RCQoqShMXkYn9Xt1Zg7ixCM -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/RCQoqShMXkYn9Xt1Zg7ixCM">
+        <rdfs:subClassOf rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <rdfs:comment>Assignation d&apos;Événement</rdfs:comment>
+        <rdfs:label>EventAssignment</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RCTJnSH9tr416rgiPRiQy5L -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/RCTJnSH9tr416rgiPRiQy5L">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Certification"/>
+        <rdfs:comment>Certificat pour complétion d&apos;événements</rdfs:comment>
+        <rdfs:label>EventCompletionCertificate</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw">
+        <rdfs:label>Volunteer</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RD10o91HfckKC5RMM4x7BqC -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/RD10o91HfckKC5RMM4x7BqC">
+        <rdfs:subClassOf rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <rdfs:comment>volunteer de status active</rdfs:comment>
+        <rdfs:label>ActiveVolunteer</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RDRhkMYISutC1i6XL20ZwFx -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/RDRhkMYISutC1i6XL20ZwFx">
+        <rdfs:subClassOf rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <rdfs:comment>volunteer de status inactive</rdfs:comment>
+        <rdfs:label>InactiveVolunteer</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RDVqGxiwGl6xuxEdXOK7cn7 -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/RDVqGxiwGl6xuxEdXOK7cn7">
+        <rdfs:subClassOf rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <rdfs:comment>Volontaire Avancé</rdfs:comment>
+        <rdfs:label>AdvancedVolunteer</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RM9DRqWAvODF2wjnNA1UDH -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/RM9DRqWAvODF2wjnNA1UDH">
+        <rdfs:subClassOf rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <rdfs:comment>Assignation Approuvée</rdfs:comment>
+        <rdfs:label>ApprovedAssignment</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/ROG0DmR5SE9CTckqNzp7mz -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/ROG0DmR5SE9CTckqNzp7mz">
+        <rdfs:subClassOf rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <rdfs:comment>Assignation de Campagne</rdfs:comment>
+        <rdfs:label>CampaignAssignment</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/Rd7gTfuQYXaCNv8ADD0Ki3 -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/Rd7gTfuQYXaCNv8ADD0Ki3">
+        <rdfs:subClassOf rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <rdfs:comment>Assignation Terminée</rdfs:comment>
+        <rdfs:label>CompletedAssignment</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RdSfoBIIaZdTWrNoi4vvQz -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/RdSfoBIIaZdTWrNoi4vvQz">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <rdfs:comment>Réservation annulée par l&apos;utilisateur</rdfs:comment>
+        <rdfs:label>CancelledReservation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN">
+        <rdfs:label>Assignement</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/Rs5xK8WTD7oMUgQeYMt0YK -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/Rs5xK8WTD7oMUgQeYMt0YK">
+        <rdfs:subClassOf rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <rdfs:comment>Assignation Annulée</rdfs:comment>
+        <rdfs:label>CancelledAssignment</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RvzoCcjYxXBpoAVLzjpfnT -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/RvzoCcjYxXBpoAVLzjpfnT">
+        <rdfs:subClassOf rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <rdfs:comment>Volontaire Suspendu</rdfs:comment>
+        <rdfs:label>SuspendedVolunteer</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#AwarenessCampaign -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#AwarenessCampaign">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdfs:comment>Campaign focused on raising environmental awareness</rdfs:comment>
+        <rdfs:label>Awareness Campaign</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Blog -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#Blog">
+        <rdfs:comment>Blog posts and articles</rdfs:comment>
+        <rdfs:label>Blog</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#BronzeSponsor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#BronzeSponsor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#SponsorshipLevel"/>
+        <rdfs:comment>Basic level of sponsorship</rdfs:comment>
+        <rdfs:label>Bronze Sponsor</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Campaign -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#Campaign">
+        <rdfs:comment>Generic campaign class for environmental initiatives</rdfs:comment>
+        <rdfs:label>Campaign</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Certification -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#Certification"/>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#CertificationBlog -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#CertificationBlog">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#CertificationReview -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#CertificationReview">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Review"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#CleanupCampaign -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#CleanupCampaign">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdfs:comment>Campaign focused on cleanup activities</rdfs:comment>
+        <rdfs:label>Cleanup Campaign</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#CompetitiveEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#CompetitiveEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:comment>Competitive events and tournaments</rdfs:comment>
+        <rdfs:label>Competitive Event</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#DigitalResource -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#DigitalResource">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <rdfs:comment>Digital resources and files</rdfs:comment>
+        <rdfs:label>Digital Resource</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Donation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#Donation">
+        <rdfs:comment>Represents a donation made by a sponsor</rdfs:comment>
+        <rdfs:label>Donation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#DonationBlog -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#DonationBlog">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#DonationReview -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#DonationReview">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Review"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#EducationalEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#EducationalEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:comment>Educational events and workshops</rdfs:comment>
+        <rdfs:label>Educational Event</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#EntertainmentEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#EntertainmentEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:comment>Entertainment and social events</rdfs:comment>
+        <rdfs:label>Entertainment Event</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#EquipmentResource -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#EquipmentResource">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <rdfs:comment>Equipment and tools</rdfs:comment>
+        <rdfs:label>Equipment Resource</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Event -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#Event">
+        <rdfs:comment>Represents an ecological event</rdfs:comment>
+        <rdfs:label>Event</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#EventBlog -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#EventBlog">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#EventCampaign -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#EventCampaign">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdfs:comment>Campaign focused on organizing events</rdfs:comment>
+        <rdfs:label>Event Campaign</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#EventReview -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#EventReview">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Review"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#FinancialDonation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#FinancialDonation">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Donation"/>
+        <rdfs:comment>Monetary donation</rdfs:comment>
+        <rdfs:label>Financial Donation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#FinancialResource -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#FinancialResource">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <rdfs:comment>Financial resources and funds</rdfs:comment>
+        <rdfs:label>Financial Resource</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#FundingCampaign -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#FundingCampaign">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdfs:comment>Campaign focused on raising funds</rdfs:comment>
+        <rdfs:label>Funding Campaign</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#GoldSponsor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#GoldSponsor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#SponsorshipLevel"/>
+        <rdfs:comment>High level of sponsorship</rdfs:comment>
+        <rdfs:label>Gold Sponsor</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#HumanResource -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#HumanResource">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <rdfs:comment>Human resources and volunteers</rdfs:comment>
+        <rdfs:label>Human Resource</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Indoor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#Indoor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:comment>Indoor locations</rdfs:comment>
+        <rdfs:label>Indoor Location</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Location -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#Location">
+        <rdfs:comment>Event locations</rdfs:comment>
+        <rdfs:label>Location</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#MaterialDonation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#MaterialDonation">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Donation"/>
+        <rdfs:comment>Donation of physical goods</rdfs:comment>
+        <rdfs:label>Material Donation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#MaterialResource -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#MaterialResource">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <rdfs:comment>Physical materials and supplies</rdfs:comment>
+        <rdfs:label>Material Resource</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Outdoor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#Outdoor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:comment>Outdoor locations</rdfs:comment>
+        <rdfs:label>Outdoor Location</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#PlatinumSponsor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#PlatinumSponsor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#SponsorshipLevel"/>
+        <rdfs:comment>Highest level of sponsorship</rdfs:comment>
+        <rdfs:label>Platinum Sponsor</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Reservation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#Reservation">
+        <rdfs:comment>Reservations for events</rdfs:comment>
+        <rdfs:label>Reservation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Resource -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#Resource">
+        <rdfs:comment>Generic resource class</rdfs:comment>
+        <rdfs:label>Resource</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Review -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#Review"/>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#ServiceDonation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#ServiceDonation">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Donation"/>
+        <rdfs:comment>Donation of professional services</rdfs:comment>
+        <rdfs:label>Service Donation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#SilverSponsor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#SilverSponsor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#SponsorshipLevel"/>
+        <rdfs:comment>Medium level of sponsorship</rdfs:comment>
+        <rdfs:label>Silver Sponsor</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#SocializationEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#SocializationEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdfs:comment>Social and networking events</rdfs:comment>
+        <rdfs:label>Socialization Event</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Sponsor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#Sponsor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <rdfs:comment>Organization that supports events through donations</rdfs:comment>
+        <rdfs:label>Sponsor</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#SponsorBlog -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#SponsorBlog">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#SponsorReview -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#SponsorReview">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Review"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#SponsorshipLevel -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#SponsorshipLevel">
+        <rdfs:comment>Classification level for sponsorship commitments</rdfs:comment>
+        <rdfs:label>Sponsorship Level</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#User -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#User">
+        <rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+        <rdfs:comment>User of the ecological platform</rdfs:comment>
+        <rdfs:label>User</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#VirtualPlatform -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#VirtualPlatform">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdfs:comment>Virtual meeting platforms</rdfs:comment>
+        <rdfs:label>Virtual Platform</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#li -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/eco-ontology#li"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Organization -->
+
+    <owl:Class rdf:about="http://xmlns.com/foaf/0.1/Organization"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Person -->
+
+    <owl:Class rdf:about="http://xmlns.com/foaf/0.1/Person"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://webprotege.stanford.edu/RAssignment3 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RAssignment3">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#SophieLeroy"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:RD3Wor03BEPInfzUaMNVPC7 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-03-10</webprotege:RD3Wor03BEPInfzUaMNVPC7>
+        <webprotege:RDT3XEARggTy1BIBKDXXrmx rdf:datatype="http://www.w3.org/2001/XMLSchema#string">approved</webprotege:RDT3XEARggTy1BIBKDXXrmx>
+        <webprotege:RRatingAssignment rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</webprotege:RRatingAssignment>
+        <rdfs:label>assignment3</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RAssignment4 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RAssignment4">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#MarcBernard"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:RD3Wor03BEPInfzUaMNVPC7 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-04-05</webprotege:RD3Wor03BEPInfzUaMNVPC7>
+        <webprotege:RDT3XEARggTy1BIBKDXXrmx rdf:datatype="http://www.w3.org/2001/XMLSchema#string">approved</webprotege:RDT3XEARggTy1BIBKDXXrmx>
+        <webprotege:RRatingAssignment rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</webprotege:RRatingAssignment>
+        <rdfs:label>assignment4</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RAssignment5 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RAssignment5">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#AnnaKowalski"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:RD3Wor03BEPInfzUaMNVPC7 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-05-12</webprotege:RD3Wor03BEPInfzUaMNVPC7>
+        <webprotege:RDT3XEARggTy1BIBKDXXrmx rdf:datatype="http://www.w3.org/2001/XMLSchema#string">rejected</webprotege:RDT3XEARggTy1BIBKDXXrmx>
+        <webprotege:RRatingAssignment rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</webprotege:RRatingAssignment>
+        <rdfs:label>assignment5</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RAssignment6 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RAssignment6">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#DavidChen"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:RD3Wor03BEPInfzUaMNVPC7 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-06-18</webprotege:RD3Wor03BEPInfzUaMNVPC7>
+        <webprotege:RDT3XEARggTy1BIBKDXXrmx rdf:datatype="http://www.w3.org/2001/XMLSchema#string">rejected</webprotege:RDT3XEARggTy1BIBKDXXrmx>
+        <webprotege:RRatingAssignment rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</webprotege:RRatingAssignment>
+        <rdfs:label>assignment6</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RAssignment7 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RAssignment7">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#ElenaRodriguez"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:RD3Wor03BEPInfzUaMNVPC7 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-07-25</webprotege:RD3Wor03BEPInfzUaMNVPC7>
+        <webprotege:RDT3XEARggTy1BIBKDXXrmx rdf:datatype="http://www.w3.org/2001/XMLSchema#string">approved</webprotege:RDT3XEARggTy1BIBKDXXrmx>
+        <webprotege:RRatingAssignment rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</webprotege:RRatingAssignment>
+        <rdfs:label>assignment7</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RBg6SnCnVtXmJVKRP6DxJEA -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RBg6SnCnVtXmJVKRP6DxJEA">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <webprotege:R8r5yxVXnZfa0TwP5biVHiL rdf:resource="http://www.semanticweb.org/eco-ontology#ClimateWorkshop"/>
+        <belongsToUser rdf:resource="http://www.semanticweb.org/eco-ontology#MarieMartin"/>
+        <confirmedBy rdf:resource="http://www.semanticweb.org/eco-ontology#AdminUser"/>
+        <webprotege:R7QgAmvOpBSpwRmRrDZL8VE>A1</webprotege:R7QgAmvOpBSpwRmRrDZL8VE>
+        <webprotege:R9wdyKGFoajnFCFN4oqnwHr>confirmed</webprotege:R9wdyKGFoajnFCFN4oqnwHr>
+        <rdfs:label>reservation1</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RCglywDKxiDpyxbag1C6jnH -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RCglywDKxiDpyxbag1C6jnH">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Certification"/>
+        <awardedTo rdf:resource="http://www.semanticweb.org/eco-ontology#MarieMartin"/>
+        <issuedBy rdf:resource="http://www.semanticweb.org/eco-ontology#AdminUser"/>
+        <webprotege:R9QGoktbkOBbsLkvgjicNA8>ECO-ABC12345</webprotege:R9QGoktbkOBbsLkvgjicNA8>
+        <webprotege:R9gsGMKtVBKEAd4d8I75UkC rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</webprotege:R9gsGMKtVBKEAd4d8I75UkC>
+        <webprotege:RBPJvon09P5n1GLdLbu2esV>participation</webprotege:RBPJvon09P5n1GLdLbu2esV>
+        <rdfs:label>certification1</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RD2YKfLkOpJdarKVIu6bdGu -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RD2YKfLkOpJdarKVIu6bdGu">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#JohnDoe"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:R8BxRbqkCT2nIQCr5UoVlXD>+33659874512</webprotege:R8BxRbqkCT2nIQCr5UoVlXD>
+        <webprotege:R9F95BAS8WtbTv8ZGBaPe42>asthmatic</webprotege:R9F95BAS8WtbTv8ZGBaPe42>
+        <webprotege:R9PW79FzwQKWuQYdTdYlHzN>IM a 41 y.o who love helping people and doing volunteer work since I was a kid</webprotege:R9PW79FzwQKWuQYdTdYlHzN>
+        <webprotege:R9tdW5crNU837y5TemwdNfR>was doing volunteer work in many events</webprotege:R9tdW5crNU837y5TemwdNfR>
+        <webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>jardinage</webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>
+        <webprotege:RCHqvY6cUdoI8XfAt441VX0>actif</webprotege:RCHqvY6cUdoI8XfAt441VX0>
+        <webprotege:RXzg1eKoCWK7S9zHsFoTFC>test test test</webprotege:RXzg1eKoCWK7S9zHsFoTFC>
+        <rdfs:label>volunteer 1</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a">
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/R7hfXkjoyWBAEmQX3pSjIZl"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+            </owl:Restriction>
+        </rdf:type>
+        <webprotege:R7hfXkjoyWBAEmQX3pSjIZl rdf:resource="http://www.semanticweb.org/eco-ontology#ClimateWorkshop"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RD2YKfLkOpJdarKVIu6bdGu"/>
+        <webprotege:RCxW58hZN5YubcE8RrXif1Y>10/12/2025</webprotege:RCxW58hZN5YubcE8RrXif1Y>
+        <webprotege:RD3Wor03BEPInfzUaMNVPC7>10/11/2025</webprotege:RD3Wor03BEPInfzUaMNVPC7>
+        <rdfs:label>Assignement1</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RNewAssignment1 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RNewAssignment1">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#JohnDoe"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:RD3Wor03BEPInfzUaMNVPC7 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-01-15</webprotege:RD3Wor03BEPInfzUaMNVPC7>
+        <webprotege:RDT3XEARggTy1BIBKDXXrmx rdf:datatype="http://www.w3.org/2001/XMLSchema#string">approved</webprotege:RDT3XEARggTy1BIBKDXXrmx>
+        <webprotege:RRatingAssignment rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</webprotege:RRatingAssignment>
+        <rdfs:label>assignment1</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RNewAssignment2 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RNewAssignment2">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#MarieMartin"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:RD3Wor03BEPInfzUaMNVPC7 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-02-20</webprotege:RD3Wor03BEPInfzUaMNVPC7>
+        <webprotege:RDT3XEARggTy1BIBKDXXrmx rdf:datatype="http://www.w3.org/2001/XMLSchema#string">rejected</webprotege:RDT3XEARggTy1BIBKDXXrmx>
+        <webprotege:RRatingAssignment rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</webprotege:RRatingAssignment>
+        <rdfs:label>assignment2</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RNewVolunteer2 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RNewVolunteer2">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#JaneSmith"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:R8BxRbqkCT2nIQCr5UoVlXD>+33123456789</webprotege:R8BxRbqkCT2nIQCr5UoVlXD>
+        <webprotege:R9F95BAS8WtbTv8ZGBaPe42>none</webprotege:R9F95BAS8WtbTv8ZGBaPe42>
+        <webprotege:R9PW79FzwQKWuQYdTdYlHzN>I am a 28 y.o environmental scientist passionate about climate action and community engagement</webprotege:R9PW79FzwQKWuQYdTdYlHzN>
+        <webprotege:R9tdW5crNU837y5TemwdNfR>organized beach cleanups and tree planting events</webprotege:R9tdW5crNU837y5TemwdNfR>
+        <webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>éducation environnementale</webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>
+        <webprotege:RCHqvY6cUdoI8XfAt441VX0>très actif</webprotege:RCHqvY6cUdoI8XfAt441VX0>
+        <webprotege:RXzg1eKoCWK7S9zHsFoTFC>Passionate about making a positive impact on the environment</webprotege:RXzg1eKoCWK7S9zHsFoTFC>
+        <rdfs:label>volunteer 2</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RNewVolunteer3 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RNewVolunteer3">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#PierreDupont"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:R8BxRbqkCT2nIQCr5UoVlXD>+33987654321</webprotege:R8BxRbqkCT2nIQCr5UoVlXD>
+        <webprotege:R9F95BAS8WtbTv8ZGBaPe42>allergic to pollen</webprotege:R9F95BAS8WtbTv8ZGBaPe42>
+        <webprotege:R9PW79FzwQKWuQYdTdYlHzN>I am a 35 y.o engineer who wants to contribute to sustainable development through volunteer work</webprotege:R9PW79FzwQKWuQYdTdYlHzN>
+        <webprotege:R9tdW5crNU837y5TemwdNfR>participated in renewable energy projects and waste reduction campaigns</webprotege:R9tdW5crNU837y5TemwdNfR>
+        <webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>technologie verte</webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>
+        <webprotege:RCHqvY6cUdoI8XfAt441VX0>modérément actif</webprotege:RCHqvY6cUdoI8XfAt441VX0>
+        <webprotege:RXzg1eKoCWK7S9zHsFoTFC>Committed to using technology for environmental solutions</webprotege:RXzg1eKoCWK7S9zHsFoTFC>
+        <rdfs:label>volunteer 3</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RVolunteer4 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RVolunteer4">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#SophieLeroy"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:R8BxRbqkCT2nIQCr5UoVlXD>+33555666777</webprotege:R8BxRbqkCT2nIQCr5UoVlXD>
+        <webprotege:R9F95BAS8WtbTv8ZGBaPe42>none</webprotege:R9F95BAS8WtbTv8ZGBaPe42>
+        <webprotege:R9PW79FzwQKWuQYdTdYlHzN>I am a 24 y.o student in environmental studies, eager to gain hands-on experience in conservation</webprotege:R9PW79FzwQKWuQYdTdYlHzN>
+        <webprotege:R9tdW5crNU837y5TemwdNfR>volunteered at local animal shelters and community gardens</webprotege:R9tdW5crNU837y5TemwdNfR>
+        <webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>conservation</webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>
+        <webprotege:RCHqvY6cUdoI8XfAt441VX0>très actif</webprotege:RCHqvY6cUdoI8XfAt441VX0>
+        <webprotege:RXzg1eKoCWK7S9zHsFoTFC>Passionate about wildlife conservation and environmental education</webprotege:RXzg1eKoCWK7S9zHsFoTFC>
+        <rdfs:label>volunteer 4</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RVolunteer5 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RVolunteer5">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#MarcBernard"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:R8BxRbqkCT2nIQCr5UoVlXD>+33444555666</webprotege:R8BxRbqkCT2nIQCr5UoVlXD>
+        <webprotege:R9F95BAS8WtbTv8ZGBaPe42>back problems</webprotege:R9F95BAS8WtbTv8ZGBaPe42>
+        <webprotege:R9PW79FzwQKWuQYdTdYlHzN>I am a 52 y.o retired teacher who wants to contribute to environmental causes in my community</webprotege:R9PW79FzwQKWuQYdTdYlHzN>
+        <webprotege:R9tdW5crNU837y5TemwdNfR>organized school environmental clubs and community recycling programs</webprotege:R9tdW5crNU837y5TemwdNfR>
+        <webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>éducation</webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>
+        <webprotege:RCHqvY6cUdoI8XfAt441VX0>actif</webprotege:RCHqvY6cUdoI8XfAt441VX0>
+        <webprotege:RXzg1eKoCWK7S9zHsFoTFC>Dedicated to teaching others about environmental responsibility</webprotege:RXzg1eKoCWK7S9zHsFoTFC>
+        <rdfs:label>volunteer 5</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RVolunteer6 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RVolunteer6">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#AnnaKowalski"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:R8BxRbqkCT2nIQCr5UoVlXD>+33333444555</webprotege:R8BxRbqkCT2nIQCr5UoVlXD>
+        <webprotege:R9F95BAS8WtbTv8ZGBaPe42>none</webprotege:R9F95BAS8WtbTv8ZGBaPe42>
+        <webprotege:R9PW79FzwQKWuQYdTdYlHzN>I am a 30 y.o marketing professional who wants to use my skills for environmental advocacy</webprotege:R9PW79FzwQKWuQYdTdYlHzN>
+        <webprotege:R9tdW5crNU837y5TemwdNfR>created social media campaigns for environmental organizations</webprotege:R9tdW5crNU837y5TemwdNfR>
+        <webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>communication</webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>
+        <webprotege:RCHqvY6cUdoI8XfAt441VX0>très actif</webprotege:RCHqvY6cUdoI8XfAt441VX0>
+        <webprotege:RXzg1eKoCWK7S9zHsFoTFC>Skilled in digital marketing for environmental causes</webprotege:RXzg1eKoCWK7S9zHsFoTFC>
+        <rdfs:label>volunteer 6</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RVolunteer7 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RVolunteer7">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#DavidChen"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:R8BxRbqkCT2nIQCr5UoVlXD>+33222333444</webprotege:R8BxRbqkCT2nIQCr5UoVlXD>
+        <webprotege:R9F95BAS8WtbTv8ZGBaPe42>none</webprotege:R9F95BAS8WtbTv8ZGBaPe42>
+        <webprotege:R9PW79FzwQKWuQYdTdYlHzN>I am a 26 y.o software developer who wants to contribute to environmental tech solutions</webprotege:R9PW79FzwQKWuQYdTdYlHzN>
+        <webprotege:R9tdW5crNU837y5TemwdNfR>developed apps for carbon footprint tracking and waste reduction</webprotege:R9tdW5crNU837y5TemwdNfR>
+        <webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>développement</webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>
+        <webprotege:RCHqvY6cUdoI8XfAt441VX0>actif</webprotege:RCHqvY6cUdoI8XfAt441VX0>
+        <webprotege:RXzg1eKoCWK7S9zHsFoTFC>Tech-savvy volunteer focused on digital environmental solutions</webprotege:RXzg1eKoCWK7S9zHsFoTFC>
+        <rdfs:label>volunteer 7</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RVolunteer8 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RVolunteer8">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#ElenaRodriguez"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:R8BxRbqkCT2nIQCr5UoVlXD>+33111222333</webprotege:R8BxRbqkCT2nIQCr5UoVlXD>
+        <webprotege:R9F95BAS8WtbTv8ZGBaPe42>none</webprotege:R9F95BAS8WtbTv8ZGBaPe42>
+        <webprotege:R9PW79FzwQKWuQYdTdYlHzN>I am a 33 y.o nurse who wants to help with environmental health initiatives</webprotege:R9PW79FzwQKWuQYdTdYlHzN>
+        <webprotege:R9tdW5crNU837y5TemwdNfR>organized health awareness campaigns about air pollution effects</webprotege:R9tdW5crNU837y5TemwdNfR>
+        <webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>santé environnementale</webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>
+        <webprotege:RCHqvY6cUdoI8XfAt441VX0>modérément actif</webprotege:RCHqvY6cUdoI8XfAt441VX0>
+        <webprotege:RXzg1eKoCWK7S9zHsFoTFC>Healthcare professional committed to environmental health advocacy</webprotege:RXzg1eKoCWK7S9zHsFoTFC>
+        <rdfs:label>volunteer 8</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#AdminUser -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#AdminUser">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <email>admin@ecoplatform.com</email>
+        <firstName>Admin</firstName>
+        <lastName>EcoPlatform</lastName>
+        <phone>+1-555-0001</phone>
+        <registrationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-01-01T08:00:00</registrationDate>
+        <role>Admin</role>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#AnnaKowalski -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#AnnaKowalski"/>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#BeachCleanup2024 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#BeachCleanup2024">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#CleanupCampaign"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#field_volunteers"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#recyclable_bags"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#safety_gear"/>
+        <campaignDescription>Annual beach cleanup initiative to remove plastic waste from coastal areas</campaignDescription>
+        <campaignName>Beach Cleanup 2024</campaignName>
+        <campaignStatus>Active</campaignStatus>
+        <endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-12-31T23:59:59</endDate>
+        <goal>Remove 10 tons of plastic waste from beaches</goal>
+        <startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-03-01T00:00:00</startDate>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#BlogPost001 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#BlogPost001">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+        <blogContent>Beach cleanups play a crucial role in protecting marine ecosystems...</blogContent>
+        <blogTitle>The Importance of Beach Cleanups</blogTitle>
+        <category>Environmental Protection</category>
+        <publicationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-01-18T09:00:00</publicationDate>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#BlogPost002 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#BlogPost002">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+        <blogContent>How community gardens improve urban biodiversity and social cohesion.</blogContent>
+        <blogTitle>Community Gardens and Urban Biodiversity</blogTitle>
+        <category>Biodiversity</category>
+        <publicationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-04-10T10:30:00</publicationDate>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#BlogPost003 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#BlogPost003">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+        <blogContent>A practical guide to reducing single-use plastics in everyday life.</blogContent>
+        <blogTitle>Practical Steps to Reduce Single-Use Plastics</blogTitle>
+        <category>Waste Reduction</category>
+        <publicationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-07-22T08:00:00</publicationDate>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#BlogPost004 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#BlogPost004">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+        <blogContent>Urban composting: How to turn kitchen waste into nutrient-rich soil for balconies and small gardens.</blogContent>
+        <blogTitle>Urban Composting for Small Spaces</blogTitle>
+        <category>Waste Reduction</category>
+        <publicationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-08-05T09:00:00</publicationDate>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#BlogPost005 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#BlogPost005">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+        <blogContent>Native plants are vital to local ecosystems — choose species that support pollinators and require less water.</blogContent>
+        <blogTitle>Choosing Native Plants for Your Garden</blogTitle>
+        <category>Biodiversity</category>
+        <publicationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-08-18T11:15:00</publicationDate>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#BlogPost006 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#BlogPost006">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+        <blogContent>Solar power at home: evaluating panels, incentives, and simple maintenance tips to keep systems efficient.</blogContent>
+        <blogTitle>Small-Scale Solar: A Homeowner&apos;s Guide</blogTitle>
+        <category>Renewable Energy</category>
+        <publicationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-09-02T10:00:00</publicationDate>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#BlogPost007 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#BlogPost007">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+        <blogContent>How to host low-waste events: planning, sourcing reusable materials, and communicating with attendees.</blogContent>
+        <blogTitle>Hosting Low-Waste Events</blogTitle>
+        <category>Sustainable Events</category>
+        <publicationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-09-15T14:30:00</publicationDate>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#BlogPost008 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#BlogPost008">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+        <blogContent>Electric mobility basics: comparing e-bikes, scooters and small electric cars for short urban trips.</blogContent>
+        <blogTitle>Electric Mobility for City Life</blogTitle>
+        <category>Transport</category>
+        <publicationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-10-01T08:45:00</publicationDate>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#BlogPost009 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#BlogPost009">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Blog"/>
+        <blogContent>Reducing food waste: meal planning, smart storage, and creative recipes to use leftovers.</blogContent>
+        <blogTitle>Cut Food Waste with Smart Meal Planning</blogTitle>
+        <category>Food</category>
+        <publicationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-10-12T12:00:00</publicationDate>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#BotanicalGarden -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#BotanicalGarden">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Outdoor"/>
+        <address>2000 Botanical Garden Way</address>
+        <capacity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">300</capacity>
+        <city>San Francisco</city>
+        <inRepair rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</inRepair>
+        <latitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">37.7749</latitude>
+        <locationDescription>Expansive botanical garden with diverse plant species and event spaces</locationDescription>
+        <locationImages>botanical_garden_1.jpg,botanical_garden_2.jpg</locationImages>
+        <locationName>Botanical Garden</locationName>
+        <longitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-122.4194</longitude>
+        <price rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">200.00</price>
+        <reserved rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</reserved>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#BronzeLevel -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#BronzeLevel">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#BronzeSponsor"/>
+        <benefits>Logo on website, Social media mention</benefits>
+        <levelName>Bronze</levelName>
+        <minAmount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">100.00</minAmount>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#CentralPark -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#CentralPark">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Outdoor"/>
+        <address>59th to 110th Street</address>
+        <capacity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1000</capacity>
+        <city>New York</city>
+        <country>USA</country>
+        <inRepair rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</inRepair>
+        <latitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">40.7829</latitude>
+        <locationDescription>Iconic urban park in Manhattan featuring meadows, lakes, and recreational facilities</locationDescription>
+        <locationImages>central_park_1.jpg,central_park_2.jpg</locationImages>
+        <locationName>Central Park</locationName>
+        <longitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-73.9654</longitude>
+        <price rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.00</price>
+        <reserved rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</reserved>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#CityHall -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#CityHall">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Indoor"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <address>1 City Hall Plaza</address>
+        <capacity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">500</capacity>
+        <city>Chicago</city>
+        <inRepair rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</inRepair>
+        <latitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">41.8781</latitude>
+        <locationDescription>Historic city hall with large auditorium for public events</locationDescription>
+        <locationImages>city_hall_1.jpg,city_hall_2.jpg</locationImages>
+        <locationName>City Hall Auditorium</locationName>
+        <longitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-87.6298</longitude>
+        <price rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">300.00</price>
+        <reserved rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</reserved>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#ClimateAwareness2024 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#ClimateAwareness2024">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#AwarenessCampaign"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#educational_app"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#environmental_database"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#expert_coordinators"/>
+        <campaignDescription>Educational campaign about climate change impacts and solutions</campaignDescription>
+        <campaignName>Climate Awareness 2024</campaignName>
+        <campaignStatus>active</campaignStatus>
+        <endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-10-31T23:59:59</endDate>
+        <goal>Reach 1 million people with climate education</goal>
+        <startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-04-01T00:00:00</startDate>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#ClimateWorkshop -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#ClimateWorkshop">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#EducationalEvent"/>
+        <hasSponsor rdf:resource="http://www.semanticweb.org/eco-ontology#EcoTechCorp"/>
+        <isLocatedAt rdf:resource="http://www.semanticweb.org/eco-ontology#CommunityCenter"/>
+        <isOrganizedBy rdf:resource="http://www.semanticweb.org/eco-ontology#JohnDoe"/>
+        <isPartOfCampaign rdf:resource="http://www.semanticweb.org/eco-ontology#ClimateAwareness2024"/>
+        <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#duration">PT3H</duration>
+        <eventDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-05-15T09:00:00</eventDate>
+        <eventDescription>Interactive workshop exploring practical solutions to climate change</eventDescription>
+        <eventImages>climate_workshop_1.jpg,climate_workshop_2.jpg</eventImages>
+        <eventStatus>Scheduled</eventStatus>
+        <eventTitle>Climate Change Solutions Workshop</eventTitle>
+        <maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</maxParticipants>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#CommunityCenter -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#CommunityCenter">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Indoor"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <address>123 Main Street</address>
+        <capacity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">200</capacity>
+        <city>Boston</city>
+        <inRepair rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</inRepair>
+        <latitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">42.3601</latitude>
+        <locationDescription>Modern community center with conference rooms and workshop spaces</locationDescription>
+        <locationImages>community_center_1.jpg,community_center_2.jpg</locationImages>
+        <locationName>Community Center</locationName>
+        <longitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-71.0589</longitude>
+        <price rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">150.00</price>
+        <reserved rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</reserved>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#CommunityGardenParty -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#CommunityGardenParty">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#SocializationEvent"/>
+        <isLocatedAt rdf:resource="http://www.semanticweb.org/eco-ontology#BotanicalGarden"/>
+        <isOrganizedBy rdf:resource="http://www.semanticweb.org/eco-ontology#JaneSmith"/>
+        <isPartOfCampaign rdf:resource="http://www.semanticweb.org/eco-ontology#tree_planting_day"/>
+        <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#duration">PT4H</duration>
+        <eventDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-06-08T15:00:00</eventDate>
+        <eventDescription>Social gathering in the community garden with local food and music</eventDescription>
+        <eventImages>https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=500,https://images.unsplash.com/photo-1464207687429-7505649dae38?w=500</eventImages>
+        <eventStatus>Scheduled</eventStatus>
+        <eventTitle>Community Garden Party</eventTitle>
+        <maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">80</maxParticipants>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#DavidChen -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#DavidChen"/>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Donation001 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#Donation001">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#FinancialDonation"/>
+        <amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1500.00</amount>
+        <currency>USD</currency>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-01-20T14:30:00</dateDonated>
+        <note>Supporting environmental education initiatives</note>
+        <paymentMethod>Bank Transfer</paymentMethod>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#EcoMarathon2024 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#EcoMarathon2024">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#CompetitiveEvent"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <isLocatedAt rdf:resource="http://www.semanticweb.org/eco-ontology#RiversidePark"/>
+        <isOrganizedBy rdf:resource="http://www.semanticweb.org/eco-ontology#JohnDoe"/>
+        <isPartOfCampaign rdf:resource="http://www.semanticweb.org/eco-ontology#BeachCleanup2024"/>
+        <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#duration">PT4H</duration>
+        <eventDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-06-15T08:00:00</eventDate>
+        <eventDescription>Annual eco-friendly marathon promoting sustainable sports and environmental awareness</eventDescription>
+        <eventImages>https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=500,https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500,https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500</eventImages>
+        <eventStatus>Scheduled</eventStatus>
+        <eventTitle>Eco-Marathon 2024</eventTitle>
+        <maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">500</maxParticipants>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#EcoMusicFestival -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#EcoMusicFestival">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#EntertainmentEvent"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <isLocatedAt rdf:resource="http://www.semanticweb.org/eco-ontology#BotanicalGarden"/>
+        <isOrganizedBy rdf:resource="http://www.semanticweb.org/eco-ontology#JohnDoe"/>
+        <isPartOfCampaign rdf:resource="http://www.semanticweb.org/eco-ontology#BeachCleanup2024"/>
+        <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#duration">PT8H</duration>
+        <eventDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-10-12T16:00:00</eventDate>
+        <eventDescription>Music festival with environmental awareness theme featuring local artists</eventDescription>
+        <eventImages>https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=500,https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=500,https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500</eventImages>
+        <eventStatus>Scheduled</eventStatus>
+        <eventTitle>Eco Music Festival</eventTitle>
+        <maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2000</maxParticipants>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#EcoNetworkingMixer -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#EcoNetworkingMixer">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#SocializationEvent"/>
+        <isLocatedAt rdf:resource="http://www.semanticweb.org/eco-ontology#GreenVirtualSpace"/>
+        <isOrganizedBy rdf:resource="http://www.semanticweb.org/eco-ontology#JohnDoe"/>
+        <isPartOfCampaign rdf:resource="http://www.semanticweb.org/eco-ontology#energy_saving_campaign"/>
+        <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#duration">PT2H</duration>
+        <eventDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-04-18T18:00:00</eventDate>
+        <eventDescription>Virtual networking event for environmental professionals and enthusiasts</eventDescription>
+        <eventImages>https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=500</eventImages>
+        <eventStatus>Confirmed</eventStatus>
+        <eventTitle>Eco Networking Mixer</eventTitle>
+        <maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</maxParticipants>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#EcoTechCorp -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#EcoTechCorp">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Sponsor"/>
+        <hasSponsorshipLevel rdf:resource="http://www.semanticweb.org/eco-ontology#GoldLevel"/>
+        <companyName>EcoTech Corporation</companyName>
+        <contactEmail>sponsor@ecotech.com</contactEmail>
+        <industry>Green Technology</industry>
+        <phoneNumber>+1-555-0101</phoneNumber>
+        <website>www.ecotech.com</website>
+        <makesDonation rdf:resource="http://www.semanticweb.org/eco-ontology#EcoTechDonation1"/>
+        <makesDonation rdf:resource="http://www.semanticweb.org/eco-ontology#EcoTechMaterial1"/>
+        <makesDonation rdf:resource="http://www.semanticweb.org/eco-ontology#EcoTechService1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#EcoWebinarPlatform -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#EcoWebinarPlatform">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#VirtualPlatform"/>
+        <capacity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1000</capacity>
+        <inRepair rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</inRepair>
+        <locationDescription>Virtual platform for environmental webinars and online events</locationDescription>
+        <locationImages>webinar_platform_1.jpg</locationImages>
+        <locationName>Eco Webinar Platform</locationName>
+        <platformURL>https://webinar.eco-platform.org</platformURL>
+        <price rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">50.00</price>
+        <reserved rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</reserved>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#ElenaRodriguez -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#ElenaRodriguez"/>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#GoldLevel -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#GoldLevel">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#GoldSponsor"/>
+        <benefits>All Silver benefits, Speaking opportunity, VIP access</benefits>
+        <levelName>Gold</levelName>
+        <minAmount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1000.00</minAmount>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#GreenFilmScreening -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#GreenFilmScreening">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#EntertainmentEvent"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <isLocatedAt rdf:resource="http://www.semanticweb.org/eco-ontology#CommunityCenter"/>
+        <isOrganizedBy rdf:resource="http://www.semanticweb.org/eco-ontology#JaneSmith"/>
+        <isPartOfCampaign rdf:resource="http://www.semanticweb.org/eco-ontology#ClimateAwareness2024"/>
+        <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#duration">PT3H</duration>
+        <eventDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-03-25T19:00:00</eventDate>
+        <eventDescription>Screening of environmental documentaries followed by panel discussion</eventDescription>
+        <eventImages>https://images.unsplash.com/photo-1489599809505-fb452c5e0f70?w=500,https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500</eventImages>
+        <eventStatus>Scheduled</eventStatus>
+        <eventTitle>Green Film Screening</eventTitle>
+        <maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">300</maxParticipants>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#GreenInnovationChallenge -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#GreenInnovationChallenge">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#CompetitiveEvent"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <isLocatedAt rdf:resource="http://www.semanticweb.org/eco-ontology#CityHall"/>
+        <isOrganizedBy rdf:resource="http://www.semanticweb.org/eco-ontology#JaneSmith"/>
+        <isPartOfCampaign rdf:resource="http://www.semanticweb.org/eco-ontology#ClimateAwareness2024"/>
+        <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#duration">PT6H</duration>
+        <eventDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-09-20T09:00:00</eventDate>
+        <eventDescription>Competition for sustainable technology solutions and environmental startups</eventDescription>
+        <eventImages>https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500,https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=500</eventImages>
+        <eventStatus>Planning</eventStatus>
+        <eventTitle>Green Innovation Challenge</eventTitle>
+        <maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">200</maxParticipants>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#GreenSolutions -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#GreenSolutions">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Sponsor"/>
+        <hasSponsorshipLevel rdf:resource="http://www.semanticweb.org/eco-ontology#SilverLevel"/>
+        <companyName>Green Solutions Ltd</companyName>
+        <contactEmail>info@greensolutions.com</contactEmail>
+        <industry>Environmental Consulting</industry>
+        <phoneNumber>+1-555-0102</phoneNumber>
+        <website>www.greensolutions.com</website>
+        <makesDonation rdf:resource="http://www.semanticweb.org/eco-ontology#GreenSolutionsDonation1"/>
+        <makesDonation rdf:resource="http://www.semanticweb.org/eco-ontology#GreenSolutionsMaterial2"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#GreenVirtualSpace -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#GreenVirtualSpace">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#VirtualPlatform"/>
+        <capacity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">500</capacity>
+        <inRepair rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</inRepair>
+        <locationDescription>Online meeting space for environmental discussions and virtual events</locationDescription>
+        <locationImages>virtual_space_1.jpg</locationImages>
+        <locationName>Green Virtual Space</locationName>
+        <platformURL>https://meet.green-community.org</platformURL>
+        <price rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25.00</price>
+        <reserved rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</reserved>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#JaneSmith -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#JaneSmith">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <email>jane.smith@exemple.com</email>
+        <firstName>Jane</firstName>
+        <lastName>Smith</lastName>
+        <phone>+1-555-0103</phone>
+        <registrationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-01-20T14:15:00</registrationDate>
+        <role>Organizer</role>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#JohnDoe -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#JohnDoe">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <email>john.doe@exemple.com</email>
+        <firstName>John</firstName>
+        <lastName>Doe</lastName>
+        <phone>+1-555-0100</phone>
+        <registrationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-01-15T10:30:00</registrationDate>
+        <role>Organizer</role>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#LucasRobert -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#LucasRobert">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <email>lucas.robert@email.com</email>
+        <firstName>Lucas</firstName>
+        <lastName>Robert</lastName>
+        <phone>+1-555-0203</phone>
+        <registrationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-02-25T16:20:00</registrationDate>
+        <role>User</role>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#MarcBernard -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#MarcBernard"/>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#MarieMartin -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#MarieMartin">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <email>marie.martin@email.com</email>
+        <firstName>Marie</firstName>
+        <lastName>Martin</lastName>
+        <phone>+1-555-0200</phone>
+        <registrationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-02-10T09:15:00</registrationDate>
+        <role>User</role>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#PierreDupont -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#PierreDupont"/>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#PierreDurand -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#PierreDurand">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <email>pierre.durand@email.com</email>
+        <firstName>Pierre</firstName>
+        <lastName>Durand</lastName>
+        <phone>+1-555-0201</phone>
+        <registrationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-02-15T11:30:00</registrationDate>
+        <role>User</role>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#PlatinumLevel -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#PlatinumLevel">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#PlatinumSponsor"/>
+        <benefits>All Gold benefits, Title sponsorship, Exclusive branding rights</benefits>
+        <levelName>Platinum</levelName>
+        <minAmount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5000.00</minAmount>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#RenewableEnergySeminar -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#RenewableEnergySeminar">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#EducationalEvent"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <isLocatedAt rdf:resource="http://www.semanticweb.org/eco-ontology#EcoWebinarPlatform"/>
+        <isOrganizedBy rdf:resource="http://www.semanticweb.org/eco-ontology#JaneSmith"/>
+        <isPartOfCampaign rdf:resource="http://www.semanticweb.org/eco-ontology#ClimateAwareness2024"/>
+        <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#duration">PT2H</duration>
+        <eventDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-10-29T14:00:00</eventDate>
+        <eventDescription>Expert talks on solar, wind, and hydro power solutions for sustainable energy</eventDescription>
+        <eventImages>https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=500</eventImages>
+        <eventStatus>Confirmed</eventStatus>
+        <eventTitle>Renewable Energy Seminar</eventTitle>
+        <maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">150</maxParticipants>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#Review -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#Review">
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/eco-ontology#Review"/>
+            </owl:Restriction>
+        </rdf:type>
+        <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</rating>
+        <reviewDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">28-10-2025</reviewDate>
+        <reviewText>j&apos;aime bien</reviewText>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#ReviewForBlog003_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#ReviewForBlog003_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Review"/>
+        <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</rating>
+        <reviewDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-07-23T12:00:00</reviewDate>
+        <reviewText>Very practical and actionable steps — reduced my plastic use a lot.</reviewText>
+        <reviewOf rdf:resource="http://www.semanticweb.org/eco-ontology#BlogPost003"/>
+        <rdfs:label>review1</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#ReviewForBlog003_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#ReviewForBlog003_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Review"/>
+        <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</rating>
+        <reviewDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-07-24T09:30:00</reviewDate>
+        <reviewText>Good tips, could use more references but helpful overall.</reviewText>
+        <reviewOf rdf:resource="http://www.semanticweb.org/eco-ontology#BlogPost003"/>
+        <rdfs:label>review2</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#RiversidePark -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#RiversidePark">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Location"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Outdoor"/>
+        <address>Riverside Drive</address>
+        <capacity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1000</capacity>
+        <city>New York</city>
+        <inRepair rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</inRepair>
+        <latitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">40.7829</latitude>
+        <locationDescription>Beautiful riverside park with walking trails and event spaces</locationDescription>
+        <locationImages>riverside_park_1.jpg,riverside_park_2.jpg</locationImages>
+        <locationName>Riverside Park</locationName>
+        <longitude rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-73.9866</longitude>
+        <price rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.00</price>
+        <reserved rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</reserved>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#SilverLevel -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#SilverLevel">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#SilverSponsor"/>
+        <benefits>All Bronze benefits, Banner at event, Featured in newsletter</benefits>
+        <levelName>Silver</levelName>
+        <minAmount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">500.00</minAmount>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#SophieLeblanc -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#SophieLeblanc">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#User"/>
+        <email>sophie.leblanc@email.com</email>
+        <firstName>Sophie</firstName>
+        <lastName>Leblanc</lastName>
+        <phone>+1-555-0202</phone>
+        <registrationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-02-20T14:45:00</registrationDate>
+        <role>User</role>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#SophieLeroy -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#SophieLeroy"/>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#SustainableAgricultureWorkshop -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#SustainableAgricultureWorkshop">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#EducationalEvent"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Event"/>
+        <isLocatedAt rdf:resource="http://www.semanticweb.org/eco-ontology#CommunityCenter"/>
+        <isOrganizedBy rdf:resource="http://www.semanticweb.org/eco-ontology#JohnDoe"/>
+        <isPartOfCampaign rdf:resource="http://www.semanticweb.org/eco-ontology#energy_saving_campaign"/>
+        <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#duration">PT3H</duration>
+        <eventDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-04-10T10:00:00</eventDate>
+        <eventDescription>Hands-on workshop on organic farming techniques and sustainable food production</eventDescription>
+        <eventImages>https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=500,https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500</eventImages>
+        <eventStatus>Scheduled</eventStatus>
+        <eventTitle>Sustainable Agriculture Workshop</eventTitle>
+        <maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">40</maxParticipants>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#certification2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#certification2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Certification"/>
+        <awardedTo rdf:resource="http://www.semanticweb.org/eco-ontology#LucasRobert"/>
+        <issuedBy rdf:resource="http://www.semanticweb.org/eco-ontology#AdminUser"/>
+        <webprotege:R9QGoktbkOBbsLkvgjicNA8>ECO-DEF67890</webprotege:R9QGoktbkOBbsLkvgjicNA8>
+        <webprotege:R9gsGMKtVBKEAd4d8I75UkC rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">25</webprotege:R9gsGMKtVBKEAd4d8I75UkC>
+        <webprotege:RBPJvon09P5n1GLdLbu2esV>achievement</webprotege:RBPJvon09P5n1GLdLbu2esV>
+        <rdfs:label>certification2</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#certification3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#certification3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Certification"/>
+        <awardedTo rdf:resource="http://www.semanticweb.org/eco-ontology#JaneSmith"/>
+        <issuedBy rdf:resource="http://www.semanticweb.org/eco-ontology#AdminUser"/>
+        <webprotege:R9QGoktbkOBbsLkvgjicNA8>ECO-GHI11223</webprotege:R9QGoktbkOBbsLkvgjicNA8>
+        <webprotege:R9gsGMKtVBKEAd4d8I75UkC rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</webprotege:R9gsGMKtVBKEAd4d8I75UkC>
+        <webprotege:RBPJvon09P5n1GLdLbu2esV>eco-points</webprotege:RBPJvon09P5n1GLdLbu2esV>
+        <rdfs:label>certification3</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#eco_fund_2024 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#eco_fund_2024">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#FundingCampaign"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#expert_coordinators"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#government_grants"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#individual_donations"/>
+        <campaignDescription>Collecte de fonds pour installation d&apos;éoliennes communautaires</campaignDescription>
+        <campaignName>Financement Projet Éolien</campaignName>
+        <campaignStatus>active</campaignStatus>
+        <endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-07-31T00:00:00</endDate>
+        <fundsRaised rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">42000.50</fundsRaised>
+        <goal>Collecter 75,000€ pour 3 éoliennes</goal>
+        <startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-02-01T00:00:00</startDate>
+        <targetAmount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">75000.00</targetAmount>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#educational_app -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#educational_app">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#DigitalResource"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <quantityAvailable rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</quantityAvailable>
+        <resourceCategory>logiciel</resourceCategory>
+        <resourceDescription>Application mobile pour apprendre l&apos;écologie</resourceDescription>
+        <resourceName>Application Éducative Écologie</resourceName>
+        <unitCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5000.00</unitCost>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#energy_saving_campaign -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#energy_saving_campaign">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#AwarenessCampaign"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#educational_app"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#expert_coordinators"/>
+        <campaignDescription>Économisons Notre Énergie</campaignDescription>
+        <campaignName>Campagne nationale sur les économies d&apos;énergie domestique</campaignName>
+        <campaignStatus>planned</campaignStatus>
+        <endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-12-31T00:00:00</endDate>
+        <goal>Former 1000 ambassadeurs énergie</goal>
+        <startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-10-01T00:00:00</startDate>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#environmental_database -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#environmental_database">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#DigitalResource"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <quantityAvailable rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</quantityAvailable>
+        <resourceCategory>données</resourceCategory>
+        <resourceDescription>Base de données des espèces protégées</resourceDescription>
+        <resourceName>Base de Données Biodiversité</resourceName>
+        <unitCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">15000.00</unitCost>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#expert_coordinators -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#expert_coordinators">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#HumanResource"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <quantityAvailable rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</quantityAvailable>
+        <resourceCategory>management</resourceCategory>
+        <resourceDescription>Personnel expérimenté en gestion de projets écologiques</resourceDescription>
+        <resourceName>Coordinateurs Projets</resourceName>
+        <skillLevel>expert</skillLevel>
+        <unitCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.00</unitCost>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#field_volunteers -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#field_volunteers">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#HumanResource"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <quantityAvailable rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">500</quantityAvailable>
+        <resourceCategory>Opérationnel</resourceCategory>
+        <resourceDescription>Volontaires pour les actions sur le terrain</resourceDescription>
+        <resourceName>Bénévoles Opérationnels</resourceName>
+        <skillLevel>Intermédiaire</skillLevel>
+        <unitCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.00</unitCost>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#forest_cleanup -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#forest_cleanup">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#CleanupCampaign"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#expert_coordinators"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#field_volunteers"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#recyclable_bags"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#safety_gear"/>
+        <campaignDescription>Nettoyage des déchets dans les forêts publiques</campaignDescription>
+        <campaignName>Opération Forêt Propre</campaignName>
+        <campaignStatus>planned</campaignStatus>
+        <endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-09-30T00:00:00</endDate>
+        <goal>Nettoyer 50 hectares de forêt</goal>
+        <startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-07-01T00:00:00</startDate>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#government_grants -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#government_grants">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#FinancialResource"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <currency>EUR</currency>
+        <quantityAvailable rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">250000</quantityAvailable>
+        <resourceCategory>public</resourceCategory>
+        <resourceDescription>Fonds publics pour projets environnementaux</resourceDescription>
+        <resourceName>Subventions Gouvernementales</resourceName>
+        <unitCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.00</unitCost>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#individual_donations -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#individual_donations">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#FinancialResource"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <currency>EUR</currency>
+        <quantityAvailable rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50000</quantityAvailable>
+        <resourceCategory>dons</resourceCategory>
+        <resourceDescription>Dons collectés auprès des particuliers</resourceDescription>
+        <resourceName>Cagnotte Dons Citoyens</resourceName>
+        <unitCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.00</unitCost>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#planting_tools -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#planting_tools">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#EquipmentResource"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <equipmentType>outil manuel</equipmentType>
+        <quantityAvailable rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">200</quantityAvailable>
+        <resourceCategory>jardinage</resourceCategory>
+        <resourceDescription>Pelles, râteaux, gants de jardinage</resourceDescription>
+        <resourceName>Outils de Jardinage</resourceName>
+        <unitCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">15.00</unitCost>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#recyclable_bags -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#recyclable_bags">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#MaterialResource"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <materialType>Bioplastique</materialType>
+        <quantityAvailable rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10000</quantityAvailable>
+        <resourceCategory>Consommable</resourceCategory>
+        <resourceDescription>Sacs en matériau compostable pour collecte</resourceDescription>
+        <resourceName>Sacs Biodégradables</resourceName>
+        <unitCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.30</unitCost>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reforest_amazon_2024 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#reforest_amazon_2024">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#EventCampaign"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#expert_coordinators"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#field_volunteers"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#planting_tools"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#safety_gear"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#tree_saplings"/>
+        <campaignDescription>Planter des arbres en Amazonie brésilienne</campaignDescription>
+        <campaignName>Reforestation Amazonie 2024</campaignName>
+        <campaignStatus>planned</campaignStatus>
+        <endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-12-31T00:00:00</endDate>
+        <goal>Planter 10,000 arbres</goal>
+        <startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-03-01T00:00:00</startDate>
+        <targetParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">200</targetParticipants>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#research_grant_2024 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#research_grant_2024">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#FundingCampaign"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#environmental_database"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#expert_coordinators"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#government_grants"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#individual_donations"/>
+        <campaignDescription>Financement de recherche sur la préservation de la biodiversité marine</campaignDescription>
+        <campaignName>Bourse Recherche Biodiversité</campaignName>
+        <campaignStatus>active</campaignStatus>
+        <endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-09-30T00:00:00</endDate>
+        <fundsRaised rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.00</fundsRaised>
+        <goal>Soutenir 5 projets de recherche avec 25,000€ chacun</goal>
+        <startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-01T00:00:00</startDate>
+        <targetAmount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">125000.00</targetAmount>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reservation10 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#reservation10">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <webprotege:R8r5yxVXnZfa0TwP5biVHiL rdf:resource="http://www.semanticweb.org/eco-ontology#GreenFilmScreening"/>
+        <belongsToUser rdf:resource="http://www.semanticweb.org/eco-ontology#PierreDurand"/>
+        <webprotege:R7QgAmvOpBSpwRmRrDZL8VE>C23</webprotege:R7QgAmvOpBSpwRmRrDZL8VE>
+        <webprotege:R9wdyKGFoajnFCFN4oqnwHr>pending</webprotege:R9wdyKGFoajnFCFN4oqnwHr>
+        <rdfs:label>reservation10</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reservation11 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#reservation11">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <webprotege:R8r5yxVXnZfa0TwP5biVHiL rdf:resource="http://www.semanticweb.org/eco-ontology#SustainableAgricultureWorkshop"/>
+        <belongsToUser rdf:resource="http://www.semanticweb.org/eco-ontology#SophieLeblanc"/>
+        <confirmedBy rdf:resource="http://www.semanticweb.org/eco-ontology#AdminUser"/>
+        <webprotege:R7QgAmvOpBSpwRmRrDZL8VE>D6</webprotege:R7QgAmvOpBSpwRmRrDZL8VE>
+        <webprotege:R9wdyKGFoajnFCFN4oqnwHr>confirmed</webprotege:R9wdyKGFoajnFCFN4oqnwHr>
+        <rdfs:label>reservation11</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reservation12 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#reservation12">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <webprotege:R8r5yxVXnZfa0TwP5biVHiL rdf:resource="http://www.semanticweb.org/eco-ontology#EcoMusicFestival"/>
+        <belongsToUser rdf:resource="http://www.semanticweb.org/eco-ontology#LucasRobert"/>
+        <confirmedBy rdf:resource="http://www.semanticweb.org/eco-ontology#AdminUser"/>
+        <webprotege:R7QgAmvOpBSpwRmRrDZL8VE>VIP2</webprotege:R7QgAmvOpBSpwRmRrDZL8VE>
+        <webprotege:R9wdyKGFoajnFCFN4oqnwHr>confirmed</webprotege:R9wdyKGFoajnFCFN4oqnwHr>
+        <rdfs:label>reservation12</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reservation13 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#reservation13">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <webprotege:R8r5yxVXnZfa0TwP5biVHiL rdf:resource="http://www.semanticweb.org/eco-ontology#EcoMusicFestival"/>
+        <belongsToUser rdf:resource="http://www.semanticweb.org/eco-ontology#PierreDurand"/>
+        <webprotege:R7QgAmvOpBSpwRmRrDZL8VE>VIP3</webprotege:R7QgAmvOpBSpwRmRrDZL8VE>
+        <webprotege:R9wdyKGFoajnFCFN4oqnwHr>pending</webprotege:R9wdyKGFoajnFCFN4oqnwHr>
+        <rdfs:label>reservation13</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reservation2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#reservation2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <webprotege:R8r5yxVXnZfa0TwP5biVHiL rdf:resource="http://www.semanticweb.org/eco-ontology#EcoMarathon2024"/>
+        <belongsToUser rdf:resource="http://www.semanticweb.org/eco-ontology#PierreDurand"/>
+        <webprotege:R7QgAmvOpBSpwRmRrDZL8VE>B15</webprotege:R7QgAmvOpBSpwRmRrDZL8VE>
+        <webprotege:R9wdyKGFoajnFCFN4oqnwHr>pending</webprotege:R9wdyKGFoajnFCFN4oqnwHr>
+        <rdfs:label>reservation2</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reservation3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#reservation3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <webprotege:R8r5yxVXnZfa0TwP5biVHiL rdf:resource="http://www.semanticweb.org/eco-ontology#GreenFilmScreening"/>
+        <belongsToUser rdf:resource="http://www.semanticweb.org/eco-ontology#SophieLeblanc"/>
+        <confirmedBy rdf:resource="http://www.semanticweb.org/eco-ontology#AdminUser"/>
+        <webprotege:R7QgAmvOpBSpwRmRrDZL8VE>C22</webprotege:R7QgAmvOpBSpwRmRrDZL8VE>
+        <webprotege:R9wdyKGFoajnFCFN4oqnwHr>cancelled</webprotege:R9wdyKGFoajnFCFN4oqnwHr>
+        <rdfs:label>reservation3</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reservation4 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#reservation4">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <webprotege:R8r5yxVXnZfa0TwP5biVHiL rdf:resource="http://www.semanticweb.org/eco-ontology#SustainableAgricultureWorkshop"/>
+        <belongsToUser rdf:resource="http://www.semanticweb.org/eco-ontology#LucasRobert"/>
+        <confirmedBy rdf:resource="http://www.semanticweb.org/eco-ontology#AdminUser"/>
+        <webprotege:R7QgAmvOpBSpwRmRrDZL8VE>D5</webprotege:R7QgAmvOpBSpwRmRrDZL8VE>
+        <webprotege:R9wdyKGFoajnFCFN4oqnwHr>confirmed</webprotege:R9wdyKGFoajnFCFN4oqnwHr>
+        <rdfs:label>reservation4</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reservation5 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#reservation5">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <webprotege:R8r5yxVXnZfa0TwP5biVHiL rdf:resource="http://www.semanticweb.org/eco-ontology#EcoMusicFestival"/>
+        <belongsToUser rdf:resource="http://www.semanticweb.org/eco-ontology#JaneSmith"/>
+        <confirmedBy rdf:resource="http://www.semanticweb.org/eco-ontology#AdminUser"/>
+        <webprotege:R7QgAmvOpBSpwRmRrDZL8VE>VIP1</webprotege:R7QgAmvOpBSpwRmRrDZL8VE>
+        <webprotege:R9wdyKGFoajnFCFN4oqnwHr>confirmed</webprotege:R9wdyKGFoajnFCFN4oqnwHr>
+        <rdfs:label>reservation5</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reservation6 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#reservation6">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <webprotege:R8r5yxVXnZfa0TwP5biVHiL rdf:resource="http://www.semanticweb.org/eco-ontology#ClimateWorkshop"/>
+        <belongsToUser rdf:resource="http://www.semanticweb.org/eco-ontology#PierreDurand"/>
+        <confirmedBy rdf:resource="http://www.semanticweb.org/eco-ontology#AdminUser"/>
+        <webprotege:R7QgAmvOpBSpwRmRrDZL8VE>A2</webprotege:R7QgAmvOpBSpwRmRrDZL8VE>
+        <webprotege:R9wdyKGFoajnFCFN4oqnwHr>confirmed</webprotege:R9wdyKGFoajnFCFN4oqnwHr>
+        <rdfs:label>reservation6</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reservation7 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#reservation7">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <webprotege:R8r5yxVXnZfa0TwP5biVHiL rdf:resource="http://www.semanticweb.org/eco-ontology#ClimateWorkshop"/>
+        <belongsToUser rdf:resource="http://www.semanticweb.org/eco-ontology#SophieLeblanc"/>
+        <webprotege:R7QgAmvOpBSpwRmRrDZL8VE>A3</webprotege:R7QgAmvOpBSpwRmRrDZL8VE>
+        <webprotege:R9wdyKGFoajnFCFN4oqnwHr>pending</webprotege:R9wdyKGFoajnFCFN4oqnwHr>
+        <rdfs:label>reservation7</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reservation8 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#reservation8">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <webprotege:R8r5yxVXnZfa0TwP5biVHiL rdf:resource="http://www.semanticweb.org/eco-ontology#EcoMarathon2024"/>
+        <belongsToUser rdf:resource="http://www.semanticweb.org/eco-ontology#LucasRobert"/>
+        <confirmedBy rdf:resource="http://www.semanticweb.org/eco-ontology#AdminUser"/>
+        <webprotege:R7QgAmvOpBSpwRmRrDZL8VE>B16</webprotege:R7QgAmvOpBSpwRmRrDZL8VE>
+        <webprotege:R9wdyKGFoajnFCFN4oqnwHr>confirmed</webprotege:R9wdyKGFoajnFCFN4oqnwHr>
+        <rdfs:label>reservation8</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#reservation9 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#reservation9">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Reservation"/>
+        <webprotege:R8r5yxVXnZfa0TwP5biVHiL rdf:resource="http://www.semanticweb.org/eco-ontology#EcoMarathon2024"/>
+        <belongsToUser rdf:resource="http://www.semanticweb.org/eco-ontology#JaneSmith"/>
+        <webprotege:R7QgAmvOpBSpwRmRrDZL8VE>B17</webprotege:R7QgAmvOpBSpwRmRrDZL8VE>
+        <webprotege:R9wdyKGFoajnFCFN4oqnwHr>pending</webprotege:R9wdyKGFoajnFCFN4oqnwHr>
+        <rdfs:label>reservation9</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#safety_gear -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#safety_gear">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#EquipmentResource"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <equipmentType>Équipement protection</equipmentType>
+        <quantityAvailable rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">150</quantityAvailable>
+        <resourceCategory>sécurité</resourceCategory>
+        <resourceDescription>Gilets fluorescents, casques, chaussures de sécurité</resourceDescription>
+        <resourceName>Équipement de Protection</resourceName>
+        <unitCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">45.00</unitCost>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#tree_planting_day -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#tree_planting_day">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Campaign"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#EventCampaign"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#field_volunteers"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#planting_tools"/>
+        <requiresResource rdf:resource="http://www.semanticweb.org/eco-ontology#tree_saplings"/>
+        <campaignDescription>Événement de plantation d&apos;arbres ouvert au public</campaignDescription>
+        <campaignName>Journée de Plantation Communautaire</campaignName>
+        <campaignStatus>active</campaignStatus>
+        <endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T00:00:00</endDate>
+        <goal>Planter 500 arbres en une journée</goal>
+        <startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T00:00:00</startDate>
+        <targetParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5000</targetParticipants>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eco-ontology#tree_saplings -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#tree_saplings">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#MaterialResource"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Resource"/>
+        <materialType>Plante</materialType>
+        <quantityAvailable rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5000</quantityAvailable>
+        <resourceCategory>Plants d&apos;arbres locaux pour reforestation</resourceCategory>
+        <resourceCategory>Végétal</resourceCategory>
+        <resourceName>Jeunes Plants Forestiers</resourceName>
+        <unitCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.50</unitCost>
+    </owl:NamedIndividual>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#li"/>
+        <Link>Volunteer</Link>
+        <className>nav-item</className>
+    </rdf:Description>
+    
+
+
+    <!-- http://webprotege.stanford.edu/RNewAssignment1 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RNewAssignment1">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#JohnDoe"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:RD3Wor03BEPInfzUaMNVPC7 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-01-15</webprotege:RD3Wor03BEPInfzUaMNVPC7>
+        <webprotege:RDT3XEARggTy1BIBKDXXrmx>approuvé</webprotege:RDT3XEARggTy1BIBKDXXrmx>
+        <webprotege:RRatingAssignment rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</webprotege:RRatingAssignment>
+        <rdfs:label>assignment1</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+    <!-- http://webprotege.stanford.edu/RNewAssignment2 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RNewAssignment2">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#MarieMartin"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:RD3Wor03BEPInfzUaMNVPC7 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-02-20</webprotege:RD3Wor03BEPInfzUaMNVPC7>
+        <webprotege:RDT3XEARggTy1BIBKDXXrmx>non approuvé</webprotege:RDT3XEARggTy1BIBKDXXrmx>
+        <webprotege:RRatingAssignment rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</webprotege:RRatingAssignment>
+        <rdfs:label>assignment2</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+    <!-- http://webprotege.stanford.edu/RNewVolunteer2 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RNewVolunteer2">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#JaneSmith"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:R8BxRbqkCT2nIQCr5UoVlXD>+33123456789</webprotege:R8BxRbqkCT2nIQCr5UoVlXD>
+        <webprotege:R9F95BAS8WtbTv8ZGBaPe42>none</webprotege:R9F95BAS8WtbTv8ZGBaPe42>
+        <webprotege:R9PW79FzwQKWuQYdTdYlHzN>I am a 28 y.o environmental scientist passionate about climate action and community engagement</webprotege:R9PW79FzwQKWuQYdTdYlHzN>
+        <webprotege:R9tdW5crNU837y5TemwdNfR>organized beach cleanups and tree planting events</webprotege:R9tdW5crNU837y5TemwdNfR>
+        <webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>éducation environnementale</webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>
+        <webprotege:RCHqvY6cUdoI8XfAt441VX0>très actif</webprotege:RCHqvY6cUdoI8XfAt441VX0>
+        <webprotege:RXzg1eKoCWK7S9zHsFoTFC>Passionate about making a positive impact on the environment</webprotege:RXzg1eKoCWK7S9zHsFoTFC>
+        <rdfs:label>volunteer 2</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+    <!-- http://webprotege.stanford.edu/RNewVolunteer3 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RNewVolunteer3">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#PierreDupont"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:R8BxRbqkCT2nIQCr5UoVlXD>+33987654321</webprotege:R8BxRbqkCT2nIQCr5UoVlXD>
+        <webprotege:R9F95BAS8WtbTv8ZGBaPe42>allergic to pollen</webprotege:R9F95BAS8WtbTv8ZGBaPe42>
+        <webprotege:R9PW79FzwQKWuQYdTdYlHzN>I am a 35 y.o engineer who wants to contribute to sustainable development through volunteer work</webprotege:R9PW79FzwQKWuQYdTdYlHzN>
+        <webprotege:R9tdW5crNU837y5TemwdNfR>participated in renewable energy projects and waste reduction campaigns</webprotege:R9tdW5crNU837y5TemwdNfR>
+        <webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>technologie verte</webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>
+        <webprotege:RCHqvY6cUdoI8XfAt441VX0>modérément actif</webprotege:RCHqvY6cUdoI8XfAt441VX0>
+        <webprotege:RXzg1eKoCWK7S9zHsFoTFC>Committed to using technology for environmental solutions</webprotege:RXzg1eKoCWK7S9zHsFoTFC>
+        <rdfs:label>volunteer 3</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+    <!-- http://webprotege.stanford.edu/RVolunteer4 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RVolunteer4">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#SophieLeroy"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:R8BxRbqkCT2nIQCr5UoVlXD>+33555666777</webprotege:R8BxRbqkCT2nIQCr5UoVlXD>
+        <webprotege:R9F95BAS8WtbTv8ZGBaPe42>none</webprotege:R9F95BAS8WtbTv8ZGBaPe42>
+        <webprotege:R9PW79FzwQKWuQYdTdYlHzN>I am a 24 y.o student in environmental studies, eager to gain hands-on experience in conservation</webprotege:R9PW79FzwQKWuQYdTdYlHzN>
+        <webprotege:R9tdW5crNU837y5TemwdNfR>volunteered at local animal shelters and community gardens</webprotege:R9tdW5crNU837y5TemwdNfR>
+        <webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>conservation</webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>
+        <webprotege:RCHqvY6cUdoI8XfAt441VX0>très actif</webprotege:RCHqvY6cUdoI8XfAt441VX0>
+        <webprotege:RXzg1eKoCWK7S9zHsFoTFC>Passionate about wildlife conservation and environmental education</webprotege:RXzg1eKoCWK7S9zHsFoTFC>
+        <rdfs:label>volunteer 4</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+    <!-- http://webprotege.stanford.edu/RVolunteer5 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RVolunteer5">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#MarcBernard"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:R8BxRbqkCT2nIQCr5UoVlXD>+33444555666</webprotege:R8BxRbqkCT2nIQCr5UoVlXD>
+        <webprotege:R9F95BAS8WtbTv8ZGBaPe42>back problems</webprotege:R9F95BAS8WtbTv8ZGBaPe42>
+        <webprotege:R9PW79FzwQKWuQYdTdYlHzN>I am a 52 y.o retired teacher who wants to contribute to environmental causes in my community</webprotege:R9PW79FzwQKWuQYdTdYlHzN>
+        <webprotege:R9tdW5crNU837y5TemwdNfR>organized school environmental clubs and community recycling programs</webprotege:R9tdW5crNU837y5TemwdNfR>
+        <webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>éducation</webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>
+        <webprotege:RCHqvY6cUdoI8XfAt441VX0>actif</webprotege:RCHqvY6cUdoI8XfAt441VX0>
+        <webprotege:RXzg1eKoCWK7S9zHsFoTFC>Dedicated to teaching others about environmental responsibility</webprotege:RXzg1eKoCWK7S9zHsFoTFC>
+        <rdfs:label>volunteer 5</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+    <!-- http://webprotege.stanford.edu/RVolunteer6 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RVolunteer6">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#AnnaKowalski"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:R8BxRbqkCT2nIQCr5UoVlXD>+33333444555</webprotege:R8BxRbqkCT2nIQCr5UoVlXD>
+        <webprotege:R9F95BAS8WtbTv8ZGBaPe42>none</webprotege:R9F95BAS8WtbTv8ZGBaPe42>
+        <webprotege:R9PW79FzwQKWuQYdTdYlHzN>I am a 30 y.o marketing professional who wants to use my skills for environmental advocacy</webprotege:R9PW79FzwQKWuQYdTdYlHzN>
+        <webprotege:R9tdW5crNU837y5TemwdNfR>created social media campaigns for environmental organizations</webprotege:R9tdW5crNU837y5TemwdNfR>
+        <webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>communication</webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>
+        <webprotege:RCHqvY6cUdoI8XfAt441VX0>très actif</webprotege:RCHqvY6cUdoI8XfAt441VX0>
+        <webprotege:RXzg1eKoCWK7S9zHsFoTFC>Skilled in digital marketing for environmental causes</webprotege:RXzg1eKoCWK7S9zHsFoTFC>
+        <rdfs:label>volunteer 6</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+    <!-- http://webprotege.stanford.edu/RVolunteer7 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RVolunteer7">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#DavidChen"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:R8BxRbqkCT2nIQCr5UoVlXD>+33222333444</webprotege:R8BxRbqkCT2nIQCr5UoVlXD>
+        <webprotege:R9F95BAS8WtbTv8ZGBaPe42>none</webprotege:R9F95BAS8WtbTv8ZGBaPe42>
+        <webprotege:R9PW79FzwQKWuQYdTdYlHzN>I am a 26 y.o software developer who wants to contribute to environmental tech solutions</webprotege:R9PW79FzwQKWuQYdTdYlHzN>
+        <webprotege:R9tdW5crNU837y5TemwdNfR>developed apps for carbon footprint tracking and waste reduction</webprotege:R9tdW5crNU837y5TemwdNfR>
+        <webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>développement</webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>
+        <webprotege:RCHqvY6cUdoI8XfAt441VX0>actif</webprotege:RCHqvY6cUdoI8XfAt441VX0>
+        <webprotege:RXzg1eKoCWK7S9zHsFoTFC>Tech-savvy volunteer focused on digital environmental solutions</webprotege:RXzg1eKoCWK7S9zHsFoTFC>
+        <rdfs:label>volunteer 7</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+    <!-- http://webprotege.stanford.edu/RVolunteer8 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RVolunteer8">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/RCXXzqv27uFuX5nYU81XUvw"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#ElenaRodriguez"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:R8BxRbqkCT2nIQCr5UoVlXD>+33111222333</webprotege:R8BxRbqkCT2nIQCr5UoVlXD>
+        <webprotege:R9F95BAS8WtbTv8ZGBaPe42>none</webprotege:R9F95BAS8WtbTv8ZGBaPe42>
+        <webprotege:R9PW79FzwQKWuQYdTdYlHzN>I am a 33 y.o nurse who wants to help with environmental health initiatives</webprotege:R9PW79FzwQKWuQYdTdYlHzN>
+        <webprotege:R9tdW5crNU837y5TemwdNfR>organized health awareness campaigns about air pollution effects</webprotege:R9tdW5crNU837y5TemwdNfR>
+        <webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>santé environnementale</webprotege:RBqpxvMVBnwM1Wb6OhzTpHf>
+        <webprotege:RCHqvY6cUdoI8XfAt441VX0>modérément actif</webprotege:RCHqvY6cUdoI8XfAt441VX0>
+        <webprotege:RXzg1eKoCWK7S9zHsFoTFC>Healthcare professional committed to environmental health advocacy</webprotege:RXzg1eKoCWK7S9zHsFoTFC>
+        <rdfs:label>volunteer 8</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+    <!-- http://webprotege.stanford.edu/RAssignment3 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RAssignment3">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#SophieLeroy"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:RD3Wor03BEPInfzUaMNVPC7 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-03-10</webprotege:RD3Wor03BEPInfzUaMNVPC7>
+        <webprotege:RDT3XEARggTy1BIBKDXXrmx>approuvé</webprotege:RDT3XEARggTy1BIBKDXXrmx>
+        <webprotege:RRatingAssignment rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</webprotege:RRatingAssignment>
+        <rdfs:label>assignment3</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+    <!-- http://webprotege.stanford.edu/RAssignment4 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RAssignment4">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#MarcBernard"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:RD3Wor03BEPInfzUaMNVPC7 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-04-05</webprotege:RD3Wor03BEPInfzUaMNVPC7>
+        <webprotege:RDT3XEARggTy1BIBKDXXrmx>approuvé</webprotege:RDT3XEARggTy1BIBKDXXrmx>
+        <webprotege:RRatingAssignment rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</webprotege:RRatingAssignment>
+        <rdfs:label>assignment4</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+    <!-- http://webprotege.stanford.edu/RAssignment5 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RAssignment5">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#AnnaKowalski"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:RD3Wor03BEPInfzUaMNVPC7 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-05-12</webprotege:RD3Wor03BEPInfzUaMNVPC7>
+        <webprotege:RDT3XEARggTy1BIBKDXXrmx>non approuvé</webprotege:RDT3XEARggTy1BIBKDXXrmx>
+        <webprotege:RRatingAssignment rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</webprotege:RRatingAssignment>
+        <rdfs:label>assignment5</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+    <!-- http://webprotege.stanford.edu/RAssignment6 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RAssignment6">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#DavidChen"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:RD3Wor03BEPInfzUaMNVPC7 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-06-18</webprotege:RD3Wor03BEPInfzUaMNVPC7>
+        <webprotege:RDT3XEARggTy1BIBKDXXrmx>approuvé</webprotege:RDT3XEARggTy1BIBKDXXrmx>
+        <webprotege:RRatingAssignment rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</webprotege:RRatingAssignment>
+        <rdfs:label>assignment6</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+    <!-- http://webprotege.stanford.edu/RAssignment7 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/RAssignment7">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/Rj2A7xNWLfpNcbE4HJMKqN"/>
+        <webprotege:RBNk0vvVsRh8FjaWPGT0XCO rdf:resource="http://www.semanticweb.org/eco-ontology#ElenaRodriguez"/>
+        <webprotege:RBqttmTqH5uyTK64wj0hDiD rdf:resource="http://webprotege.stanford.edu/RDLZr3t8WjBOyvvC3yXh09a"/>
+        <webprotege:RD3Wor03BEPInfzUaMNVPC7 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-07-25</webprotege:RD3Wor03BEPInfzUaMNVPC7>
+        <webprotege:RDT3XEARggTy1BIBKDXXrmx>approuvé</webprotege:RDT3XEARggTy1BIBKDXXrmx>
+        <webprotege:RRatingAssignment rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</webprotege:RRatingAssignment>
+        <rdfs:label>assignment7</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <!-- Sponsor and Donation Individuals added -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#AcmeCorp">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Sponsor"/>
+        <companyName>Acme Corporation</companyName>
+        <contactEmail>contact@acme.example</contactEmail>
+        <phoneNumber>+1-555-0100</phoneNumber>
+        <industry>Manufacturing</industry>
+        <website>https://acme.example.com</website>
+        <makesDonation rdf:resource="http://www.semanticweb.org/eco-ontology#AcmeDonation1"/>
+        <makesDonation rdf:resource="http://www.semanticweb.org/eco-ontology#AcmeDonation2"/>
+        <makesDonation rdf:resource="http://www.semanticweb.org/eco-ontology#AcmeMaterial2"/>
+        <rdfs:label>Acme Corporation</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#AcmeDonation1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#FinancialDonation"/>
+        <amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5000.00</amount>
+        <currency>USD</currency>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-15T10:00:00</dateDonated>
+        <fundsEvent rdf:resource="http://www.semanticweb.org/eco-ontology#EcoMusicFestival"/>
+        <rdfs:label>Acme Donation March 2025</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#GreenLeafInc">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Sponsor"/>
+        <companyName>GreenLeaf Inc</companyName>
+        <contactEmail>hello@greenleaf.example</contactEmail>
+        <phoneNumber>+44-20-7946-0011</phoneNumber>
+        <industry>Environmental Services</industry>
+        <website>https://greenleaf.example.org</website>
+        <makesDonation rdf:resource="http://www.semanticweb.org/eco-ontology#GreenLeafDonation1"/>
+        <makesDonation rdf:resource="http://www.semanticweb.org/eco-ontology#GreenLeafDonation2"/>
+        <makesDonation rdf:resource="http://www.semanticweb.org/eco-ontology#GreenLeafService2"/>
+        <rdfs:label>GreenLeaf Inc</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#GreenLeafDonation1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#MaterialDonation"/>
+        <itemDescription>Recycling bins and safety gloves</itemDescription>
+        <estimatedValue rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1200.00</estimatedValue>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-08-01T09:30:00</dateDonated>
+        <fundsEvent rdf:resource="http://www.semanticweb.org/eco-ontology#BeachCleanup2024"/>
+        <rdfs:label>GreenLeaf Material Donation 2024</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#LocalCharity">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#Sponsor"/>
+        <companyName>Local Charity Association</companyName>
+        <contactEmail>info@localcharity.example</contactEmail>
+        <phoneNumber>+33-1-2345-6789</phoneNumber>
+        <industry>Non-Profit</industry>
+        <website>https://localcharity.example.org</website>
+        <makesDonation rdf:resource="http://www.semanticweb.org/eco-ontology#LocalCharityService1"/>
+        <makesDonation rdf:resource="http://www.semanticweb.org/eco-ontology#LocalCharityService2"/>
+        <rdfs:label>Local Charity Association</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#LocalCharityService1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#ServiceDonation"/>
+        <hoursDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">40</hoursDonated>
+        <serviceDescription>Volunteer coordination and event staffing</serviceDescription>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-09-10T08:00:00</dateDonated>
+        <fundsEvent rdf:resource="http://www.semanticweb.org/eco-ontology#SustainableAgricultureWorkshop"/>
+        <rdfs:label>Local Charity Service Donation 2024</rdfs:label>
+    </owl:NamedIndividual>
+
+    <!-- Additional donation individuals added per request -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#EcoTechDonation1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#FinancialDonation"/>
+        <amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2500.00</amount>
+        <currency>EUR</currency>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-02-20T12:00:00</dateDonated>
+        <fundsEvent rdf:resource="http://www.semanticweb.org/eco-ontology#EcoMarathon2024"/>
+        <note>Community sports sponsorship for sustainable transportation awareness</note>
+        <paymentMethod>Credit Card</paymentMethod>
+        <rdfs:label>EcoTech Financial Donation Feb 2025</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#EcoTechMaterial1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#MaterialDonation"/>
+        <itemDescription>Solar lantern kits (50 units)</itemDescription>
+        <estimatedValue rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1800.00</estimatedValue>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-02-21T09:00:00</dateDonated>
+        <fundsEvent rdf:resource="http://www.semanticweb.org/eco-ontology#GreenInnovationChallenge"/>
+        <rdfs:label>EcoTech Material Donation Feb 2025</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#EcoTechService1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#ServiceDonation"/>
+        <hoursDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">16</hoursDonated>
+        <serviceDescription>AV and technical support for presentations</serviceDescription>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-02-22T08:30:00</dateDonated>
+        <fundsEvent rdf:resource="http://www.semanticweb.org/eco-ontology#RenewableEnergySeminar"/>
+        <rdfs:label>EcoTech Service Donation Feb 2025</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#AcmeDonation2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#FinancialDonation"/>
+        <amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">7500.00</amount>
+        <currency>USD</currency>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-04-10T11:00:00</dateDonated>
+        <fundsEvent rdf:resource="http://www.semanticweb.org/eco-ontology#GreenInnovationChallenge"/>
+        <note>Strategic support for innovation prizes</note>
+        <paymentMethod>Wire Transfer</paymentMethod>
+        <rdfs:label>Acme Donation Apr 2025</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#AcmeMaterial2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#MaterialDonation"/>
+        <itemDescription>First aid kits and event tents</itemDescription>
+        <estimatedValue rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2400.00</estimatedValue>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-16T09:30:00</dateDonated>
+        <fundsEvent rdf:resource="http://www.semanticweb.org/eco-ontology#EcoMarathon2024"/>
+        <rdfs:label>Acme Material Donation Mar 2025</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#GreenLeafDonation2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#MaterialDonation"/>
+        <itemDescription>1,000 reusable bags for attendees</itemDescription>
+        <estimatedValue rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">900.00</estimatedValue>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-09-05T10:00:00</dateDonated>
+        <fundsEvent rdf:resource="http://www.semanticweb.org/eco-ontology#BeachCleanup2024"/>
+        <rdfs:label>GreenLeaf Material Donation Sep 2024</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#GreenLeafService2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#ServiceDonation"/>
+        <hoursDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">20</hoursDonated>
+        <serviceDescription>Community outreach and volunteer training</serviceDescription>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-09-06T09:00:00</dateDonated>
+        <fundsEvent rdf:resource="http://www.semanticweb.org/eco-ontology#CommunityGardenParty"/>
+        <rdfs:label>GreenLeaf Service Donation Sep 2024</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#LocalCharityService2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#ServiceDonation"/>
+        <hoursDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30</hoursDonated>
+        <serviceDescription>Event logistics &amp; volunteer coordination</serviceDescription>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-05T07:30:00</dateDonated>
+        <fundsEvent rdf:resource="http://www.semanticweb.org/eco-ontology#EcoMusicFestival"/>
+        <rdfs:label>Local Charity Service Donation Mar 2025</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#GreenSolutionsDonation1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#FinancialDonation"/>
+        <amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3000.00</amount>
+        <currency>USD</currency>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-06-01T10:30:00</dateDonated>
+        <fundsEvent rdf:resource="http://www.semanticweb.org/eco-ontology#EcoNetworkingMixer"/>
+        <note>Support for networking events promoting sustainable business</note>
+        <paymentMethod>Credit Card</paymentMethod>
+        <rdfs:label>GreenSolutions Donation Jun 2025</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#GreenSolutionsMaterial2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#MaterialDonation"/>
+        <itemDescription>Portable recycling stations (10 units)</itemDescription>
+        <estimatedValue rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2200.00</estimatedValue>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-05-28T09:45:00</dateDonated>
+        <fundsEvent rdf:resource="http://www.semanticweb.org/eco-ontology#EcoMusicFestival"/>
+        <rdfs:label>GreenSolutions Material Donation May 2025</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#AcmeService2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#ServiceDonation"/>
+        <hoursDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">12</hoursDonated>
+        <serviceDescription>Stage setup and logistics support</serviceDescription>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-14T07:00:00</dateDonated>
+        <fundsEvent rdf:resource="http://www.semanticweb.org/eco-ontology#CommunityGardenParty"/>
+        <rdfs:label>Acme Service Donation Mar 2025</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/eco-ontology#Donation003">
+        <rdf:type rdf:resource="http://www.semanticweb.org/eco-ontology#FinancialDonation"/>
+        <amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1200.00</amount>
+        <currency>USD</currency>
+        <dateDonated rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-01-18T13:00:00</dateDonated>
+        <fundsEvent rdf:resource="http://www.semanticweb.org/eco-ontology#EcoMusicFestival"/>
+        <note>Community outreach donation</note>
+        <paymentMethod>PayPal</paymentMethod>
+        <rdfs:label>Donation January 2025</rdfs:label>
+    </owl:NamedIndividual>
+
+    <rdf:Description rdf:about="http://www.semanticweb.org/eco-ontology#Review">
+        <rdfs:comment>User reviews and ratings</rdfs:comment>
+        <rdfs:label>Review</rdfs:label>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+

@@ -1,0 +1,264 @@
+.resources-page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.resources-page h1 {
+  color: #2c5530;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Cartes de Statistiques */
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-left: 4px solid;
+}
+
+.stat-card.total {
+  border-left-color: #2c5530;
+  background: linear-gradient(135deg, #2c5530, #4a7c59);
+  color: white;
+}
+
+.stat-card.human {
+  border-left-color: #17a2b8;
+  background: linear-gradient(135deg, #17a2b8, #20c997);
+  color: white;
+}
+
+.stat-card.material {
+  border-left-color: #fd7e14;
+  background: linear-gradient(135deg, #fd7e14, #e44d26);
+  color: white;
+}
+
+.stat-card.equipment {
+  border-left-color: #6f42c1;
+  background: linear-gradient(135deg, #6f42c1, #8b5cf6);
+  color: white;
+}
+
+.stat-card.financial {
+  border-left-color: #28a745;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+}
+
+.stat-card.cost {
+  border-left-color: #dc3545;
+  background: linear-gradient(135deg, #dc3545, #fd7e14);
+  color: white;
+}
+
+.stat-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.stat-card p {
+  margin: 0;
+  font-size: 0.7rem;
+  opacity: 0.9;
+}
+
+/* Section Filtres */
+.filters-section {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.filters-section h3 {
+  margin-top: 0;
+  color: #2c5530;
+  margin-bottom: 1rem;
+}
+
+.filters {
+  display: flex;
+  gap: 1.5rem;
+  align-items: end;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-group label {
+  font-weight: 600;
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.filter-group select,
+.filter-group input {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  min-width: 150px;
+}
+
+.clear-filters {
+  padding: 0.5rem 1rem;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.clear-filters:hover {
+  background-color: #5a6268;
+}
+
+.results-count {
+  margin-top: 1rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+/* Grille des ressources */
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.resource-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.resource-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.resource-card h3 {
+  color: #2c5530;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.resource-card p {
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.resource-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.category {
+  background-color: #e7f3ff;
+  color: #004085;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.type {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.quantity {
+  font-weight: bold;
+  color: #2c5530;
+}
+
+.unit-cost {
+  color: #666;
+  font-style: italic;
+}
+
+.total-cost {
+  font-weight: bold;
+  color: #dc3545;
+  background-color: #f8d7da;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  color: #6c757d;
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filter-group {
+    width: 100%;
+  }
+  
+  .stats-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .resources-grid {
+    grid-template-columns: 1fr;
+  }
+}

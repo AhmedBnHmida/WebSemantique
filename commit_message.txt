@@ -1,0 +1,8 @@
+Fix volunteers queries and add status properties to assignments
+
+- Fix volunteer experience display (reorder columns)
+- Fix volunteer skills query (remove FILTER outside WHERE)  
+- Change assignment status values from approuvé/rejeté to approved/rejected to fix Fuseki encoding issue
+- Add status properties: 4 approved, 3 rejected assignments
+- Update SPARQL filters to handle both French and English status values
+
