@@ -98,7 +98,3 @@ def search_events():
     
     results = sparql_utils.execute_query(query)
     return jsonify(results)
-
-
-
-

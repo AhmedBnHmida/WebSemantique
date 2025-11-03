@@ -1,105 +1,58 @@
 "use client"
 
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import "./Navbar.css"
 
 const Navbar = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const location = useLocation()
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen)
-  }
+  const menuItems = [
+    { path: "/personnes", label: "Personnes", icon: "👥" },
+    { path: "/specialites", label: "Spécialités", icon: "🎓" },
+    { path: "/universites", label: "Universités", icon: "🏛️" },
+    { path: "/cours", label: "Cours", icon: "📚" },
+    { path: "/ressources-pedagogiques", label: "Ressources", icon: "📖" },
+    { path: "/evaluations", label: "Évaluations", icon: "📝" },
+    { path: "/competences", label: "Compétences", icon: "💡" },
+    { path: "/projets-academiques", label: "Projets", icon: "🔬" },
+    { path: "/technologies-educatives", label: "Technologies", icon: "💻" },
+    { path: "/orientations-academiques", label: "Orientations", icon: "🧭" },
+  ]
 
-  const closeDropdown = () => {
-    setIsDropdownOpen(false)
+  const isActive = (path) => {
+    return location.pathname === path
   }
 
   return (
     <nav className="navbar">
       <div className="nav-container">
-        <a href="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1 className="nav-logo">🌿 Eco Platform</h1>
-        </a>
+        <Link to="/" className="nav-brand">
+          <div className="nav-logo-icon">
+            <div className="book book-bottom"></div>
+            <div className="book book-middle"></div>
+            <div className="book book-top"></div>
+          </div>
+          <span className="nav-brand-text">Edu Smart</span>
+        </Link>
 
         <ul className="nav-menu">
-          {/* Classes Dropdown Menu */}
-          <li className="nav-item dropdown">
-            <button className="nav-link dropdown-toggle" onClick={toggleDropdown}>
-              Classes
-              <span className="dropdown-icon">▼</span>
-            </button>
-
-            {isDropdownOpen && (
-              <ul className="dropdown-menu">
-                <li>
-                  <Link to="/campaigns" className="dropdown-link" onClick={closeDropdown}>
-                    Campagnes
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/resources" className="dropdown-link" onClick={closeDropdown}>
-                    Ressources
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/events" className="dropdown-link" onClick={closeDropdown}>
-                    Événements
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/locations" className="dropdown-link" onClick={closeDropdown}>
-                    Locations
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/reservations" className="dropdown-link" onClick={closeDropdown}>
-                    Réservations
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/certifications" className="dropdown-link" onClick={closeDropdown}>
-                    Certifications
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/volunteers" className="dropdown-link" onClick={closeDropdown}>
-                    Volontaires
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/assignments" className="dropdown-link" onClick={closeDropdown}>
-                    Assignements
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/sponsors" className="dropdown-link" onClick={closeDropdown}>
-                    Sponsors
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/donations" className="dropdown-link" onClick={closeDropdown}>
-                    Donations
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/blogs" className="dropdown-link" onClick={closeDropdown}>
-                    Blogs
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/users" className="dropdown-link" onClick={closeDropdown}>
-                    Utilisateurs
-                  </Link>
-                </li>
-              </ul>
-            )}
-          </li>
-
+          {menuItems.map((item) => (
+            <li key={item.path} className="nav-item">
+              <Link 
+                to={item.path} 
+                className={`nav-link ${isActive(item.path) ? 'active' : ''}`}
+              >
+                <span className="nav-icon">{item.icon}</span>
+                <span className="nav-label">{item.label}</span>
+              </Link>
+            </li>
+          ))}
+          
           {/* Search Link */}
           <li className="nav-item">
-            <Link to="/" className="nav-link">
-              Rechercher
+            <Link to="/rechercher" className={`nav-link search-link ${isActive('/rechercher') ? 'active' : ''}`}>
+              <span className="nav-icon">🔍</span>
+              <span className="nav-label">Rechercher</span>
             </Link>
           </li>
         </ul>

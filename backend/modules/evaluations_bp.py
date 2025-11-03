@@ -1,0 +1,242 @@
+"""CRUD endpoints for Evaluations"""
+
+from flask import Blueprint, jsonify, request
+from sparql_utils import sparql_utils
+from modules.validators import validate_evaluation
+import uuid
+
+evaluations_bp = Blueprint('evaluations', __name__)
+PREFIX = "http://www.education-intelligente.org/ontologie#"
+
+def generate_evaluation_uri(type_eval: str, date_eval: str = None) -> str:
+    """Generate a unique URI for an evaluation"""
+    safe_type = type_eval.upper().replace(' ', '_')[:30]
+    date_part = date_eval.replace('-', '') if date_eval else ''
+    return f"{PREFIX}Evaluation_{safe_type}_{date_part}_{uuid.uuid4().hex[:8]}"
+
+@evaluations_bp.route('/evaluations', methods=['GET'])
+def get_all_evaluations():
+    """Get all evaluations"""
+    query = f"""
+    PREFIX ont: <{PREFIX}>
+    SELECT ?evaluation ?typeEvaluation ?dateEvaluation
+           ?cours ?intitule ?competence ?nomCompetence
+           ?technologie ?nomTechnologie
+    WHERE {{
+        ?evaluation a ont:Evaluation .
+        OPTIONAL {{ ?evaluation ont:typeEvaluation ?typeEvaluation . }}
+        OPTIONAL {{ ?evaluation ont:dateEvaluation ?dateEvaluation . }}
+        OPTIONAL {{
+            ?evaluation ont:porteSur ?cours .
+            ?cours ont:intitule ?intitule .
+        }}
+        OPTIONAL {{
+            ?evaluation ont:mesureCompetence ?competence .
+            ?competence ont:nomCompetence ?nomCompetence .
+        }}
+        OPTIONAL {{
+            ?evaluation ont:faciliteePar ?technologie .
+            ?technologie ont:nomTechnologie ?nomTechnologie .
+        }}
+    }}
+    ORDER BY DESC(?dateEvaluation)
+    """
+    try:
+        results = sparql_utils.execute_query(query)
+        return jsonify(results)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@evaluations_bp.route('/evaluations/<evaluation_id>', methods=['GET'])
+def get_evaluation(evaluation_id):
+    """Get a specific evaluation"""
+    query = f"""
+    PREFIX ont: <{PREFIX}>
+    SELECT ?evaluation ?typeEvaluation ?dateEvaluation
+           ?cours ?intitule ?projet ?titreProjet
+           ?competence ?nomCompetence
+           ?technologie ?nomTechnologie
+    WHERE {{
+        <{evaluation_id}> a ont:Evaluation .
+        OPTIONAL {{ <{evaluation_id}> ont:typeEvaluation ?typeEvaluation . }}
+        OPTIONAL {{ <{evaluation_id}> ont:dateEvaluation ?dateEvaluation . }}
+        OPTIONAL {{
+            <{evaluation_id}> ont:porteSur ?cours .
+            ?cours ont:intitule ?intitule .
+        }}
+        OPTIONAL {{
+            <{evaluation_id}> ont:porteSur ?projet .
+            ?projet ont:titreProjet ?titreProjet .
+        }}
+        OPTIONAL {{
+            <{evaluation_id}> ont:mesureCompetence ?competence .
+            ?competence ont:nomCompetence ?nomCompetence .
+        }}
+        OPTIONAL {{
+            <{evaluation_id}> ont:faciliteePar ?technologie .
+            ?technologie ont:nomTechnologie ?nomTechnologie .
+        }}
+    }}
+    """
+    try:
+        results = sparql_utils.execute_query(query)
+        return jsonify(results[0] if results else {}), 404 if not results else 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@evaluations_bp.route('/evaluations', methods=['POST'])
+def create_evaluation():
+    """Create a new evaluation"""
+    data = request.json
+    
+    errors = validate_evaluation(data)
+    if errors:
+        return jsonify({"errors": errors}), 400
+    
+    evaluation_uri = generate_evaluation_uri(
+        data.get('typeEvaluation', ''),
+        data.get('dateEvaluation', '')
+    )
+    
+    insert_parts = [
+        f"<{evaluation_uri}> a ont:Evaluation",
+        f"; ont:typeEvaluation \"{data.get('typeEvaluation')}\""
+    ]
+    
+    if data.get('dateEvaluation'):
+        insert_parts.append(f"; ont:dateEvaluation \"{data.get('dateEvaluation')}\"^^xsd:date")
+    if data.get('cours'):
+        insert_parts.append(f"; ont:porteSur <{data.get('cours')}>")
+    if data.get('projet'):
+        insert_parts.append(f"; ont:porteSur <{data.get('projet')}>")
+    if data.get('competence'):
+        insert_parts.append(f"; ont:mesureCompetence <{data.get('competence')}>")
+    if data.get('technologie'):
+        insert_parts.append(f"; ont:faciliteePar <{data.get('technologie')}>")
+    
+    query = f"""
+    PREFIX ont: <{PREFIX}>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    INSERT DATA {{
+        {' '.join(insert_parts)} .
+    }}
+    """
+    
+    try:
+        result = sparql_utils.execute_update(query)
+        if "error" in result:
+            return jsonify(result), 500
+        return jsonify({"message": "Évaluation créée avec succès", "uri": evaluation_uri}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@evaluations_bp.route('/evaluations/<evaluation_id>', methods=['PUT'])
+def update_evaluation(evaluation_id):
+    """Update an evaluation"""
+    data = request.json
+    
+    errors = validate_evaluation(data)
+    if errors:
+        return jsonify({"errors": errors}), 400
+    
+    delete_query = f"""
+    PREFIX ont: <{PREFIX}>
+    DELETE {{
+        <{evaluation_id}> ?p ?o .
+    }}
+    WHERE {{
+        <{evaluation_id}> ?p ?o .
+    }}
+    """
+    
+    insert_parts = [f"<{evaluation_id}> a ont:Evaluation"]
+    
+    if data.get('typeEvaluation'):
+        insert_parts.append(f"; ont:typeEvaluation \"{data.get('typeEvaluation')}\"")
+    if data.get('dateEvaluation'):
+        insert_parts.append(f"; ont:dateEvaluation \"{data.get('dateEvaluation')}\"^^xsd:date")
+    if data.get('cours'):
+        insert_parts.append(f"; ont:porteSur <{data.get('cours')}>")
+    if data.get('projet'):
+        insert_parts.append(f"; ont:porteSur <{data.get('projet')}>")
+    if data.get('competence'):
+        insert_parts.append(f"; ont:mesureCompetence <{data.get('competence')}>")
+    if data.get('technologie'):
+        insert_parts.append(f"; ont:faciliteePar <{data.get('technologie')}>")
+    
+    insert_query = f"""
+    PREFIX ont: <{PREFIX}>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    INSERT DATA {{
+        {' '.join(insert_parts)} .
+    }}
+    """
+    
+    try:
+        sparql_utils.execute_update(delete_query)
+        result = sparql_utils.execute_update(insert_query)
+        if "error" in result:
+            return jsonify(result), 500
+        return jsonify({"message": "Évaluation mise à jour avec succès"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@evaluations_bp.route('/evaluations/<evaluation_id>', methods=['DELETE'])
+def delete_evaluation(evaluation_id):
+    """Delete an evaluation"""
+    # Construct full URI if not already a full URI
+    if evaluation_id.startswith('http://') or evaluation_id.startswith('https://'):
+        evaluation_uri = evaluation_id
+    else:
+        if evaluation_id.startswith(PREFIX):
+            evaluation_uri = evaluation_id
+        else:
+            evaluation_uri = f"{PREFIX}{evaluation_id}"
+    
+    delete_query = f"""
+    PREFIX ont: <{PREFIX}>
+    DELETE WHERE {{
+        <{evaluation_uri}> ?p ?o .
+    }}
+    """
+    
+    try:
+        result = sparql_utils.execute_update(delete_query)
+        if "error" in result:
+            return jsonify(result), 500
+        return jsonify({"message": "Évaluation supprimée avec succès"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@evaluations_bp.route('/evaluations/search', methods=['POST'])
+def search_evaluations():
+    """Search evaluations"""
+    data = request.json
+    filters = []
+    
+    query = f"""
+    PREFIX ont: <{PREFIX}>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    SELECT ?evaluation ?typeEvaluation ?dateEvaluation
+    WHERE {{
+        ?evaluation a ont:Evaluation .
+        OPTIONAL {{ ?evaluation ont:typeEvaluation ?typeEvaluation . }}
+        OPTIONAL {{ ?evaluation ont:dateEvaluation ?dateEvaluation . }}
+    """
+    
+    if data and data.get('typeEvaluation'):
+        filters.append(f'REGEX(?typeEvaluation, "{data.get("typeEvaluation")}", "i")')
+    if data and data.get('dateEvaluation'):
+        filters.append(f'?dateEvaluation = "{data.get("dateEvaluation")}"^^xsd:date')
+    
+    if filters:
+        query += "\n        FILTER(" + " && ".join(filters) + ")"
+    
+    query += "\n    } ORDER BY DESC(?dateEvaluation)"
+    
+    try:
+        results = sparql_utils.execute_query(query)
+        return jsonify(results)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
