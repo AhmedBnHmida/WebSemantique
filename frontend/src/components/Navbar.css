@@ -3,40 +3,89 @@
 }
 
 .navbar {
-  background-color: #2c5530;
+  background-color: #0048cf;
   padding: 1rem 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-container {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
-  gap: 3rem;
+  padding: 0 1.5rem;
+  gap: 1rem;
 }
 
-.nav-logo {
-  color: white;
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 0;
-  letter-spacing: -0.5px;
+/* Brand/Logo Section */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
   flex-shrink: 0;
 }
 
-/* Centered nav menu with modern styling */
+.nav-logo-icon {
+  position: relative;
+  width: 36px;
+  height: 32px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.book {
+  position: absolute;
+  width: 24px;
+  height: 7px;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.book-bottom {
+  bottom: 0;
+  background-color: #60A5FA; /* Light blue */
+  left: 0;
+  z-index: 1;
+}
+
+.book-middle {
+  bottom: 5px;
+  background-color: #EF4444; /* Red */
+  left: 2.5px;
+  z-index: 2;
+}
+
+.book-top {
+  bottom: 10px;
+  background-color: #10B981; /* Green */
+  left: 5px;
+  z-index: 3;
+}
+
+.nav-brand-text {
+  color: white;
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
+
+/* Navigation menu aligned to the right */
 .nav-menu {
   display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 1.5rem;
+  gap: 0.25rem;
   align-items: center;
-  justify-content: center;
-  flex: 1;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
 }
 
 .nav-item {
@@ -46,18 +95,33 @@
 .nav-link {
   color: white;
   text-decoration: none;
-  padding: 0.625rem 1rem;
+  padding: 0.4rem 0.65rem;
   border-radius: 6px;
-  transition: all 0.3s ease;
-  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  font-size: 0.8125rem;
   font-weight: 500;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.1px;
   background: none;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
+  white-space: nowrap;
+  position: relative;
+}
+
+.nav-icon {
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.nav-label {
+  display: inline-block;
+  font-size: 0.8125rem;
 }
 
 .nav-link:hover {
@@ -65,75 +129,157 @@
   transform: translateY(-1px);
 }
 
-/* Modern dropdown styling */
-.dropdown {
-  position: relative;
+.nav-link:hover .nav-icon {
+  transform: scale(1.1);
 }
 
-.dropdown-toggle {
-  padding: 0.625rem 1rem !important;
+.nav-link.active {
+  background-color: rgba(255, 255, 255, 0.25);
+  font-weight: 600;
 }
 
-.dropdown-icon {
-  font-size: 0.7rem;
-  transition: transform 0.3s ease;
-}
-
-.dropdown:has(.dropdown-toggle:focus) .dropdown-icon,
-.dropdown-menu:hover ~ .dropdown-toggle .dropdown-icon {
-  transform: rotate(180deg);
-}
-
-.dropdown-menu {
+.nav-link.active::after {
+  content: '';
   position: absolute;
-  top: calc(100% + 0.5rem);
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
   background-color: white;
-  list-style: none;
-  padding: 0.75rem 0;
-  margin: 0;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  min-width: 220px;
-  z-index: 1000;
-  animation: slideDown 0.2s ease;
+  border-radius: 2px;
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-8px);
+.search-link {
+  margin-left: 0.5rem;
+  padding-left: 0.75rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+  .nav-link {
+    padding: 0.4rem 0.55rem;
+    font-size: 0.75rem;
   }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+
+  .nav-label {
+    font-size: 0.75rem;
+  }
+
+  .nav-icon {
+    font-size: 0.85rem;
   }
 }
 
-.dropdown-menu li {
-  margin: 0;
+@media (max-width: 1200px) {
+  .nav-menu {
+    gap: 0.2rem;
+  }
+
+  .nav-link {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .nav-label {
+    font-size: 0.75rem;
+  }
+
+  .nav-icon {
+    font-size: 0.8rem;
+  }
 }
 
-.dropdown-link {
-  display: block;
-  padding: 0.75rem 1.5rem;
-  color: #2c5530;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  font-size: 0.95rem;
-  font-weight: 500;
+@media (max-width: 968px) {
+  .nav-link .nav-label {
+    display: none;
+  }
+
+  .nav-link {
+    padding: 0.4rem;
+    min-width: 36px;
+    justify-content: center;
+  }
+
+  .nav-icon {
+    font-size: 1rem;
+  }
+
+  .search-link {
+    border-left: none;
+    padding-left: 0.4rem;
+  }
 }
 
-.dropdown-link:hover {
-  background-color: #f0f7f1;
-  padding-left: 1.75rem;
-}
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 1rem;
+    flex-wrap: wrap;
+  }
 
-.dropdown-link:first-child {
-  border-radius: 8px 8px 0 0;
-}
+  .nav-brand-text {
+    font-size: 1.25rem;
+  }
 
-.dropdown-link:last-child {
-  border-radius: 0 0 8px 8px;
+  .nav-logo-icon {
+    width: 32px;
+    height: 28px;
+  }
+
+  .book {
+    width: 22px;
+    height: 6px;
+  }
+
+  .book-middle {
+    bottom: 5px;
+    left: 2px;
+  }
+
+  .book-top {
+    bottom: 10px;
+    left: 4px;
+  }
+
+  .nav-menu {
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  }
+
+  .nav-menu::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .nav-menu::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .nav-menu::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+  }
+
+  .nav-link {
+    font-size: 0.75rem;
+    padding: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .nav-icon {
+    font-size: 1rem;
+  }
+
+  .search-link {
+    margin-left: auto;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    padding-left: 0.75rem;
+  }
 }

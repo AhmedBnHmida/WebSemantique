@@ -8,7 +8,7 @@ load_dotenv()
 
 class SPARQLUtils:
     def __init__(self):
-        self.endpoint = os.getenv('FUSEKI_ENDPOINT', 'http://localhost:3030/eco-ontology')
+        self.endpoint = os.getenv('FUSEKI_ENDPOINT', 'http://localhost:3030/educationInfin')
         self.sparql = SPARQLWrapper(self.endpoint + "/query")
         self.sparql.setReturnFormat(JSON)
     
@@ -47,12 +47,17 @@ class SPARQLUtils:
             sparql_upd = SPARQLWrapper(update_endpoint)
             sparql_upd.setMethod(POST)
             sparql_upd.setQuery(update_query)
-            sparql_upd.query()
+            response = sparql_upd.query()
+            
+            # Check if response indicates success (200, 204, or None for some implementations)
+            # SPARQLWrapper doesn't always expose status codes, so we check for exceptions
+            # If we get here without exception, the update was likely successful
             return {"status": "success"}
         except Exception as e:
-            print(f"Erreur SPARQL Update: {str(e)}")
+            error_msg = str(e)
+            print(f"Erreur SPARQL Update: {error_msg}")
             print(f"Update: {update_query}")
-            return {"error": f"Erreur SPARQL Update: {str(e)}"}
+            return {"error": f"Erreur SPARQL Update: {error_msg}"}
 
 # Instance globale
 sparql_utils = SPARQLUtils()

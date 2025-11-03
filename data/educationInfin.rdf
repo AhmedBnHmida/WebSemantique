@@ -1,0 +1,3073 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.education-intelligente.org/ontologie#"
+     xml:base="http://www.education-intelligente.org/ontologie"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.education-intelligente.org/ontologie"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#domaine -->
+
+    <owl:AnnotationProperty rdf:about="http://www.education-intelligente.org/ontologie#domaine"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/2001/XMLSchema#date -->
+
+    <rdfs:Datatype rdf:about="http://www.w3.org/2001/XMLSchema#date"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#aCree -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#aCree">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#creePar"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#aPourParticipant -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#aPourParticipant">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#concerneEtudiant"/>
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#participeA"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#accessibleVia -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#accessibleVia">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#hebergeRessource"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#accueille -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#accueille">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#appartientA"/>
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#inscritDans"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#acquisePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#acquisePar">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#adopteTechnologie -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#adopteTechnologie">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#adopteePar"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#adopteePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#adopteePar">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#affilieA -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#affilieA">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#emploie"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Enseignant"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#appartientA -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#appartientA">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#attribue -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#attribue">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#attribuePar"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Enseignant"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#attribuePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#attribuePar">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#estAttribuePar"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Enseignant"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#baseSurCompetence -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#baseSurCompetence">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#competenceGuide"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#citeDans -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#citeDans">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#utiliseRessourceProjet"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#collaboreAvec -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#collaboreAvec">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#competenceGuide -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#competenceGuide">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#concerneEtudiant -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#concerneEtudiant">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#contient -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#contient">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#faitPartieDe"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#creePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#creePar">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#developpeCompetence -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#developpeCompetence">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#developpeeDans"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#developpeeDans -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#developpeeDans">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#emploie -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#emploie">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Enseignant"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#encadre -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#encadre">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#encadrePar"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Enseignant"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#encadrePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#encadrePar">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Enseignant"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#enseigne -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#enseigne">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#enseignePar"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Enseignant"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#enseignePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#enseignePar">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Enseignant"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#estAttribuePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#estAttribuePar">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Enseignant"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#estEvaluePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#estEvaluePar">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#evalue"/>
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#porteSur"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#estOffertePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#estOffertePar">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#offre"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#estOrganisePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#estOrganisePar">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#organise"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#estPorteSurPar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#estPorteSurPar">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#porteSur"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#estRecommandePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#estRecommandePar">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#recommandeCours"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#estRecommandeePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#estRecommandeePar">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#recommandeSpecialite"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#estVersionDe -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#estVersionDe">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#evalue -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#evalue">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#faciliteEvaluation -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#faciliteEvaluation">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#faciliteePar"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#faciliteePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#faciliteePar">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#faitPartieDe -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#faitPartieDe">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#formePour -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#formePour">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#recommandeePour"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#hebergeRessource -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#hebergeRessource">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#inscritDans -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#inscritDans">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#integreTechnologie -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#integreTechnologie">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#utiliseeDans"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#interagitAvec -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#interagitAvec">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#supporteInteraction"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#mesureCompetence -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#mesureCompetence">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#mesureePar"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#mesureePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#mesureePar">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#necessairePour -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#necessairePour">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#requiertCompetence"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#offertDans -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#offertDans">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#proposeStage"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#offre -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#offre">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#organise -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#organise">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#participeA -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#participeA">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#porteSur -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#porteSur">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#proposeStage -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#proposeStage">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#realisePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#realisePar">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#realiseProjet"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#realiseProjet -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#realiseProjet">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#recommandeCours -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#recommandeCours">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#recommandeSpecialite -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#recommandeSpecialite">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#recommandeePour -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#recommandeePour">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#requiertCompetence -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#requiertCompetence">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#specialiseEn -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#specialiseEn">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#suiviePar"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#suitCours -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#suitCours">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#suiviPar"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#suiviPar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#suiviPar">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#suiviePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#suiviePar">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#supervise -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#supervise">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#supervisePar"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#supervisePar -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#supervisePar">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#supporteCours -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#supporteCours">
+        <owl:inverseOf rdf:resource="http://www.education-intelligente.org/ontologie#utiliseRessource"/>
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#supporteInteraction -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#supporteInteraction">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#utiliseRessource -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#utiliseRessource">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#utiliseRessourceProjet -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#utiliseRessourceProjet">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#utiliseeDans -->
+
+    <owl:ObjectProperty rdf:about="http://www.education-intelligente.org/ontologie#utiliseeDans">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+        <rdfs:range rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.education-intelligente.org/MotclesProjet -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/MotclesProjet">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#anciennete -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#anciennete">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Enseignant"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#anneeAcademique -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#anneeAcademique">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#anneeFondation -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#anneeFondation">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#anneeImpl -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#anneeImpl">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#anneePublication -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#anneePublication">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#anneeRealisation -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#anneeRealisation">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#auteur -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#auteur">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#codeCours -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#codeCours">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#codeSpecialite -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#codeSpecialite">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#coefficient -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#coefficient">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#commentaire -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#commentaire">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#creditsECTS -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#creditsECTS">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#dateEvaluation -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#dateEvaluation">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#dateNaissance -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#dateNaissance">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#dateOrientation -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#dateOrientation">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#description -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#description">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#descriptionCompetence -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#descriptionCompetence">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#domaineProjet -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#domaineProjet">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#dureeFormation -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#dureeFormation">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#editeur -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#editeur">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#email -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#email">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#grade -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#grade">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Enseignant"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#intitule -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#intitule">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#langueCours -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#langueCours">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#lienAcces -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#lienAcces">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#motsCles -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#motsCles">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#moyenneGenerale -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#moyenneGenerale">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#nbUtilisateurs -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#nbUtilisateurs">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#niveauCompetence -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#niveauCompetence">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#niveauDiplome -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#niveauDiplome">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#niveauEtude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#niveauEtude">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#nom -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#nom">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#nomCompetence -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#nomCompetence">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#nomSpecialite -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#nomSpecialite">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#nomTechnologie -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#nomTechnologie">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#nomUniversite -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#nomUniversite">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#nombreEtudiants -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#nombreEtudiants">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#nombreModules -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#nombreModules">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#noteObtenue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#noteObtenue">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#noteProjet -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#noteProjet">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#numeroMatricule -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#numeroMatricule">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#objectifOrientation -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#objectifOrientation">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#pays -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#pays">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#prenom -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#prenom">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#rangNational -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#rangNational">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#recommandation -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#recommandation">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#role -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#role">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#scoreAptitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#scoreAptitude">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#semestre -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#semestre">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#siteWeb -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#siteWeb">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#telephone -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#telephone">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#titreProjet -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#titreProjet">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#titreRessource -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#titreRessource">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#typeCompetence -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#typeCompetence">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#typeEvaluation -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#typeEvaluation">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#typeOrientation -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#typeOrientation">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#typeProjet -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#typeProjet">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#typeRessource -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#typeRessource">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#typeTechnologie -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#typeTechnologie">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#version -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#version">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#ville -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#ville">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#volumeHoraire -->
+
+    <owl:DatatypeProperty rdf:about="http://www.education-intelligente.org/ontologie#volumeHoraire">
+        <rdfs:domain rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#ApplicationMobileEducative -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#ApplicationMobileEducative">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#ArticleScientifique -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#ArticleScientifique">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Assistant -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#Assistant">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Enseignant"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Competence -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#Competence"/>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#CompetenceLinguistique -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#CompetenceLinguistique">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#CompetenceMethodologique -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#CompetenceMethodologique">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#CompetenceRecherche -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#CompetenceRecherche">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#CompetenceTechnique -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#CompetenceTechnique">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#CompetenceTransversale -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#CompetenceTransversale">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Competence"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#ConseilOrientation -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#ConseilOrientation">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#ControleContinu -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#ControleContinu">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Cours -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#Cours"/>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#CoursDirige -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#CoursDirige">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#CoursEnLigne -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#CoursEnLigne">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#CoursObligatoire -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#CoursObligatoire">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#CoursOptionnel -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#CoursOptionnel">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#CoursPratique -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#CoursPratique">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#CoursTheorique -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#CoursTheorique">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Cours"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Encadrant -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#Encadrant">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Enseignant"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Enseignant -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#Enseignant">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#EntretienConseiller -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#EntretienConseiller">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#Etudiant">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Personne"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#EtudiantDoctorat -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#EtudiantDoctorat">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#EtudiantLicence -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#EtudiantLicence">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#EtudiantMaster -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#EtudiantMaster">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Evaluation -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#Evaluation"/>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#ExamenFinal -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#ExamenFinal">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Livre -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#Livre">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#MOOCPlatform -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#MOOCPlatform">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#MemoireDeMaster -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#MemoireDeMaster">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#OrientationAcademique -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#OutilIAEducatif -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#OutilIAEducatif">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#OutilInteractif -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#OutilInteractif">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Personne -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#Personne"/>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#PlanDeCarriere -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#PlanDeCarriere">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#PlateformeEnLigne -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#PlateformeEnLigne">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#PlateformeLMS -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#PlateformeLMS">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Professeur -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#Professeur">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Enseignant"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#ProjetAcademique -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#ProjetCollaboratif -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#ProjetCollaboratif">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#ProjetDeFinDEtudes -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#ProjetDeFinDEtudes">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#ProjetDeRecherche -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#ProjetDeRecherche">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#ProjetEvalue -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#ProjetEvalue">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#QuizEnLigne -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#QuizEnLigne">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#RapportDeStage -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#RapportDeStage">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#RealiteVirtuelleEducative -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#RealiteVirtuelleEducative">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#RessourcePedagogique -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#SalonEtudiant -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#SalonEtudiant">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#SeriousGame -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#SeriousGame">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Soutenance -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#Soutenance">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Evaluation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Specialite -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#Specialite"/>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#SpecialiteDroit -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#SpecialiteDroit">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#SpecialiteEconomie -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#SpecialiteEconomie">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#SpecialiteInformatique -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#SpecialiteInformatique">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#SpecialiteIngenierie -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#SpecialiteIngenierie">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#SpecialiteLettres -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#SpecialiteLettres">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#SpecialiteMedecine -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#SpecialiteMedecine">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#SpecialiteSciences -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#SpecialiteSciences">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Specialite"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#StageOrientation -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#StageOrientation">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#SupportCours -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#SupportCours">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#TechnologieEducative -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#TechnologieEducative"/>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#TestPsychometrique -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#TestPsychometrique">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#OrientationAcademique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#TheseDoctorale -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#TheseDoctorale">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#ProjetAcademique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Universite -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#Universite"/>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#UniversitePrivee -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#UniversitePrivee">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#UniversitePublique -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#UniversitePublique">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#Universite"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#VideoCours -->
+
+    <owl:Class rdf:about="http://www.education-intelligente.org/ontologie#VideoCours">
+        <rdfs:subClassOf rdf:resource="http://www.education-intelligente.org/ontologie#RessourcePedagogique"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#AnglaisTechnique -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#AnglaisTechnique">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CoursOptionnel"/>
+        <developpeCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_Linguistique"/>
+        <faitPartieDe rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Informatique"/>
+        <anneeAcademique>2024-2025</anneeAcademique>
+        <codeCours>ANG101</codeCours>
+        <creditsECTS rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</creditsECTS>
+        <intitule>Anglais Technique</intitule>
+        <langueCours>Anglais</langueCours>
+        <semestre>S3</semestre>
+        <volumeHoraire rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30</volumeHoraire>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#App_Mobile_Edu -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#App_Mobile_Edu">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ApplicationMobileEducative"/>
+        <adopteePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <utiliseeDans rdf:resource="http://www.education-intelligente.org/ontologie#BaseDeDonnees"/>
+        <anneeImpl rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneeImpl>
+        <editeur>EduTech Solutions</editeur>
+        <nbUtilisateurs rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10000</nbUtilisateurs>
+        <nomTechnologie>EduApp Mobile</nomTechnologie>
+        <typeTechnologie>Application Mobile</typeTechnologie>
+        <version>2.1</version>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Article_DeepLearning -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Article_DeepLearning">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ArticleScientifique"/>
+        <citeDans rdf:resource="http://www.education-intelligente.org/ontologie#Projet_Recherche_IA"/>
+        <creePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Dupont"/>
+        <supporteCours rdf:resource="http://www.education-intelligente.org/ontologie#IntroductionIA"/>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneePublication>
+        <auteur>Brown, K. &amp; Wilson, L.</auteur>
+        <lienAcces rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://example.com/article-deeplearning-edu</lienAcces>
+        <titreRessource>Neural Networks for Educational Data Mining</titreRessource>
+        <typeRessource>Article scientifique</typeRessource>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Article_IA_ML -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Article_IA_ML">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ArticleScientifique"/>
+        <citeDans rdf:resource="http://www.education-intelligente.org/ontologie#Projet_Recherche_IA"/>
+        <supporteCours rdf:resource="http://www.education-intelligente.org/ontologie#IntroductionIA"/>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2023</anneePublication>
+        <auteur>Smith, J. &amp; Johnson, M.</auteur>
+        <lienAcces rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://example.com/article-ia-education</lienAcces>
+        <titreRessource>Deep Learning Applications in Education</titreRessource>
+        <typeRessource>Article scientifique</typeRessource>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Assistant_Karim -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Assistant_Karim">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Assistant"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <anciennete rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</anciennete>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1992-07-18</dateNaissance>
+        <email>karim.elamrani@uir.ma</email>
+        <grade>Assistant</grade>
+        <nom>El Amrani</nom>
+        <prenom>Karim</prenom>
+        <role>Enseignant</role>
+        <telephone>+212655667788</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Assistant_Mouna -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Assistant_Mouna">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Assistant"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <enseigne rdf:resource="http://www.education-intelligente.org/ontologie#IntroductionIA"/>
+        <anciennete rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</anciennete>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1990-11-04</dateNaissance>
+        <email>mouna.elkhayat@uh2c.ma</email>
+        <grade>Assistant</grade>
+        <nom>El Khayat</nom>
+        <prenom>Mouna</prenom>
+        <role>Enseignant</role>
+        <telephone>+212698776655</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#BaseDeDonnees -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#BaseDeDonnees">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CoursDirige"/>
+        <enseignePar rdf:resource="http://www.education-intelligente.org/ontologie#Assistant_Mouna"/>
+        <faitPartieDe rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Informatique"/>
+        <anneeAcademique>2024-2025</anneeAcademique>
+        <codeCours>BD201</codeCours>
+        <creditsECTS rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</creditsECTS>
+        <intitule>Bases de Données Avancées</intitule>
+        <langueCours>Français</langueCours>
+        <semestre>S4</semestre>
+        <volumeHoraire rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</volumeHoraire>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#ChatGPT_Edu -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#ChatGPT_Edu">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#OutilIAEducatif"/>
+        <utiliseeDans rdf:resource="http://www.education-intelligente.org/ontologie#IntroductionIA"/>
+        <anneeImpl rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2025</anneeImpl>
+        <editeur>OpenAI</editeur>
+        <nbUtilisateurs rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">500000</nbUtilisateurs>
+        <nomTechnologie>ChatGPT for Education</nomTechnologie>
+        <typeTechnologie>Outil IA</typeTechnologie>
+        <version>GPT-5</version>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Competence_Linguistique -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Competence_Linguistique">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CompetenceLinguistique"/>
+        <developpeeDans rdf:resource="http://www.education-intelligente.org/ontologie#AnglaisTechnique"/>
+        <descriptionCompetence>Maîtrise de l&apos;anglais technique pour la documentation et communication scientifique.</descriptionCompetence>
+        <motsCles>Anglais, technique, documentation</motsCles>
+        <niveauCompetence>Intermédiaire</niveauCompetence>
+        <nomCompetence>Anglais Technique</nomCompetence>
+        <typeCompetence>Linguistique</typeCompetence>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Competence_ML -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Competence_ML">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CompetenceTechnique"/>
+        <recommandeePour rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_DataScience"/>
+        <descriptionCompetence>Connaissances des algorithmes d&apos;apprentissage et des outils (scikit-learn, tensorflow).</descriptionCompetence>
+        <motsCles>Python, Scikit-learn, TensorFlow</motsCles>
+        <niveauCompetence>Intermédiaire</niveauCompetence>
+        <nomCompetence>Machine Learning</nomCompetence>
+        <typeCompetence>Technique</typeCompetence>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Competence_Methodologique -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Competence_Methodologique">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CompetenceMethodologique"/>
+        <developpeeDans rdf:resource="http://www.education-intelligente.org/ontologie#MethodologieRecherche"/>
+        <necessairePour rdf:resource="http://www.education-intelligente.org/ontologie#Projet_PFE_GestionCours"/>
+        <descriptionCompetence>Capacité à structurer et gérer un projet de manière efficace.</descriptionCompetence>
+        <motsCles>Gestion projet, planification, méthodologie</motsCles>
+        <niveauCompetence>Intermédiaire</niveauCompetence>
+        <nomCompetence>Méthodologie de Projet</nomCompetence>
+        <typeCompetence>Méthodologique</typeCompetence>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Competence_ProgrammationWeb -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Competence_ProgrammationWeb">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CompetenceTechnique"/>
+        <acquisePar rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_SaraBenali"/>
+        <developpeeDans rdf:resource="http://www.education-intelligente.org/ontologie#ProgrammationWeb"/>
+        <recommandeePour rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Informatique"/>
+        <descriptionCompetence>Maîtrise des langages web modernes (HTML5, CSS3, JS, React).</descriptionCompetence>
+        <motsCles>HTML,CSS,JS,React,API</motsCles>
+        <niveauCompetence>Avancé</niveauCompetence>
+        <nomCompetence>Programmation Web</nomCompetence>
+        <typeCompetence>Technique</typeCompetence>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Competence_Python -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Competence_Python">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CompetenceTechnique"/>
+        <acquisePar rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_OmarHaddad"/>
+        <developpeeDans rdf:resource="http://www.education-intelligente.org/ontologie#CoursEnLigne_MachineLearning"/>
+        <recommandeePour rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_DataScience"/>
+        <descriptionCompetence>Maîtrise de Python pour le développement et l&apos;analyse de données.</descriptionCompetence>
+        <motsCles>Python, Data Science, Django, Flask</motsCles>
+        <niveauCompetence>Avancé</niveauCompetence>
+        <nomCompetence>Programmation Python</nomCompetence>
+        <typeCompetence>Technique</typeCompetence>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Competence_Recherche -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Competence_Recherche">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CompetenceRecherche"/>
+        <developpeeDans rdf:resource="http://www.education-intelligente.org/ontologie#MethodologieRecherche"/>
+        <necessairePour rdf:resource="http://www.education-intelligente.org/ontologie#Projet_These_IA"/>
+        <descriptionCompetence>Compétences en recherche académique, rédaction scientifique et publication.</descriptionCompetence>
+        <motsCles>Recherche, publication, analyse</motsCles>
+        <niveauCompetence>Avancé</niveauCompetence>
+        <nomCompetence>Recherche Scientifique</nomCompetence>
+        <typeCompetence>Recherche</typeCompetence>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Competence_Transversale -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Competence_Transversale">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CompetenceTransversale"/>
+        <descriptionCompetence>Capacités de communication, collaboration et leadership.</descriptionCompetence>
+        <motsCles>Communication, équipe, leadership</motsCles>
+        <niveauCompetence>Avancé</niveauCompetence>
+        <nomCompetence>Communication et Travail d&apos;Équipe</nomCompetence>
+        <typeCompetence>Transversale</typeCompetence>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Conseil_Orientation_Omar -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Conseil_Orientation_Omar">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ConseilOrientation"/>
+        <concerneEtudiant rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_OmarHaddad"/>
+        <recommandeSpecialite rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_DataScience"/>
+        <supervisePar rdf:resource="http://www.education-intelligente.org/ontologie#Assistant_Mouna"/>
+        <dateOrientation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-05-15</dateOrientation>
+        <objectifOrientation>Aider l&apos;étudiant à choisir son parcours en Master</objectifOrientation>
+        <recommandation>Orientation vers Master Data Science</recommandation>
+        <scoreAptitude rdf:datatype="http://www.w3.org/2001/XMLSchema#float">85.0</scoreAptitude>
+        <typeOrientation>Conseil d&apos;orientation</typeOrientation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Controle_Continu_BD -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Controle_Continu_BD">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ControleContinu"/>
+        <attribuePar rdf:resource="http://www.education-intelligente.org/ontologie#Assistant_Mouna"/>
+        <evalue rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_OmarHaddad"/>
+        <porteSur rdf:resource="http://www.education-intelligente.org/ontologie#BaseDeDonnees"/>
+        <coefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</coefficient>
+        <commentaire>Bon travail régulier</commentaire>
+        <dateEvaluation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-03-15</dateEvaluation>
+        <noteObtenue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">14.0</noteObtenue>
+        <typeEvaluation>Contrôle continu</typeEvaluation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Controle_Continu_IA -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Controle_Continu_IA">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ControleContinu"/>
+        <attribuePar rdf:resource="http://www.education-intelligente.org/ontologie#Assistant_Mouna"/>
+        <evalue rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_OmarHaddad"/>
+        <mesureCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_ML"/>
+        <porteSur rdf:resource="http://www.education-intelligente.org/ontologie#IntroductionIA"/>
+        <coefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</coefficient>
+        <commentaire>Bonne compréhension des concepts</commentaire>
+        <dateEvaluation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-04-15</dateEvaluation>
+        <noteObtenue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">14.5</noteObtenue>
+        <typeEvaluation>Contrôle continu</typeEvaluation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#CoursEnLigne_MachineLearning -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#CoursEnLigne_MachineLearning">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CoursEnLigne"/>
+        <faitPartieDe rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_DataScience"/>
+        <integreTechnologie rdf:resource="http://www.education-intelligente.org/ontologie#Moodle_UH2"/>
+        <anneeAcademique>2024-2025</anneeAcademique>
+        <codeCours>ML301</codeCours>
+        <creditsECTS rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</creditsECTS>
+        <intitule>Machine Learning en Ligne</intitule>
+        <langueCours>Français</langueCours>
+        <semestre>S6</semestre>
+        <volumeHoraire rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">40</volumeHoraire>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Cours_Algebre -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Cours_Algebre">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CoursObligatoire"/>
+        <developpeCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_Methodologique"/>
+        <faitPartieDe rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Informatique"/>
+        <anneeAcademique>2024-2025</anneeAcademique>
+        <codeCours>ALG101</codeCours>
+        <creditsECTS rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</creditsECTS>
+        <intitule>Algèbre Linéaire</intitule>
+        <langueCours>Français</langueCours>
+        <semestre>S1</semestre>
+        <volumeHoraire rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">45</volumeHoraire>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Cours_Entrepreneuriat -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Cours_Entrepreneuriat">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CoursOptionnel"/>
+        <developpeCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_Transversale"/>
+        <faitPartieDe rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Economie"/>
+        <anneeAcademique>2024-2025</anneeAcademique>
+        <codeCours>ENT201</codeCours>
+        <creditsECTS rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</creditsECTS>
+        <intitule>Entrepreneuriat et Innovation</intitule>
+        <langueCours>Français</langueCours>
+        <semestre>S6</semestre>
+        <volumeHoraire rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">24</volumeHoraire>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Cours_TheorieBD -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Cours_TheorieBD">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CoursTheorique"/>
+        <enseignePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Bennani"/>
+        <faitPartieDe rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Informatique"/>
+        <anneeAcademique>2024-2025</anneeAcademique>
+        <codeCours>BDT201</codeCours>
+        <creditsECTS rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</creditsECTS>
+        <intitule>Théorie des Bases de Données</intitule>
+        <langueCours>Français</langueCours>
+        <semestre>S4</semestre>
+        <volumeHoraire rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30</volumeHoraire>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Encadrant_Fatima -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Encadrant_Fatima">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Encadrant"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <encadre rdf:resource="http://www.education-intelligente.org/ontologie#Projet_PFE_GestionCours"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1982-08-20</dateNaissance>
+        <email>fatima.elidrissi@uir.ma</email>
+        <nom>El Idrissi</nom>
+        <prenom>Fatima</prenom>
+        <role>Enseignant/Encadrant</role>
+        <telephone>+212612000111</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Encadrant_Hassan -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Encadrant_Hassan">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Encadrant"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <encadre rdf:resource="http://www.education-intelligente.org/ontologie#Memoire_Master_Sara"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1980-01-30</dateNaissance>
+        <email>hassan.alaoui@uh2c.ma</email>
+        <nom>Alaoui</nom>
+        <prenom>Hassan</prenom>
+        <role>Enseignant/Encadrant</role>
+        <telephone>+212666778899</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Entretien_Conseiller_Ahmed -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Entretien_Conseiller_Ahmed">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EntretienConseiller"/>
+        <baseSurCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_Recherche"/>
+        <concerneEtudiant rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_AhmedMekki"/>
+        <supervisePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Dupont"/>
+        <dateOrientation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-01-10</dateOrientation>
+        <objectifOrientation>Évaluation du parcours doctoral</objectifOrientation>
+        <recommandation>Poursuite du doctorat recommandée</recommandation>
+        <scoreAptitude rdf:datatype="http://www.w3.org/2001/XMLSchema#float">92.0</scoreAptitude>
+        <typeOrientation>Entretien avec conseiller</typeOrientation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_AhmedMekki -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_AhmedMekki">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantDoctorat"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <realiseProjet rdf:resource="http://www.education-intelligente.org/ontologie#Projet_These_IA"/>
+        <suitCours rdf:resource="http://www.education-intelligente.org/ontologie#MethodologieRecherche"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1995-03-22</dateNaissance>
+        <email>ahmed.mekki@uh2c.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">16.2</moyenneGenerale>
+        <niveauEtude>Doctorat</niveauEtude>
+        <nom>Mekki</nom>
+        <numeroMatricule>ETU2020PHD12</numeroMatricule>
+        <prenom>Ahmed</prenom>
+        <role>Étudiant Doctorat</role>
+        <telephone>+212622334455</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_MohamedTazi -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_MohamedTazi">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantMaster"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <specialiseEn rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Droit"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2000-09-25</dateNaissance>
+        <email>mohamed.tazi@uir.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.3</moyenneGenerale>
+        <niveauEtude>Master 2</niveauEtude>
+        <nom>Tazi</nom>
+        <numeroMatricule>ETU2023DRT03</numeroMatricule>
+        <prenom>Mohamed</prenom>
+        <role>Étudiant</role>
+        <telephone>+212633445566</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_OmarHaddad -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_OmarHaddad">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantLicence"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <specialiseEn rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_DataScience"/>
+        <suitCours rdf:resource="http://www.education-intelligente.org/ontologie#IntroductionIA"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2003-02-19</dateNaissance>
+        <email>omar.haddad@uir.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">13.4</moyenneGenerale>
+        <niveauEtude>Licence</niveauEtude>
+        <nom>Haddad</nom>
+        <numeroMatricule>ETU2023INF17</numeroMatricule>
+        <prenom>Omar</prenom>
+        <role>Étudiant</role>
+        <telephone>+212612334455</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_SaraBenali -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_SaraBenali">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantMaster"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <realiseProjet rdf:resource="http://www.education-intelligente.org/ontologie#Projet_PFE_GestionCours"/>
+        <specialiseEn rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Informatique"/>
+        <suitCours rdf:resource="http://www.education-intelligente.org/ontologie#ProgrammationWeb"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2001-06-15</dateNaissance>
+        <email>sara.benali@uh2c.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.8</moyenneGenerale>
+        <niveauEtude>Master 1</niveauEtude>
+        <nom>Benali</nom>
+        <numeroMatricule>ETU2024INF45</numeroMatricule>
+        <prenom>Sara</prenom>
+        <role>Étudiante</role>
+        <telephone>+212600112233</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_YasmineAlami -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_YasmineAlami">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantLicence"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <specialiseEn rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Lettres"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2004-05-10</dateNaissance>
+        <email>yasmine.alami@uh2c.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">14.2</moyenneGenerale>
+        <niveauEtude>Licence</niveauEtude>
+        <nom>Alami</nom>
+        <numeroMatricule>ETU2024LET08</numeroMatricule>
+        <prenom>Yasmine</prenom>
+        <role>Étudiante</role>
+        <telephone>+212611223344</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Examen_ProgWeb_2025 -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Examen_ProgWeb_2025">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ExamenFinal"/>
+        <attribuePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Dupont"/>
+        <evalue rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_SaraBenali"/>
+        <faciliteePar rdf:resource="http://www.education-intelligente.org/ontologie#Moodle_UH2"/>
+        <mesureCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_ProgrammationWeb"/>
+        <porteSur rdf:resource="http://www.education-intelligente.org/ontologie#ProgrammationWeb"/>
+        <coefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</coefficient>
+        <commentaire>Très bon travail pratique</commentaire>
+        <dateEvaluation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-06-10</dateEvaluation>
+        <noteObtenue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.5</noteObtenue>
+        <typeEvaluation>Examen final</typeEvaluation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Game_Edu_Serious -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Game_Edu_Serious">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SeriousGame"/>
+        <hebergeRessource rdf:resource="http://www.education-intelligente.org/ontologie#Outil_Simulation_Web"/>
+        <utiliseeDans rdf:resource="http://www.education-intelligente.org/ontologie#ProgrammationWeb"/>
+        <anneeImpl rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2023</anneeImpl>
+        <editeur>GameEdu Studio</editeur>
+        <nbUtilisateurs rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5000</nbUtilisateurs>
+        <nomTechnologie>CodeQuest Learning Game</nomTechnologie>
+        <typeTechnologie>Serious Game</typeTechnologie>
+        <version>1.5</version>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#IntroductionIA -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#IntroductionIA">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CoursTheorique"/>
+        <enseignePar rdf:resource="http://www.education-intelligente.org/ontologie#Assistant_Mouna"/>
+        <faitPartieDe rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_DataScience"/>
+        <anneeAcademique>2024-2025</anneeAcademique>
+        <codeCours>IA101</codeCours>
+        <creditsECTS rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</creditsECTS>
+        <intitule>Introduction à l&apos;Intelligence Artificielle</intitule>
+        <langueCours>Français</langueCours>
+        <semestre>S5</semestre>
+        <volumeHoraire rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">45</volumeHoraire>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Livre_HTML_CSS -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Livre_HTML_CSS">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Livre"/>
+        <accessibleVia rdf:resource="http://www.education-intelligente.org/ontologie#Moodle_UH2"/>
+        <citeDans rdf:resource="http://www.education-intelligente.org/ontologie#Projet_PFE_GestionCours"/>
+        <creePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Dupont"/>
+        <supporteCours rdf:resource="http://www.education-intelligente.org/ontologie#ProgrammationWeb"/>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2022</anneePublication>
+        <auteur>John Duckett</auteur>
+        <lienAcces rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://example.com/livre-html-css</lienAcces>
+        <titreRessource>Apprendre HTML &amp; CSS</titreRessource>
+        <typeRessource>Livre</typeRessource>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#MOOC_Platform_EdX -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#MOOC_Platform_EdX">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#MOOCPlatform"/>
+        <adopteePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <hebergeRessource rdf:resource="http://www.education-intelligente.org/ontologie#Plateforme_Coursera"/>
+        <utiliseeDans rdf:resource="http://www.education-intelligente.org/ontologie#CoursEnLigne_MachineLearning"/>
+        <anneeImpl rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2022</anneeImpl>
+        <editeur>edX Inc.</editeur>
+        <nbUtilisateurs rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">200000</nbUtilisateurs>
+        <nomTechnologie>edX MOOC Platform</nomTechnologie>
+        <typeTechnologie>MOOC Platform</typeTechnologie>
+        <version>3.0</version>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Memoire_Master_Omar -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Memoire_Master_Omar">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#MemoireDeMaster"/>
+        <encadrePar rdf:resource="http://www.education-intelligente.org/ontologie#Assistant_Mouna"/>
+        <estOrganisePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <realisePar rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_OmarHaddad"/>
+        <requiertCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_ML"/>
+        <requiertCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_Python"/>
+        <anneeRealisation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2025</anneeRealisation>
+        <noteProjet rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.8</noteProjet>
+        <titreProjet>Analyse Prédictive avec Machine Learning</titreProjet>
+        <typeProjet>Mémoire Master</typeProjet>
+        <domaine>Data Science</domaine>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Memoire_Master_Sara -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Memoire_Master_Sara">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#MemoireDeMaster"/>
+        <encadrePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Dupont"/>
+        <realisePar rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_SaraBenali"/>
+        <requiertCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_ProgrammationWeb"/>
+        <anneeRealisation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneeRealisation>
+        <noteProjet rdf:datatype="http://www.w3.org/2001/XMLSchema#float">16.0</noteProjet>
+        <titreProjet>Applications Web Modernes avec React</titreProjet>
+        <typeProjet>Mémoire Master</typeProjet>
+        <domaine>Développement Web</domaine>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#MethodologieRecherche -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#MethodologieRecherche">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CoursObligatoire"/>
+        <developpeCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_Recherche"/>
+        <enseignePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Dupont"/>
+        <anneeAcademique>2024-2025</anneeAcademique>
+        <codeCours>MR501</codeCours>
+        <creditsECTS rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</creditsECTS>
+        <intitule>Méthodologie de Recherche</intitule>
+        <langueCours>Français</langueCours>
+        <semestre>S9</semestre>
+        <volumeHoraire rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30</volumeHoraire>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Moodle_UH2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Moodle_UH2">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#PlateformeLMS"/>
+        <adopteePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <hebergeRessource rdf:resource="http://www.education-intelligente.org/ontologie#Livre_HTML_CSS"/>
+        <utiliseeDans rdf:resource="http://www.education-intelligente.org/ontologie#ProgrammationWeb"/>
+        <anneeImpl rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneeImpl>
+        <editeur>Moodle HQ</editeur>
+        <nbUtilisateurs rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12000</nbUtilisateurs>
+        <nomTechnologie>Moodle</nomTechnologie>
+        <typeTechnologie>LMS</typeTechnologie>
+        <version>4.3</version>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Orientation_Sara -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Orientation_Sara">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#PlanDeCarriere"/>
+        <baseSurCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_ML"/>
+        <concerneEtudiant rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_SaraBenali"/>
+        <recommandeCours rdf:resource="http://www.education-intelligente.org/ontologie#IntroductionIA"/>
+        <recommandeSpecialite rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_DataScience"/>
+        <supervisePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Dupont"/>
+        <dateOrientation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-07-01</dateOrientation>
+        <objectifOrientation>Encourager l’étudiante à poursuivre un doctorat en IA.</objectifOrientation>
+        <recommandation>Inscription au programme doctoral IA et Big Data.</recommandation>
+        <scoreAptitude rdf:datatype="http://www.w3.org/2001/XMLSchema#float">92.5</scoreAptitude>
+        <typeOrientation>Plan de carrière</typeOrientation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Outil_CodePlayground -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Outil_CodePlayground">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#OutilInteractif"/>
+        <accessibleVia rdf:resource="http://www.education-intelligente.org/ontologie#Moodle_UH2"/>
+        <supporteCours rdf:resource="http://www.education-intelligente.org/ontologie#ProgrammationWeb"/>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2023</anneePublication>
+        <auteur>CodeEdu Inc.</auteur>
+        <lienAcces rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://example.com/code-playground</lienAcces>
+        <titreRessource>Code Playground Interactive</titreRessource>
+        <typeRessource>Outil interactif</typeRessource>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Outil_Simulation_Web -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Outil_Simulation_Web">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#OutilInteractif"/>
+        <supporteCours rdf:resource="http://www.education-intelligente.org/ontologie#ProgrammationWeb"/>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneePublication>
+        <auteur>OpenClassrooms</auteur>
+        <lienAcces rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://example.com/simulateur-web</lienAcces>
+        <titreRessource>Simulateur de Développement Web</titreRessource>
+        <typeRessource>Outil interactif</typeRessource>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Plateforme_Coursera -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Plateforme_Coursera">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#PlateformeEnLigne"/>
+        <supporteCours rdf:resource="http://www.education-intelligente.org/ontologie#CoursEnLigne_MachineLearning"/>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</anneePublication>
+        <auteur>Coursera Inc.</auteur>
+        <lienAcces rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://www.coursera.org</lienAcces>
+        <titreRessource>Coursera Learning Platform</titreRessource>
+        <typeRessource>Plateforme en ligne</typeRessource>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Plateforme_KhanAcademy -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Plateforme_KhanAcademy">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#PlateformeEnLigne"/>
+        <supporteCours rdf:resource="http://www.education-intelligente.org/ontologie#AnglaisTechnique"/>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2018</anneePublication>
+        <auteur>Khan Academy</auteur>
+        <lienAcces rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://www.khanacademy.org</lienAcces>
+        <titreRessource>Khan Academy Platform</titreRessource>
+        <typeRessource>Plateforme en ligne</typeRessource>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Professeur_Bennani -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Professeur_Bennani">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Professeur"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <enseigne rdf:resource="http://www.education-intelligente.org/ontologie#AnglaisTechnique"/>
+        <anciennete rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">18</anciennete>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1975-12-03</dateNaissance>
+        <email>aicha.bennani@uh2c.ma</email>
+        <grade>Professeur Titulaire</grade>
+        <nom>Bennani</nom>
+        <prenom>Aicha</prenom>
+        <role>Enseignant</role>
+        <telephone>+212644556677</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Professeur_Dupont -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Professeur_Dupont">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Professeur"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <encadre rdf:resource="http://www.education-intelligente.org/ontologie#Projet_These_IA"/>
+        <enseigne rdf:resource="http://www.education-intelligente.org/ontologie#ProgrammationWeb"/>
+        <anciennete rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">15</anciennete>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1978-04-09</dateNaissance>
+        <email>jean.dupont@uh2c.ma</email>
+        <grade>Professeur Titulaire</grade>
+        <nom>Dupont</nom>
+        <prenom>Jean</prenom>
+        <role>Enseignant</role>
+        <telephone>+212661556677</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#ProgrammationWeb -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#ProgrammationWeb">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CoursPratique"/>
+        <enseignePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Dupont"/>
+        <faitPartieDe rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Informatique"/>
+        <integreTechnologie rdf:resource="http://www.education-intelligente.org/ontologie#Moodle_UH2"/>
+        <utiliseRessource rdf:resource="http://www.education-intelligente.org/ontologie#Livre_HTML_CSS"/>
+        <anneeAcademique>2024-2025</anneeAcademique>
+        <codeCours>CS305</codeCours>
+        <creditsECTS rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</creditsECTS>
+        <intitule>Programmation Web Avancée</intitule>
+        <langueCours>Français</langueCours>
+        <semestre>S6</semestre>
+        <volumeHoraire rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">60</volumeHoraire>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Projet_Collaboratif_Web -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Projet_Collaboratif_Web">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ProjetCollaboratif"/>
+        <realisePar rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_OmarHaddad"/>
+        <realisePar rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_SaraBenali"/>
+        <requiertCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_Transversale"/>
+        <anneeRealisation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneeRealisation>
+        <noteProjet rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</noteProjet>
+        <titreProjet>Plateforme E-Learning Collaborative</titreProjet>
+        <typeProjet>Projet Collaboratif</typeProjet>
+        <domaine>Développement Web</domaine>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Projet_Evalue_React -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Projet_Evalue_React">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ProjetEvalue"/>
+        <attribuePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Dupont"/>
+        <evalue rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_SaraBenali"/>
+        <porteSur rdf:resource="http://www.education-intelligente.org/ontologie#ProgrammationWeb"/>
+        <coefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</coefficient>
+        <commentaire>Excellente réalisation</commentaire>
+        <dateEvaluation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-04-20</dateEvaluation>
+        <noteObtenue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">16.0</noteObtenue>
+        <typeEvaluation>Projet évalué</typeEvaluation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Projet_PFE_GestionCours -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Projet_PFE_GestionCours">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ProjetDeFinDEtudes"/>
+        <encadrePar rdf:resource="http://www.education-intelligente.org/ontologie#Encadrant_Fatima"/>
+        <estEvaluePar rdf:resource="http://www.education-intelligente.org/ontologie#Soutenance_PFE_Sara"/>
+        <estOrganisePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <realisePar rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_SaraBenali"/>
+        <requiertCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_ProgrammationWeb"/>
+        <utiliseRessourceProjet rdf:resource="http://www.education-intelligente.org/ontologie#Livre_HTML_CSS"/>
+        <anneeRealisation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2025</anneeRealisation>
+        <motsCles>React, Spring Boot, MySQL</motsCles>
+        <noteProjet rdf:datatype="http://www.w3.org/2001/XMLSchema#float">16.5</noteProjet>
+        <titreProjet>Application Web de Gestion des Cours</titreProjet>
+        <typeProjet>PFE</typeProjet>
+        <domaine>Développement Web</domaine>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Projet_Recherche_IA -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Projet_Recherche_IA">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ProjetDeRecherche"/>
+        <encadrePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Dupont"/>
+        <requiertCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_ML"/>
+        <requiertCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_Recherche"/>
+        <anneeRealisation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2025</anneeRealisation>
+        <titreProjet>Analyse de Données Massives avec IA</titreProjet>
+        <typeProjet>Projet de Recherche</typeProjet>
+        <domaine>Intelligence Artificielle</domaine>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Projet_These_IA -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Projet_These_IA">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#TheseDoctorale"/>
+        <encadrePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Dupont"/>
+        <requiertCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_ML"/>
+        <anneeRealisation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2026</anneeRealisation>
+        <titreProjet>Optimisation des Réseaux Neuronaux Profonds</titreProjet>
+        <domaine>Intelligence Artificielle</domaine>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Quiz_EnLigne_IA -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Quiz_EnLigne_IA">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#QuizEnLigne"/>
+        <evalue rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_OmarHaddad"/>
+        <faciliteePar rdf:resource="http://www.education-intelligente.org/ontologie#Moodle_UH2"/>
+        <porteSur rdf:resource="http://www.education-intelligente.org/ontologie#IntroductionIA"/>
+        <coefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</coefficient>
+        <commentaire>Quiz de révision</commentaire>
+        <dateEvaluation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-02-10</dateEvaluation>
+        <noteObtenue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">13.5</noteObtenue>
+        <typeEvaluation>Quiz en ligne</typeEvaluation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Rapport_Stage_Omar -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Rapport_Stage_Omar">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#RapportDeStage"/>
+        <attribuePar rdf:resource="http://www.education-intelligente.org/ontologie#Assistant_Mouna"/>
+        <evalue rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_OmarHaddad"/>
+        <coefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</coefficient>
+        <commentaire>Stage en entreprise réussi</commentaire>
+        <dateEvaluation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-08-30</dateEvaluation>
+        <noteObtenue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.5</noteObtenue>
+        <typeEvaluation>Rapport de stage</typeEvaluation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Rapport_Stage_Sara -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Rapport_Stage_Sara">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#RapportDeStage"/>
+        <attribuePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Dupont"/>
+        <evalue rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_SaraBenali"/>
+        <mesureCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_ProgrammationWeb"/>
+        <mesureCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_Transversale"/>
+        <coefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</coefficient>
+        <commentaire>Excellente application des compétences en entreprise</commentaire>
+        <dateEvaluation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-09-15</dateEvaluation>
+        <noteObtenue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">16.0</noteObtenue>
+        <typeEvaluation>Rapport de stage</typeEvaluation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Salon_Etudiant_2024 -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Salon_Etudiant_2024">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SalonEtudiant"/>
+        <concerneEtudiant rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_OmarHaddad"/>
+        <concerneEtudiant rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_SaraBenali"/>
+        <recommandeSpecialite rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_DataScience"/>
+        <recommandeSpecialite rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Informatique"/>
+        <dateOrientation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-03-20</dateOrientation>
+        <objectifOrientation>Présentation des formations et opportunités</objectifOrientation>
+        <recommandation>Visite des stands universitaires</recommandation>
+        <scoreAptitude rdf:datatype="http://www.w3.org/2001/XMLSchema#float">90.0</scoreAptitude>
+        <typeOrientation>Salon étudiant</typeOrientation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Soutenance_PFE_Sara -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Soutenance_PFE_Sara">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Soutenance"/>
+        <attribuePar rdf:resource="http://www.education-intelligente.org/ontologie#Encadrant_Fatima"/>
+        <evalue rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_SaraBenali"/>
+        <porteSur rdf:resource="http://www.education-intelligente.org/ontologie#Projet_PFE_GestionCours"/>
+        <coefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</coefficient>
+        <commentaire>Excellent travail d’intégration et de qualité logicielle.</commentaire>
+        <dateEvaluation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-06-25</dateEvaluation>
+        <noteObtenue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">17.5</noteObtenue>
+        <typeEvaluation>Soutenance finale PFE</typeEvaluation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Specialite_DataScience -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Specialite_DataScience">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SpecialiteIngenierie"/>
+        <contient rdf:resource="http://www.education-intelligente.org/ontologie#CoursEnLigne_MachineLearning"/>
+        <contient rdf:resource="http://www.education-intelligente.org/ontologie#IntroductionIA"/>
+        <formePour rdf:resource="http://www.education-intelligente.org/ontologie#Competence_ML"/>
+        <suiviePar rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_OmarHaddad"/>
+        <codeSpecialite>DS01</codeSpecialite>
+        <description>Spécialisation en traitement de données massives et apprentissage automatique.</description>
+        <dureeFormation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</dureeFormation>
+        <niveauDiplome>Master</niveauDiplome>
+        <nomSpecialite>Data Science</nomSpecialite>
+        <nombreModules rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">8</nombreModules>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Specialite_Droit -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Specialite_Droit">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SpecialiteDroit"/>
+        <estOffertePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <codeSpecialite>DRT01</codeSpecialite>
+        <description>Formation en droit civil, commercial et procédure.</description>
+        <dureeFormation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</dureeFormation>
+        <niveauDiplome>Master</niveauDiplome>
+        <nomSpecialite>Droit Privé</nomSpecialite>
+        <nombreModules rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">16</nombreModules>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Specialite_Economie -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Specialite_Economie">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SpecialiteEconomie"/>
+        <estOffertePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <codeSpecialite>ECO01</codeSpecialite>
+        <description>Formation en économie, finance et gestion d&apos;entreprise.</description>
+        <dureeFormation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</dureeFormation>
+        <niveauDiplome>Licence</niveauDiplome>
+        <nomSpecialite>Économie et Gestion</nomSpecialite>
+        <nombreModules rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">18</nombreModules>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Specialite_Informatique -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Specialite_Informatique">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SpecialiteInformatique"/>
+        <contient rdf:resource="http://www.education-intelligente.org/ontologie#AnglaisTechnique"/>
+        <contient rdf:resource="http://www.education-intelligente.org/ontologie#BaseDeDonnees"/>
+        <contient rdf:resource="http://www.education-intelligente.org/ontologie#ProgrammationWeb"/>
+        <formePour rdf:resource="http://www.education-intelligente.org/ontologie#Competence_Linguistique"/>
+        <formePour rdf:resource="http://www.education-intelligente.org/ontologie#Competence_ProgrammationWeb"/>
+        <suiviePar rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_SaraBenali"/>
+        <codeSpecialite>INFO01</codeSpecialite>
+        <description>Formation de base couvrant algorithmique, bases de données et réseaux.</description>
+        <dureeFormation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</dureeFormation>
+        <niveauDiplome>Licence</niveauDiplome>
+        <nomSpecialite>Informatique</nomSpecialite>
+        <nombreModules rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12</nombreModules>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Specialite_IngenieurieInfo -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Specialite_IngenieurieInfo">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SpecialiteIngenierie"/>
+        <estOffertePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Marakech"/>
+        <formePour rdf:resource="http://www.education-intelligente.org/ontologie#Competence_ProgrammationWeb"/>
+        <formePour rdf:resource="http://www.education-intelligente.org/ontologie#Competence_Transversale"/>
+        <codeSpecialite>GI01</codeSpecialite>
+        <description>Formation d&apos;ingénieur en informatique et systèmes.</description>
+        <dureeFormation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</dureeFormation>
+        <niveauDiplome>Ingénieur</niveauDiplome>
+        <nomSpecialite>Génie Informatique</nomSpecialite>
+        <nombreModules rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30</nombreModules>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Specialite_Lettres -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Specialite_Lettres">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SpecialiteLettres"/>
+        <estOffertePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <codeSpecialite>LET01</codeSpecialite>
+        <description>Formation en littérature, linguistique et langues étrangères.</description>
+        <dureeFormation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</dureeFormation>
+        <niveauDiplome>Licence</niveauDiplome>
+        <nomSpecialite>Lettres et Langues</nomSpecialite>
+        <nombreModules rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">15</nombreModules>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Specialite_Medecine -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Specialite_Medecine">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SpecialiteMedecine"/>
+        <estOffertePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <codeSpecialite>MED01</codeSpecialite>
+        <description>Formation médicale complète avec stages cliniques.</description>
+        <dureeFormation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</dureeFormation>
+        <niveauDiplome>Doctorat</niveauDiplome>
+        <nomSpecialite>Médecine Générale</nomSpecialite>
+        <nombreModules rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">48</nombreModules>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Specialite_Sciences -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Specialite_Sciences">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SpecialiteSciences"/>
+        <estOffertePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <codeSpecialite>SCI01</codeSpecialite>
+        <description>Formation en physique, chimie et mathématiques appliquées.</description>
+        <dureeFormation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</dureeFormation>
+        <niveauDiplome>Licence</niveauDiplome>
+        <nomSpecialite>Sciences Physiques</nomSpecialite>
+        <nombreModules rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</nombreModules>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Stage_Orientation_Info -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Stage_Orientation_Info">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#StageOrientation"/>
+        <concerneEtudiant rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_OmarHaddad"/>
+        <proposeStage rdf:resource="http://www.education-intelligente.org/ontologie#Projet_Collaboratif_Web"/>
+        <dateOrientation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-06-01</dateOrientation>
+        <objectifOrientation>Découverte des métiers de l&apos;informatique</objectifOrientation>
+        <recommandation>Stage en entreprise recommandé</recommandation>
+        <scoreAptitude rdf:datatype="http://www.w3.org/2001/XMLSchema#float">88.0</scoreAptitude>
+        <typeOrientation>Stage d&apos;orientation</typeOrientation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Support_Cours_BD -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Support_Cours_BD">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SupportCours"/>
+        <accessibleVia rdf:resource="http://www.education-intelligente.org/ontologie#Moodle_UH2"/>
+        <supporteCours rdf:resource="http://www.education-intelligente.org/ontologie#BaseDeDonnees"/>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneePublication>
+        <auteur>Mouna El Khayat</auteur>
+        <lienAcces rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://moodle.uh2c.ma/cours/bd</lienAcces>
+        <titreRessource>Support de Cours Bases de Données</titreRessource>
+        <typeRessource>Support cours</typeRessource>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Support_Cours_IA -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Support_Cours_IA">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SupportCours"/>
+        <accessibleVia rdf:resource="http://www.education-intelligente.org/ontologie#Moodle_UH2"/>
+        <creePar rdf:resource="http://www.education-intelligente.org/ontologie#Assistant_Mouna"/>
+        <supporteCours rdf:resource="http://www.education-intelligente.org/ontologie#IntroductionIA"/>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneePublication>
+        <auteur>Assistant_Mouna</auteur>
+        <lienAcces rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://moodle.uh2c.ma/cours/ia</lienAcces>
+        <titreRessource>Support de Cours Intelligence Artificielle</titreRessource>
+        <typeRessource>Support cours</typeRessource>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Test_Orientation_Sara -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Test_Orientation_Sara">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#TestPsychometrique"/>
+        <concerneEtudiant rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_SaraBenali"/>
+        <dateOrientation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-02-14</dateOrientation>
+        <objectifOrientation>Évaluer les aptitudes et préférences professionnelles</objectifOrientation>
+        <recommandation>Approfondir Data Science</recommandation>
+        <scoreAptitude rdf:datatype="http://www.w3.org/2001/XMLSchema#float">82.5</scoreAptitude>
+        <typeOrientation>Test psychométrique</typeOrientation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Universite_HassanII -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Universite_HassanII">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#UniversitePublique"/>
+        <adopteTechnologie rdf:resource="http://www.education-intelligente.org/ontologie#Moodle_UH2"/>
+        <collaboreAvec rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <emploie rdf:resource="http://www.education-intelligente.org/ontologie#Assistant_Mouna"/>
+        <emploie rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Dupont"/>
+        <offre rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Economie"/>
+        <offre rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Informatique"/>
+        <offre rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Medecine"/>
+        <offre rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Sciences"/>
+        <organise rdf:resource="http://www.education-intelligente.org/ontologie#Projet_PFE_GestionCours"/>
+        <anneeFondation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1975</anneeFondation>
+        <nomUniversite>Université Hassan II</nomUniversite>
+        <nombreEtudiants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">32000</nombreEtudiants>
+        <pays>Maroc</pays>
+        <rangNational rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</rangNational>
+        <siteWeb rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://www.univh2c.ma</siteWeb>
+        <ville>Casablanca</ville>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Universite_Marakech -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Universite_Marakech">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#UniversitePublique"/>
+        <collaboreAvec rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <offre rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Medecine"/>
+        <offre rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Sciences"/>
+        <anneeFondation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1978</anneeFondation>
+        <nomUniversite>Université Cadi Ayyad</nomUniversite>
+        <nombreEtudiants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">45000</nombreEtudiants>
+        <pays>Maroc</pays>
+        <rangNational rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</rangNational>
+        <siteWeb rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://www.uca.ma</siteWeb>
+        <ville>Marrakech</ville>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Universite_Rabat -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Universite_Rabat">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#UniversitePrivee"/>
+        <emploie rdf:resource="http://www.education-intelligente.org/ontologie#Encadrant_Fatima"/>
+        <offre rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_DataScience"/>
+        <offre rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Droit"/>
+        <offre rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Lettres"/>
+        <anneeFondation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2010</anneeFondation>
+        <nomUniversite>Université Internationale de Rabat</nomUniversite>
+        <nombreEtudiants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">8000</nombreEtudiants>
+        <pays>Maroc</pays>
+        <rangNational rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</rangNational>
+        <siteWeb rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://www.uir.ma</siteWeb>
+        <ville>Rabat</ville>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#VR_Education -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#VR_Education">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#RealiteVirtuelleEducative"/>
+        <adopteePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <faciliteEvaluation rdf:resource="http://www.education-intelligente.org/ontologie#Quiz_EnLigne_IA"/>
+        <anneeImpl rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneeImpl>
+        <editeur>VR Education Labs</editeur>
+        <nbUtilisateurs rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2000</nbUtilisateurs>
+        <nomTechnologie>VR Learning Experience</nomTechnologie>
+        <typeTechnologie>Réalité Virtuelle</typeTechnologie>
+        <version>1.0</version>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Video_React -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Video_React">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#VideoCours"/>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2023</anneePublication>
+        <auteur>OpenClassrooms</auteur>
+        <lienAcces rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://example.com/react-tutorial</lienAcces>
+        <titreRessource>Tutoriel ReactJS</titreRessource>
+        <typeRessource>Vidéo</typeRessource>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Video_SpringBoot -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Video_SpringBoot">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#VideoCours"/>
+        <accessibleVia rdf:resource="http://www.education-intelligente.org/ontologie#MOOC_Platform_EdX"/>
+        <supporteCours rdf:resource="http://www.education-intelligente.org/ontologie#ProgrammationWeb"/>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneePublication>
+        <auteur>Spring Academy</auteur>
+        <lienAcces rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://example.com/springboot-tutorial</lienAcces>
+        <titreRessource>Tutoriel Spring Boot</titreRessource>
+        <typeRessource>Vidéo</typeRessource>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+

@@ -3,12 +3,13 @@ from flask_cors import CORS
 import logging
 from modules.campRes import api_routes
 import os
-from modules.events import events_bp
+from modules.personne import personne_bp  # Updated import
 from modules.locations import locations_bp
+from modules.specialite_bp import specialite_bp  # New import
+from modules.universite_bp import universite_bp  # New import
 from modules.users import users_bp
 from modules.search import search_bp
 from modules.blogs import blogs_bp
-
 from modules.reservations import reservations_bp
 from modules.certifications import certifications_bp
 from modules.sponsors import sponsors_bp
@@ -16,7 +17,13 @@ from modules.volunteers import volunteers_bp
 from modules.assignments import assignments_bp
 from sparql_utils import sparql_utils
 from modules.reviews import reviews_bp
-
+from modules.cours_bp import cours_bp
+from modules.competences_bp import competences_bp
+from modules.projets_bp import projets_bp
+from modules.ressources_bp import ressources_bp
+from modules.technologies_bp import technologies_bp
+from modules.evaluations_bp import evaluations_bp
+from modules.orientations_bp import orientations_bp
 
 app = Flask(__name__)
 CORS(app)
@@ -27,33 +34,36 @@ logger = logging.getLogger(__name__)
 
 # Enregistrement des routes
 app.register_blueprint(api_routes, url_prefix='/api')
-app.register_blueprint(events_bp, url_prefix='/api')
+app.register_blueprint(personne_bp, url_prefix='/api')  # Updated blueprint registration
+app.register_blueprint(specialite_bp, url_prefix='/api')  # New blueprint registration
 app.register_blueprint(locations_bp, url_prefix='/api')
+app.register_blueprint(universite_bp, url_prefix='/api')  # New blueprint registration
 app.register_blueprint(users_bp, url_prefix='/api')
 app.register_blueprint(search_bp, url_prefix='/api')
 app.register_blueprint(reservations_bp, url_prefix='/api')
 app.register_blueprint(certifications_bp, url_prefix='/api')
 app.register_blueprint(sponsors_bp, url_prefix='/api')
-
 app.register_blueprint(volunteers_bp, url_prefix='/api')
 app.register_blueprint(assignments_bp, url_prefix='/api')
-
 app.register_blueprint(blogs_bp, url_prefix='/api')
 app.register_blueprint(reviews_bp, url_prefix='/api')
-
-
+# Education domain blueprints
+app.register_blueprint(cours_bp, url_prefix='/api')
+app.register_blueprint(competences_bp, url_prefix='/api')
+app.register_blueprint(projets_bp, url_prefix='/api')
+app.register_blueprint(ressources_bp, url_prefix='/api')
+app.register_blueprint(technologies_bp, url_prefix='/api')
+app.register_blueprint(evaluations_bp, url_prefix='/api')
+app.register_blueprint(orientations_bp, url_prefix='/api')
 
 @app.route('/')
 def home():
-    return jsonify({"message": "Eco Platform API is running!"})
-
-
+    return jsonify({"message": "Education Intelligente Platform API is running!"})
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
     """Endpoint de santé de l'API"""
     return jsonify({"status": "OK", "message": "API fonctionnelle"})
-
 
 @app.route('/api/test', methods=['GET'])
 def test_connection():
@@ -69,41 +79,51 @@ def test_connection():
         query = "SELECT (COUNT(*) as ?count) WHERE { ?s ?p ?o }"
         results = sparql_utils.execute_query(query)
         
-        # Test des événements
-        events_query = """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        SELECT (COUNT(*) as ?event_count) WHERE {
-            ?event a eco:Event .
+        # Test des personnes
+        personnes_query = """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT (COUNT(*) as ?personne_count) WHERE {
+            ?personne a edu:Personne .
         }
         """
-        events_results = sparql_utils.execute_query(events_query)
+        personnes_results = sparql_utils.execute_query(personnes_query)
         
-        # Test des locations
-        locations_query = """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        SELECT (COUNT(*) as ?location_count) WHERE {
-            ?location a eco:Location .
+        # Test des étudiants
+        etudiants_query = """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT (COUNT(*) as ?etudiant_count) WHERE {
+            ?etudiant a edu:Etudiant .
         }
         """
-        locations_results = sparql_utils.execute_query(locations_query)
+        etudiants_results = sparql_utils.execute_query(etudiants_query)
         
-        # Test des utilisateurs
-        users_query = """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        SELECT (COUNT(*) as ?user_count) WHERE {
-            ?user a eco:User .
+        # Test des enseignants
+        enseignants_query = """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT (COUNT(*) as ?enseignant_count) WHERE {
+            ?enseignant a edu:Enseignant .
         }
         """
-        users_results = sparql_utils.execute_query(users_query)
+        enseignants_results = sparql_utils.execute_query(enseignants_query)
+        
+        # Test des cours
+        cours_query = """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT (COUNT(*) as ?cours_count) WHERE {
+            ?cours a edu:Cours .
+        }
+        """
+        cours_results = sparql_utils.execute_query(cours_query)
         
         return jsonify({
             "status": "success",
             "message": "Connexion Fuseki OK",
             "data_summary": {
                 "total_triplets": results[0].get('count', 0) if results else 0,
-                "total_events": events_results[0].get('event_count', 0) if events_results else 0,
-                "total_locations": locations_results[0].get('location_count', 0) if locations_results else 0,
-                "total_users": users_results[0].get('user_count', 0) if users_results else 0
+                "total_personnes": personnes_results[0].get('personne_count', 0) if personnes_results else 0,
+                "total_etudiants": etudiants_results[0].get('etudiant_count', 0) if etudiants_results else 0,
+                "total_enseignants": enseignants_results[0].get('enseignant_count', 0) if enseignants_results else 0,
+                "total_cours": cours_results[0].get('cours_count', 0) if cours_results else 0
             }
         })
         
@@ -115,7 +135,6 @@ def test_connection():
             "status": "error",
             "message": f"Erreur Fuseki: {str(e)}"
         }), 500
-
 
 @app.route('/api/ontology-stats', methods=['GET'])
 def get_ontology_stats():
@@ -129,7 +148,7 @@ def get_ontology_stats():
         
         # Requête pour compter toutes les classes principales
         stats_query = """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
         PREFIX owl: <http://www.w3.org/2002/07/owl#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         
@@ -140,16 +159,16 @@ def get_ontology_stats():
         WHERE {
             {
                 ?class a owl:Class .
-                FILTER(STRSTARTS(STR(?class), "http://www.semanticweb.org/eco-ontology#"))
+                FILTER(STRSTARTS(STR(?class), "http://www.education-intelligente.org/ontologie#"))
             } UNION {
                 ?property a owl:ObjectProperty .
-                FILTER(STRSTARTS(STR(?property), "http://www.semanticweb.org/eco-ontology#"))
+                FILTER(STRSTARTS(STR(?property), "http://www.education-intelligente.org/ontologie#"))
             } UNION {
                 ?property a owl:DatatypeProperty .
-                FILTER(STRSTARTS(STR(?property), "http://www.semanticweb.org/eco-ontology#"))
+                FILTER(STRSTARTS(STR(?property), "http://www.education-intelligente.org/ontologie#"))
             } UNION {
                 ?individual a ?class .
-                FILTER(STRSTARTS(STR(?class), "http://www.semanticweb.org/eco-ontology#"))
+                FILTER(STRSTARTS(STR(?class), "http://www.education-intelligente.org/ontologie#"))
             }
         }
         """
@@ -158,26 +177,30 @@ def get_ontology_stats():
         
         # Requête pour compter les instances par type
         instances_query = """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
         
         SELECT 
-            (COUNT(DISTINCT ?event) as ?events)
-            (COUNT(DISTINCT ?location) as ?locations)
-            (COUNT(DISTINCT ?user) as ?users)
-            (COUNT(DISTINCT ?campaign) as ?campaigns)
-            (COUNT(DISTINCT ?resource) as ?resources)
-            (COUNT(DISTINCT ?sponsor) as ?sponsors)
-            (COUNT(DISTINCT ?donation) as ?donations)
-            (COUNT(DISTINCT ?blog) as ?blogs)
+            (COUNT(DISTINCT ?personne) as ?personnes)
+            (COUNT(DISTINCT ?etudiant) as ?etudiants)
+            (COUNT(DISTINCT ?enseignant) as ?enseignants)
+            (COUNT(DISTINCT ?cours) as ?cours)
+            (COUNT(DISTINCT ?universite) as ?universites)
+            (COUNT(DISTINCT ?specialite) as ?specialites)
+            (COUNT(DISTINCT ?competence) as ?competences)
+            (COUNT(DISTINCT ?projet) as ?projets)
+            (COUNT(DISTINCT ?ressource) as ?ressources)
+            (COUNT(DISTINCT ?technologie) as ?technologies)
         WHERE {
-            OPTIONAL { ?event a eco:Event }
-            OPTIONAL { ?location a eco:Location }
-            OPTIONAL { ?user a eco:User }
-            OPTIONAL { ?campaign a eco:Campaign }
-            OPTIONAL { ?resource a eco:Resource }
-            OPTIONAL { ?sponsor a eco:Sponsor }
-            OPTIONAL { ?donation a eco:Donation }
-            OPTIONAL { ?blog a eco:Blog }
+            OPTIONAL { ?personne a edu:Personne }
+            OPTIONAL { ?etudiant a edu:Etudiant }
+            OPTIONAL { ?enseignant a edu:Enseignant }
+            OPTIONAL { ?cours a edu:Cours }
+            OPTIONAL { ?universite a edu:Universite }
+            OPTIONAL { ?specialite a edu:Specialite }
+            OPTIONAL { ?competence a edu:Competence }
+            OPTIONAL { ?projet a edu:ProjetAcademique }
+            OPTIONAL { ?ressource a edu:RessourcePedagogique }
+            OPTIONAL { ?technologie a edu:TechnologieEducative }
         }
         """
         
@@ -185,7 +208,7 @@ def get_ontology_stats():
         
         # Requête pour obtenir les informations de l'ontologie
         ontology_info_query = """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
         PREFIX terms: <http://purl.org/dc/terms/>
         
         SELECT ?title ?description ?version ?creator ?created
@@ -214,28 +237,27 @@ def get_ontology_stats():
             "message": f"Erreur lors de la récupération des statistiques: {str(e)}"
         }), 500
 
-
 @app.route('/api/ontology/graph', methods=['GET'])
 def get_ontology_graph():
-    """Return nodes and edges for a graph visualization focused on Sponsor/Donation/SponsorshipLevel/Event."""
+    """Return nodes and edges for a graph visualization focused on education domain."""
     try:
         # Build a SPARQL query that returns individuals of the main classes and their outgoing properties
         query = '''
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
-                        SELECT DISTINCT ?s ?sLabel ?type ?p ?pLabel ?o ?oLabel WHERE {
-                            ?s a ?type .
-                            # include types that are the class itself or subclasses (captures FinancialDonation, etc.)
-                            ?type rdfs:subClassOf* ?superType .
-                            VALUES ?superType { eco:Sponsor eco:Donation eco:Event }
-          OPTIONAL { ?s rdfs:label ?sLabel }
-          OPTIONAL {
-            ?s ?p ?o .
-                        OPTIONAL { ?p rdfs:label ?pLabel }
-            OPTIONAL { ?o rdfs:label ?oLabel }
-          }
+        SELECT DISTINCT ?s ?sLabel ?type ?p ?pLabel ?o ?oLabel WHERE {
+            ?s a ?type .
+            # include types that are the class itself or subclasses
+            ?type rdfs:subClassOf* ?superType .
+            VALUES ?superType { edu:Personne edu:Etudiant edu:Enseignant edu:Cours edu:Universite edu:Specialite edu:Competence }
+            OPTIONAL { ?s rdfs:label ?sLabel }
+            OPTIONAL {
+                ?s ?p ?o .
+                OPTIONAL { ?p rdfs:label ?pLabel }
+                OPTIONAL { ?o rdfs:label ?oLabel }
+            }
         }
         LIMIT 2000
         '''
@@ -287,8 +309,67 @@ def get_ontology_graph():
     except Exception as e:
         app.logger.error(f"Erreur building ontology graph: {str(e)}")
         return jsonify({ 'error': str(e) }), 500
-    
 
+@app.route('/api/education-stats', methods=['GET'])
+def get_education_stats():
+    """Récupère les statistiques spécifiques au domaine éducatif"""
+    try:
+        if not sparql_utils:
+            return jsonify({
+                "status": "error",
+                "message": "SPARQL utils non initialisé"
+            }), 500
+        
+        # Statistiques des étudiants par niveau
+        etudiants_niveau_query = """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT ?niveau (COUNT(?etudiant) as ?count)
+        WHERE {
+            ?etudiant a edu:Etudiant .
+            OPTIONAL { ?etudiant edu:niveauEtude ?niveau . }
+        }
+        GROUP BY ?niveau
+        """
+        
+        # Statistiques des enseignants par grade
+        enseignants_grade_query = """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT ?grade (COUNT(?enseignant) as ?count)
+        WHERE {
+            ?enseignant a edu:Enseignant .
+            OPTIONAL { ?enseignant edu:grade ?grade . }
+        }
+        GROUP BY ?grade
+        """
+        
+        # Statistiques des cours par spécialité
+        cours_specialite_query = """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT ?specialite (COUNT(?cours) as ?count)
+        WHERE {
+            ?cours a edu:Cours .
+            ?cours edu:faitPartieDe ?specialite .
+            ?specialite edu:nomSpecialite ?nomSpecialite .
+        }
+        GROUP BY ?specialite ?nomSpecialite
+        """
+        
+        etudiants_niveau = sparql_utils.execute_query(etudiants_niveau_query)
+        enseignants_grade = sparql_utils.execute_query(enseignants_grade_query)
+        cours_specialite = sparql_utils.execute_query(cours_specialite_query)
+        
+        return jsonify({
+            "status": "success",
+            "etudiants_par_niveau": etudiants_niveau,
+            "enseignants_par_grade": enseignants_grade,
+            "cours_par_specialite": cours_specialite
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": f"Erreur lors de la récupération des statistiques éducatives: {str(e)}"
+        }), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
