@@ -16,38 +16,13 @@ def generate_orientation_uri(objectif: str) -> str:
 @orientations_bp.route('/orientations-academiques', methods=['GET'])
 def get_all_orientations():
     """Get all academic orientations"""
-    query = f"""
-    PREFIX ont: <{PREFIX}>
-    SELECT ?orientation ?objectifOrientation ?typeOrientation ?dateOrientation
-           ?personne ?nomPersonne ?prenomPersonne
-           ?specialite ?nomSpecialite
-           ?cours ?intitule
-           ?projet ?titreProjet
-    WHERE {{
-        ?orientation a ont:OrientationAcademique .
-        OPTIONAL {{ ?orientation ont:objectifOrientation ?objectifOrientation . }}
-        OPTIONAL {{ ?orientation ont:typeOrientation ?typeOrientation . }}
-        OPTIONAL {{ ?orientation ont:dateOrientation ?dateOrientation . }}
-        OPTIONAL {{
-            ?personne ont:participeA ?orientation .
-            ?personne ont:nom ?nomPersonne .
-            ?personne ont:prenom ?prenomPersonne .
-        }}
-        OPTIONAL {{
-            ?orientation ont:recommandeSpecialite ?specialite .
-            ?specialite ont:nomSpecialite ?nomSpecialite .
-        }}
-        OPTIONAL {{
-            ?orientation ont:recommandeCours ?cours .
-            ?cours ont:intitule ?intitule .
-        }}
-        OPTIONAL {{
-            ?orientation ont:proposeStage ?projet .
-            ?projet ont:titreProjet ?titreProjet .
-        }}
-    }}
-    ORDER BY ?dateOrientation DESC
-    """
+    # Build query as a single continuous line - ensure no newlines or extra whitespace
+    query = f"PREFIX ont: <{PREFIX}> SELECT ?orientation ?objectifOrientation ?typeOrientation ?dateOrientation ?personne ?nomPersonne ?prenomPersonne ?specialite ?nomSpecialite ?cours ?intitule ?projet ?titreProjet WHERE {{ ?orientation a ont:OrientationAcademique . OPTIONAL {{ ?orientation ont:objectifOrientation ?objectifOrientation . }} OPTIONAL {{ ?orientation ont:typeOrientation ?typeOrientation . }} OPTIONAL {{ ?orientation ont:dateOrientation ?dateOrientation . }} OPTIONAL {{ ?personne ont:participeA ?orientation . ?personne ont:nom ?nomPersonne . ?personne ont:prenom ?prenomPersonne . }} OPTIONAL {{ ?orientation ont:recommandeSpecialite ?specialite . ?specialite ont:nomSpecialite ?nomSpecialite . }} OPTIONAL {{ ?orientation ont:recommandeCours ?cours . ?cours ont:intitule ?intitule . }} OPTIONAL {{ ?orientation ont:proposeStage ?projet . ?projet ont:titreProjet ?titreProjet . }} }} ORDER BY DESC(?dateOrientation)"
+    # Remove any potential newlines and normalize whitespace
+    query = query.replace('\n', ' ').replace('\r', ' ').strip()
+    # Replace multiple spaces with single space
+    while '  ' in query:
+        query = query.replace('  ', ' ')
     try:
         results = sparql_utils.execute_query(query)
         return jsonify(results)
@@ -57,37 +32,13 @@ def get_all_orientations():
 @orientations_bp.route('/orientations-academiques/<orientation_id>', methods=['GET'])
 def get_orientation(orientation_id):
     """Get a specific orientation"""
-    query = f"""
-    PREFIX ont: <{PREFIX}>
-    SELECT ?orientation ?objectifOrientation ?typeOrientation ?dateOrientation
-           ?personne ?nomPersonne ?prenomPersonne
-           ?specialite ?nomSpecialite
-           ?cours ?intitule
-           ?projet ?titreProjet
-    WHERE {{
-        <{orientation_id}> a ont:OrientationAcademique .
-        OPTIONAL {{ <{orientation_id}> ont:objectifOrientation ?objectifOrientation . }}
-        OPTIONAL {{ <{orientation_id}> ont:typeOrientation ?typeOrientation . }}
-        OPTIONAL {{ <{orientation_id}> ont:dateOrientation ?dateOrientation . }}
-        OPTIONAL {{
-            ?personne ont:participeA <{orientation_id}> .
-            ?personne ont:nom ?nomPersonne .
-            ?personne ont:prenom ?prenomPersonne .
-        }}
-        OPTIONAL {{
-            <{orientation_id}> ont:recommandeSpecialite ?specialite .
-            ?specialite ont:nomSpecialite ?nomSpecialite .
-        }}
-        OPTIONAL {{
-            <{orientation_id}> ont:recommandeCours ?cours .
-            ?cours ont:intitule ?intitule .
-        }}
-        OPTIONAL {{
-            <{orientation_id}> ont:proposeStage ?projet .
-            ?projet ont:titreProjet ?titreProjet .
-        }}
-    }}
-    """
+    # Build query as a single continuous line - ensure no newlines or extra whitespace
+    query = f"PREFIX ont: <{PREFIX}> SELECT ?orientation ?objectifOrientation ?typeOrientation ?dateOrientation ?personne ?nomPersonne ?prenomPersonne ?specialite ?nomSpecialite ?cours ?intitule ?projet ?titreProjet WHERE {{ <{orientation_id}> a ont:OrientationAcademique . OPTIONAL {{ <{orientation_id}> ont:objectifOrientation ?objectifOrientation . }} OPTIONAL {{ <{orientation_id}> ont:typeOrientation ?typeOrientation . }} OPTIONAL {{ <{orientation_id}> ont:dateOrientation ?dateOrientation . }} OPTIONAL {{ ?personne ont:participeA <{orientation_id}> . ?personne ont:nom ?nomPersonne . ?personne ont:prenom ?prenomPersonne . }} OPTIONAL {{ <{orientation_id}> ont:recommandeSpecialite ?specialite . ?specialite ont:nomSpecialite ?nomSpecialite . }} OPTIONAL {{ <{orientation_id}> ont:recommandeCours ?cours . ?cours ont:intitule ?intitule . }} OPTIONAL {{ <{orientation_id}> ont:proposeStage ?projet . ?projet ont:titreProjet ?titreProjet . }} }}"
+    # Remove any potential newlines and normalize whitespace
+    query = query.replace('\n', ' ').replace('\r', ' ').strip()
+    # Replace multiple spaces with single space
+    while '  ' in query:
+        query = query.replace('  ', ' ')
     try:
         results = sparql_utils.execute_query(query)
         return jsonify(results[0] if results else {}), 404 if not results else 200
@@ -105,34 +56,45 @@ def create_orientation():
     
     orientation_uri = generate_orientation_uri(data.get('objectifOrientation'))
     
+    # Escape quotes in string values
+    def escape_sparql_string(value):
+        if value is None:
+            return None
+        return str(value).replace('\\', '\\\\').replace('"', '\\"').replace('\n', ' ').replace('\r', ' ')
+    
+    objectif = escape_sparql_string(data.get('objectifOrientation'))
+    type_orient = escape_sparql_string(data.get('typeOrientation')) if data.get('typeOrientation') else None
+    date_orient = data.get('dateOrientation')
+    
     insert_parts = [
         f"<{orientation_uri}> a ont:OrientationAcademique",
-        f"; ont:objectifOrientation \"{data.get('objectifOrientation')}\""
+        f"; ont:objectifOrientation \"{objectif}\""
     ]
     
-    if data.get('typeOrientation'):
-        insert_parts.append(f"; ont:typeOrientation \"{data.get('typeOrientation')}\"")
-    if data.get('dateOrientation'):
-        insert_parts.append(f"; ont:dateOrientation \"{data.get('dateOrientation')}\"^^xsd:date")
+    if type_orient:
+        insert_parts.append(f"; ont:typeOrientation \"{type_orient}\"")
+    if date_orient:
+        insert_parts.append(f"; ont:dateOrientation \"{date_orient}\"^^xsd:date")
     
-    query = f"""
-    PREFIX ont: <{PREFIX}>
-    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-    INSERT DATA {{
-        {' '.join(insert_parts)} .
-    }}
-    """
+    # Build the query - ensure it's a single line for INSERT DATA
+    data_line = ' '.join(insert_parts) + ' .'
+    
+    query = f"""PREFIX ont: <{PREFIX}>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+INSERT DATA {{
+    {data_line}
+}}"""
     
     # Handle relationships separately
     relationship_queries = []
     if data.get('personne'):
-        relationship_queries.append(f"INSERT DATA {{ <{data.get('personne')}> ont:participeA <{orientation_uri}> . }}")
+        relationship_queries.append(f"PREFIX ont: <{PREFIX}>\nINSERT DATA {{ <{data.get('personne')}> ont:participeA <{orientation_uri}> . }}")
     if data.get('specialite'):
-        relationship_queries.append(f"INSERT DATA {{ <{orientation_uri}> ont:recommandeSpecialite <{data.get('specialite')}> . }}")
+        relationship_queries.append(f"PREFIX ont: <{PREFIX}>\nINSERT DATA {{ <{orientation_uri}> ont:recommandeSpecialite <{data.get('specialite')}> . }}")
     if data.get('cours'):
-        relationship_queries.append(f"INSERT DATA {{ <{orientation_uri}> ont:recommandeCours <{data.get('cours')}> . }}")
+        relationship_queries.append(f"PREFIX ont: <{PREFIX}>\nINSERT DATA {{ <{orientation_uri}> ont:recommandeCours <{data.get('cours')}> . }}")
     if data.get('projet'):
-        relationship_queries.append(f"INSERT DATA {{ <{orientation_uri}> ont:proposeStage <{data.get('projet')}> . }}")
+        relationship_queries.append(f"PREFIX ont: <{PREFIX}>\nINSERT DATA {{ <{orientation_uri}> ont:proposeStage <{data.get('projet')}> . }}")
     
     try:
         result = sparql_utils.execute_update(query)
@@ -155,57 +117,78 @@ def update_orientation(orientation_id):
     if errors:
         return jsonify({"errors": errors}), 400
     
-    # Delete all relationships and properties
-    delete_query = f"""
-    PREFIX ont: <{PREFIX}>
-    DELETE {{
-        <{orientation_id}> ?p ?o .
-        ?personne ont:participeA <{orientation_id}> .
-        ?specialite ont:recommandeSpecialite <{orientation_id}> .
-        ?cours ont:recommandeCours <{orientation_id}> .
-        ?projet ont:proposeStage <{orientation_id}> .
-    }}
-    WHERE {{
-        <{orientation_id}> ?p ?o .
-        OPTIONAL {{ ?personne ont:participeA <{orientation_id}> . }}
-        OPTIONAL {{ ?specialite ont:recommandeSpecialite <{orientation_id}> . }}
-        OPTIONAL {{ ?cours ont:recommandeCours <{orientation_id}> . }}
-        OPTIONAL {{ ?projet ont:proposeStage <{orientation_id}> . }}
-    }}
-    """
+    # Delete all properties of the orientation (using DELETE WHERE)
+    delete_properties_query = f"PREFIX ont: <{PREFIX}>\nDELETE WHERE {{ <{orientation_id}> ?p ?o . }}"
+    
+    # Delete reverse relationships separately
+    delete_relationships_queries = [
+        f"PREFIX ont: <{PREFIX}>\nDELETE WHERE {{ ?personne ont:participeA <{orientation_id}> . }}",
+        f"PREFIX ont: <{PREFIX}>\nDELETE WHERE {{ <{orientation_id}> ont:recommandeSpecialite ?specialite . }}",
+        f"PREFIX ont: <{PREFIX}>\nDELETE WHERE {{ <{orientation_id}> ont:recommandeCours ?cours . }}",
+        f"PREFIX ont: <{PREFIX}>\nDELETE WHERE {{ <{orientation_id}> ont:proposeStage ?projet . }}"
+    ]
+    
+    # Escape quotes in string values
+    def escape_sparql_string(value):
+        if value is None:
+            return None
+        return str(value).replace('\\', '\\\\').replace('"', '\\"').replace('\n', ' ').replace('\r', ' ')
+    
+    objectif = escape_sparql_string(data.get('objectifOrientation')) if data.get('objectifOrientation') else None
+    type_orient = escape_sparql_string(data.get('typeOrientation')) if data.get('typeOrientation') else None
+    date_orient = data.get('dateOrientation')
     
     insert_parts = [f"<{orientation_id}> a ont:OrientationAcademique"]
     
-    if data.get('objectifOrientation'):
-        insert_parts.append(f"; ont:objectifOrientation \"{data.get('objectifOrientation')}\"")
-    if data.get('typeOrientation'):
-        insert_parts.append(f"; ont:typeOrientation \"{data.get('typeOrientation')}\"")
-    if data.get('dateOrientation'):
-        insert_parts.append(f"; ont:dateOrientation \"{data.get('dateOrientation')}\"^^xsd:date")
+    if objectif:
+        insert_parts.append(f"; ont:objectifOrientation \"{objectif}\"")
+    if type_orient:
+        insert_parts.append(f"; ont:typeOrientation \"{type_orient}\"")
+    if date_orient:
+        insert_parts.append(f"; ont:dateOrientation \"{date_orient}\"^^xsd:date")
     
-    insert_query = f"""
-    PREFIX ont: <{PREFIX}>
-    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-    INSERT DATA {{
-        {' '.join(insert_parts)} .
-    }}
-    """
+    # Build the query - ensure it's a single line for INSERT DATA
+    data_line = ' '.join(insert_parts) + ' .'
+    
+    insert_query = f"""PREFIX ont: <{PREFIX}>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+INSERT DATA {{
+    {data_line}
+}}"""
     
     relationship_queries = []
     if data.get('personne'):
-        relationship_queries.append(f"INSERT DATA {{ <{data.get('personne')}> ont:participeA <{orientation_id}> . }}")
+        relationship_queries.append(f"PREFIX ont: <{PREFIX}>\nINSERT DATA {{ <{data.get('personne')}> ont:participeA <{orientation_id}> . }}")
     if data.get('specialite'):
-        relationship_queries.append(f"INSERT DATA {{ <{orientation_id}> ont:recommandeSpecialite <{data.get('specialite')}> . }}")
+        relationship_queries.append(f"PREFIX ont: <{PREFIX}>\nINSERT DATA {{ <{orientation_id}> ont:recommandeSpecialite <{data.get('specialite')}> . }}")
     if data.get('cours'):
-        relationship_queries.append(f"INSERT DATA {{ <{orientation_id}> ont:recommandeCours <{data.get('cours')}> . }}")
+        relationship_queries.append(f"PREFIX ont: <{PREFIX}>\nINSERT DATA {{ <{orientation_id}> ont:recommandeCours <{data.get('cours')}> . }}")
     if data.get('projet'):
-        relationship_queries.append(f"INSERT DATA {{ <{orientation_id}> ont:proposeStage <{data.get('projet')}> . }}")
+        relationship_queries.append(f"PREFIX ont: <{PREFIX}>\nINSERT DATA {{ <{orientation_id}> ont:proposeStage <{data.get('projet')}> . }}")
     
     try:
-        sparql_utils.execute_update(delete_query)
-        sparql_utils.execute_update(insert_query)
+        # Delete existing properties and relationships
+        result = sparql_utils.execute_update(delete_properties_query)
+        if "error" in result:
+            return jsonify(result), 500
+        
+        # Delete all relationships
+        for del_query in delete_relationships_queries:
+            result = sparql_utils.execute_update(del_query)
+            if "error" in result:
+                return jsonify(result), 500
+        
+        # Insert updated properties
+        result = sparql_utils.execute_update(insert_query)
+        if "error" in result:
+            return jsonify(result), 500
+        
+        # Insert new relationships
         for rel_query in relationship_queries:
-            sparql_utils.execute_update(rel_query)
+            result = sparql_utils.execute_update(rel_query)
+            if "error" in result:
+                return jsonify(result), 500
+        
         return jsonify({"message": "Orientation mise à jour avec succès"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -223,23 +206,15 @@ def delete_orientation(orientation_id):
             orientation_uri = f"{PREFIX}{orientation_id}"
     
     # Delete triples where orientation is subject
-    query1 = f"""
-    PREFIX ont: <{PREFIX}>
-    DELETE WHERE {{
-        <{orientation_uri}> ?p ?o .
-    }}
-    """
+    query1 = f"PREFIX ont: <{PREFIX}>\nDELETE WHERE {{ <{orientation_uri}> ?p ?o . }}"
     
-    # Delete triples with reverse relationships
+    # Delete triples with reverse relationships (personne participates in orientation)
+    # and forward relationships (orientation recommends specialite/cours/projet)
     queries = [
-        f"""PREFIX ont: <{PREFIX}>
-    DELETE WHERE {{ ?personne ont:participeA <{orientation_uri}> . }}""",
-        f"""PREFIX ont: <{PREFIX}>
-    DELETE WHERE {{ ?specialite ont:recommandeSpecialite <{orientation_uri}> . }}""",
-        f"""PREFIX ont: <{PREFIX}>
-    DELETE WHERE {{ ?cours ont:recommandeCours <{orientation_uri}> . }}""",
-        f"""PREFIX ont: <{PREFIX}>
-    DELETE WHERE {{ ?projet ont:proposeStage <{orientation_uri}> . }}"""
+        f"PREFIX ont: <{PREFIX}>\nDELETE WHERE {{ ?personne ont:participeA <{orientation_uri}> . }}",
+        f"PREFIX ont: <{PREFIX}>\nDELETE WHERE {{ <{orientation_uri}> ont:recommandeSpecialite ?specialite . }}",
+        f"PREFIX ont: <{PREFIX}>\nDELETE WHERE {{ <{orientation_uri}> ont:recommandeCours ?cours . }}",
+        f"PREFIX ont: <{PREFIX}>\nDELETE WHERE {{ <{orientation_uri}> ont:proposeStage ?projet . }}"
     ]
     
     try:
@@ -280,7 +255,7 @@ def search_orientations():
     if filters:
         query += " FILTER(" + " && ".join(filters) + ")"
     
-    query += "} ORDER BY ?dateOrientation DESC"
+    query += "} ORDER BY DESC(?dateOrientation)"
     
     try:
         results = sparql_utils.execute_query(query)
