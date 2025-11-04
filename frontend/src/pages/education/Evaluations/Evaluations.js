@@ -29,8 +29,16 @@ const Evaluations = () => {
     total: 0
   });
 
+  // Facets state for dynamic filters
+  const [facets, setFacets] = useState({
+    by_type: [],
+    by_cours: [],
+    by_competence: []
+  });
+
   useEffect(() => {
     fetchEvaluations();
+    fetchFacets();
   }, []);
 
   useEffect(() => {
@@ -52,6 +60,17 @@ const Evaluations = () => {
       setError('Erreur lors du chargement des évaluations');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchFacets = async () => {
+    try {
+      const response = await evaluationsAPI.getFacets();
+      if (response.data) {
+        setFacets(response.data);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des facettes:', error);
     }
   };
 
@@ -155,7 +174,9 @@ const Evaluations = () => {
     try {
       const response = await evaluationsAPI.getById(evaluation.evaluation);
       const details = Array.isArray(response.data) ? response.data[0] : response.data;
-      setSelectedEvaluation(details || evaluation);
+      // Merge API response with original evaluation data to ensure all fields are available
+      const mergedData = { ...evaluation, ...details };
+      setSelectedEvaluation(mergedData);
       setShowDetailsModal(true);
     } catch (error) {
       console.error('Erreur lors du chargement des détails:', error);
@@ -236,13 +257,18 @@ const Evaluations = () => {
         <div className="filters-grid">
           <div className="filter-group">
             <label className="filter-label">Type</label>
-            <input
-              type="text"
-              placeholder="Type d'évaluation..."
-              value={filters.type}
+            <select 
+              value={filters.type} 
               onChange={(e) => handleFilterChange('type', e.target.value)}
-              className="filter-input"
-            />
+              className="filter-select"
+            >
+              <option value="">Tous les types</option>
+              {facets.by_type && facets.by_type.map((facet, index) => (
+                <option key={index} value={facet.typeEvaluation || ''}>
+                  {facet.typeEvaluation || 'Non spécifié'} ({facet.count || 0})
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="filter-group search-group">

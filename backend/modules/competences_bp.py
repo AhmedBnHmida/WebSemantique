@@ -3,6 +3,7 @@
 from flask import Blueprint, jsonify, request
 from sparql_utils import sparql_utils
 from modules.validators import validate_competence
+from modules.dbpedia_service import dbpedia_service
 import uuid
 
 competences_bp = Blueprint('competences', __name__)
@@ -216,6 +217,81 @@ def search_competences():
     try:
         results = sparql_utils.execute_query(query)
         return jsonify(results)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@competences_bp.route('/competences/facets', methods=['GET'])
+def get_competences_facets():
+    """Récupère les facettes pour la navigation filtrée"""
+    query_type = f"""
+    PREFIX ont: <{PREFIX}>
+    SELECT ?typeCompetence (COUNT(DISTINCT ?competence) as ?count)
+    WHERE {{
+        ?competence a ont:Competence .
+        ?competence ont:typeCompetence ?typeCompetence .
+    }}
+    GROUP BY ?typeCompetence
+    ORDER BY DESC(?count)
+    """
+    query_niveau = f"""
+    PREFIX ont: <{PREFIX}>
+    SELECT ?niveauCompetence (COUNT(DISTINCT ?competence) as ?count)
+    WHERE {{
+        ?competence a ont:Competence .
+        ?competence ont:niveauCompetence ?niveauCompetence .
+    }}
+    GROUP BY ?niveauCompetence
+    ORDER BY DESC(?count)
+    """
+    query_specialite = f"""
+    PREFIX ont: <{PREFIX}>
+    SELECT ?specialite ?nomSpecialite (COUNT(DISTINCT ?competence) as ?count)
+    WHERE {{
+        ?specialite ont:formePour ?competence .
+        ?specialite ont:nomSpecialite ?nomSpecialite .
+    }}
+    GROUP BY ?specialite ?nomSpecialite
+    ORDER BY DESC(?count)
+    LIMIT 20
+    """
+    try:
+        facets = {
+            "by_type": sparql_utils.execute_query(query_type),
+            "by_niveau": sparql_utils.execute_query(query_niveau),
+            "by_specialite": sparql_utils.execute_query(query_specialite)
+        }
+        return jsonify(facets)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@competences_bp.route('/competences/<path:competence_id>/dbpedia-enrich', methods=['GET'])
+def enrich_competence_with_dbpedia(competence_id):
+    """Enrich competence data with DBpedia information"""
+    try:
+        query = f"""
+        PREFIX ont: <{PREFIX}>
+        SELECT ?nomCompetence ?typeCompetence
+        WHERE {{
+            <{competence_id}> a ont:Competence .
+            OPTIONAL {{ <{competence_id}> ont:nomCompetence ?nomCompetence . }}
+            OPTIONAL {{ <{competence_id}> ont:typeCompetence ?typeCompetence . }}
+        }}
+        LIMIT 1
+        """
+        results = sparql_utils.execute_query(query)
+        if not results:
+            return jsonify({"error": "Compétence non trouvée"}), 404
+        competence_data = results[0]
+        search_term = request.args.get('term') or competence_data.get("nomCompetence") or competence_data.get("typeCompetence", "")
+        enriched_data = {"competence": competence_data, "search_term": search_term, "dbpedia_enrichment": None}
+        if search_term:
+            dbpedia_results = dbpedia_service.search_entities(search_term)
+            if dbpedia_results.get("results") and len(dbpedia_results["results"]) > 0:
+                first_result = dbpedia_results["results"][0]
+                enriched_data["dbpedia_enrichment"] = {"title": first_result["title"], "uri": first_result["uri"], "all_results": dbpedia_results["results"][:5]}
+            else:
+                enriched_data["dbpedia_enrichment"] = dbpedia_results
+        return jsonify(enriched_data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

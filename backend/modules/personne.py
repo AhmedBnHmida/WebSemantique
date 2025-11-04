@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from sparql_utils import sparql_utils
 from modules.validators import validate_personne
+from modules.dbpedia_service import dbpedia_service
 import uuid
 
 personne_bp = Blueprint('personne', __name__)
@@ -374,5 +375,96 @@ def delete_personne(personne_id):
         if "error" in result:
             return jsonify(result), 500
         return jsonify({"message": "Personne supprimée avec succès"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@personne_bp.route('/personnes/facets', methods=['GET'])
+def get_personnes_facets():
+    """Récupère les facettes pour la navigation filtrée"""
+    query_role = f"""
+    PREFIX edu: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    SELECT ?typePersonne (COUNT(DISTINCT ?personne) as ?count)
+    WHERE {{
+        ?personne rdf:type ?typePersonne .
+        FILTER(?typePersonne IN (edu:Personne, edu:Etudiant, edu:Enseignant, 
+                                 edu:Professeur, edu:Assistant, edu:Encadrant))
+    }}
+    GROUP BY ?typePersonne
+    ORDER BY DESC(?count)
+    """
+    query_universite = f"""
+    PREFIX edu: <{PREFIX}>
+    SELECT ?universite ?nomUniversite (COUNT(DISTINCT ?personne) as ?count)
+    WHERE {{
+        ?personne a edu:Personne .
+        ?personne edu:appartientA ?universite .
+        ?universite edu:nomUniversite ?nomUniversite .
+    }}
+    GROUP BY ?universite ?nomUniversite
+    ORDER BY DESC(?count)
+    LIMIT 20
+    """
+    query_specialite = f"""
+    PREFIX edu: <{PREFIX}>
+    SELECT ?specialite ?nomSpecialite (COUNT(DISTINCT ?personne) as ?count)
+    WHERE {{
+        ?personne a edu:Etudiant .
+        ?personne edu:specialiseEn ?specialite .
+        ?specialite edu:nomSpecialite ?nomSpecialite .
+    }}
+    GROUP BY ?specialite ?nomSpecialite
+    ORDER BY DESC(?count)
+    LIMIT 20
+    """
+    try:
+        facets = {
+            "by_role": sparql_utils.execute_query(query_role),
+            "by_universite": sparql_utils.execute_query(query_universite),
+            "by_specialite": sparql_utils.execute_query(query_specialite)
+        }
+        # Clean up type URIs for frontend
+        for facet in facets["by_role"]:
+            if "typePersonne" in facet:
+                uri = facet["typePersonne"]
+                if "#" in uri:
+                    facet["typePersonneLabel"] = uri.split("#")[-1]
+                else:
+                    facet["typePersonneLabel"] = uri.split("/")[-1]
+        return jsonify(facets)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@personne_bp.route('/personnes/<path:personne_id>/dbpedia-enrich', methods=['GET'])
+def enrich_personne_with_dbpedia(personne_id):
+    """Enrich personne data with DBpedia information"""
+    try:
+        query = f"""
+        PREFIX ont: <{PREFIX}>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        SELECT ?nom ?prenom ?role
+        WHERE {{
+            <{personne_id}> rdf:type ?type .
+            FILTER(?type IN (ont:Personne, ont:Etudiant, ont:Enseignant, ont:Professeur, ont:Assistant, ont:Encadrant))
+            OPTIONAL {{ <{personne_id}> ont:nom ?nom . }}
+            OPTIONAL {{ <{personne_id}> ont:prenom ?prenom . }}
+            OPTIONAL {{ <{personne_id}> ont:role ?role . }}
+        }}
+        LIMIT 1
+        """
+        results = sparql_utils.execute_query(query)
+        if not results:
+            return jsonify({"error": "Personne non trouvée"}), 404
+        personne_data = results[0]
+        search_term = request.args.get('term') or (personne_data.get("nom", "") + " " + personne_data.get("prenom", "")).strip() or personne_data.get("role", "")
+        enriched_data = {"personne": personne_data, "search_term": search_term, "dbpedia_enrichment": None}
+        if search_term:
+            dbpedia_results = dbpedia_service.search_entities(search_term)
+            if dbpedia_results.get("results") and len(dbpedia_results["results"]) > 0:
+                first_result = dbpedia_results["results"][0]
+                enriched_data["dbpedia_enrichment"] = {"title": first_result["title"], "uri": first_result["uri"], "all_results": dbpedia_results["results"][:5]}
+            else:
+                enriched_data["dbpedia_enrichment"] = dbpedia_results
+        return jsonify(enriched_data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500

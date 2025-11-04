@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { projetsAPI } from '../../../utils/api';
 import CRUDModal from '../../../components/CRUDModal';
-import DetailsModal from '../../../components/DetailsModal';
 
 const ProjetsAcademiques = () => {
   const [projets, setProjets] = useState([]);
@@ -10,6 +9,7 @@ const ProjetsAcademiques = () => {
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
     type: '',
+    domaine: '',
     search: ''
   });
 
@@ -24,13 +24,24 @@ const ProjetsAcademiques = () => {
   // Details Modal state
   const [selectedProjet, setSelectedProjet] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [activeTab, setActiveTab] = useState('info');
+  const [dbpediaData, setDbpediaData] = useState(null);
+  const [loadingDBpedia, setLoadingDBpedia] = useState(false);
 
   const [stats, setStats] = useState({
     total: 0
   });
 
+  // Facets state for dynamic filters
+  const [facets, setFacets] = useState({
+    by_type: [],
+    by_domaine: [],
+    by_universite: []
+  });
+
   useEffect(() => {
     fetchProjets();
+    fetchFacets();
   }, []);
 
   useEffect(() => {
@@ -55,6 +66,17 @@ const ProjetsAcademiques = () => {
     }
   };
 
+  const fetchFacets = async () => {
+    try {
+      const response = await projetsAPI.getFacets();
+      if (response.data) {
+        setFacets(response.data);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des facettes:', error);
+    }
+  };
+
   const calculateStats = (projetsData) => {
     setStats({ total: projetsData.length });
   };
@@ -66,6 +88,13 @@ const ProjetsAcademiques = () => {
       filtered = filtered.filter(projet => {
         const type = projet.typeProjet?.toLowerCase() || '';
         return type.includes(filters.type.toLowerCase());
+      });
+    }
+
+    if (filters.domaine) {
+      filtered = filtered.filter(projet => {
+        const domaine = projet.domaineProjet?.toLowerCase() || '';
+        return domaine.includes(filters.domaine.toLowerCase());
       });
     }
 
@@ -91,6 +120,7 @@ const ProjetsAcademiques = () => {
   const clearFilters = () => {
     setFilters({
       type: '',
+      domaine: '',
       search: ''
     });
   };
@@ -159,12 +189,40 @@ const ProjetsAcademiques = () => {
     try {
       const response = await projetsAPI.getById(projet.projet);
       const details = Array.isArray(response.data) ? response.data[0] : response.data;
-      setSelectedProjet(details || projet);
+      // Merge API response with original projet data to ensure all fields are available
+      const mergedData = { ...projet, ...details };
+      setSelectedProjet(mergedData);
       setShowDetailsModal(true);
+      setActiveTab('info');
+      
+      // Fetch DBpedia enrichment if university city is available
+      if (mergedData.ville || projet.ville) {
+        fetchDBpediaEnrichment(projet.projet);
+      }
     } catch (error) {
       console.error('Erreur lors du chargement des détails:', error);
       setSelectedProjet(projet);
       setShowDetailsModal(true);
+      setActiveTab('info');
+    }
+  };
+
+  const fetchDBpediaEnrichment = async (projetId) => {
+    try {
+      setLoadingDBpedia(true);
+      const response = await projetsAPI.enrichWithDBpedia(projetId);
+      if (response.data) {
+        if (response.data.dbpedia_enrichment) {
+          setDbpediaData(response.data.dbpedia_enrichment);
+        } else if (response.data.error) {
+          setDbpediaData({ error: response.data.error });
+        }
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des données DBpedia:', error);
+      setDbpediaData({ error: 'Erreur lors du chargement des données DBpedia' });
+    } finally {
+      setLoadingDBpedia(false);
     }
   };
 
@@ -242,13 +300,34 @@ const ProjetsAcademiques = () => {
         <div className="filters-grid">
           <div className="filter-group">
             <label className="filter-label">Type</label>
-            <input
-              type="text"
-              placeholder="Type de projet..."
+            <select 
               value={filters.type}
               onChange={(e) => handleFilterChange('type', e.target.value)}
-              className="filter-input"
-            />
+              className="filter-select"
+            >
+              <option value="">Tous les types</option>
+              {facets.by_type && facets.by_type.map((facet, index) => (
+                <option key={index} value={facet.typeProjet || ''}>
+                  {facet.typeProjet || 'Non spécifié'} ({facet.count || 0})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="filter-group">
+            <label className="filter-label">Domaine</label>
+            <select 
+              value={filters.domaine || ''} 
+              onChange={(e) => handleFilterChange('domaine', e.target.value)}
+              className="filter-select"
+            >
+              <option value="">Tous les domaines</option>
+              {facets.by_domaine && facets.by_domaine.map((facet, index) => (
+                <option key={index} value={facet.domaineProjet || ''}>
+                  {facet.domaineProjet || 'Non spécifié'} ({facet.count || 0})
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="filter-group search-group">
@@ -615,6 +694,91 @@ const ProjetsAcademiques = () => {
           color: #64748b;
           margin: 0;
         }
+
+        /* DBpedia Results List Styles */
+        .dbpedia-results {
+          margin-bottom: 24px;
+        }
+
+        .dbpedia-results h4 {
+          margin: 0 0 16px 0;
+          font-size: 1.125rem;
+          font-weight: 600;
+          color: #1e293b;
+        }
+
+        .dbpedia-results-list {
+          list-style: decimal;
+          padding-left: 24px;
+          margin: 0;
+        }
+
+        .dbpedia-result-item {
+          margin-bottom: 16px;
+          padding: 12px;
+          background: white;
+          border-radius: 8px;
+          border-left: 4px solid #3b82f6;
+          transition: box-shadow 0.2s;
+        }
+
+        .dbpedia-result-item:hover {
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .dbpedia-result-content {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .dbpedia-result-title {
+          font-size: 1rem;
+          font-weight: 600;
+          color: #1e293b;
+          margin: 0;
+        }
+
+        .dbpedia-result-uri {
+          font-size: 0.875rem;
+          color: #3b82f6;
+          text-decoration: none;
+          word-break: break-all;
+          transition: color 0.2s;
+        }
+
+        .dbpedia-result-uri:hover {
+          color: #1e40af;
+          text-decoration: underline;
+        }
+
+        .dbpedia-primary {
+          margin-bottom: 24px;
+          padding: 16px;
+          background: #eff6ff;
+          border-radius: 8px;
+          border-left: 4px solid #2563eb;
+        }
+
+        .dbpedia-primary h4 {
+          margin: 0 0 12px 0;
+          font-size: 1rem;
+          font-weight: 600;
+          color: #1e293b;
+        }
+
+        .dbpedia-uri-link {
+          font-size: 0.875rem;
+          color: #3b82f6;
+          text-decoration: none;
+          word-break: break-all;
+          transition: color 0.2s;
+        }
+
+        .dbpedia-uri-link:hover {
+          color: #1e40af;
+          text-decoration: underline;
+        }
       `}</style>
 
       {/* CRUD Modals */}
@@ -639,17 +803,262 @@ const ProjetsAcademiques = () => {
         loading={submitLoading}
       />
 
-      {/* Details Modal */}
-      <DetailsModal
-        isOpen={showDetailsModal}
-        onClose={() => {
+      {/* Details Modal with DBpedia */}
+      {showDetailsModal && selectedProjet && (
+        <div className="modal-overlay" onClick={() => {
           setShowDetailsModal(false);
           setSelectedProjet(null);
-        }}
-        title={selectedProjet ? selectedProjet.titreProjet || 'Détails du projet' : 'Détails'}
-        data={selectedProjet}
-        fields={projetDetailsFields}
-      />
+          setDbpediaData(null);
+          setActiveTab('info');
+        }}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>{selectedProjet.titreProjet}</h2>
+              <button 
+                className="modal-close"
+                onClick={() => {
+                  setShowDetailsModal(false);
+                  setSelectedProjet(null);
+                  setDbpediaData(null);
+                  setActiveTab('info');
+                }}
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="modal-tabs">
+              <button 
+                className={`tab-button ${activeTab === 'info' ? 'active' : ''}`}
+                onClick={() => setActiveTab('info')}
+              >
+                Informations
+              </button>
+              {dbpediaData && (
+                <button 
+                  className={`tab-button ${activeTab === 'dbpedia' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('dbpedia')}
+                >
+                  🌐 DBpedia Info
+                </button>
+              )}
+            </div>
+
+            <div className="modal-body">
+              {activeTab === 'info' && selectedProjet && (
+                <div className="tab-content">
+                  <div className="detail-section">
+                    <h3>Informations générales</h3>
+                    <div className="detail-grid">
+                      {projetDetailsFields.map((field) => {
+                        const value = selectedProjet[field.name];
+                        if (field.hideIfEmpty && !value) return null;
+                        
+                        return (
+                          <div key={field.name} className="detail-item">
+                            <label>{field.label}:</label>
+                            <span>
+                              {value || 'Non spécifié'}
+                              {(selectedProjet.ville || selectedProjet.nomUniversite) && (
+                                <button 
+                                  className="btn-enrich-inline"
+                                  onClick={() => fetchDBpediaEnrichment(selectedProjet.projet)}
+                                  title="Enrichir avec DBpedia"
+                                >
+                                  🌐
+                                </button>
+                              )}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'dbpedia' && (
+                <div className="tab-content">
+                  <h3>🌐 Informations DBpedia (Linked Data)</h3>
+                  {loadingDBpedia ? (
+                    <div className="loading-state">
+                      <div className="loading-spinner-small"></div>
+                      <p>Chargement des données DBpedia...</p>
+                    </div>
+                  ) : dbpediaData ? (
+                    <div className="dbpedia-section">
+                      {dbpediaData.error ? (
+                        <div className="dbpedia-error">
+                          <p>⚠️ {dbpediaData.error}</p>
+                          <p className="help-text">Les données DBpedia ne sont pas disponibles pour "{dbpediaData.search_text || dbpediaData.term || 'ce terme'}".</p>
+                        </div>
+                      ) : (
+                        <>
+                          {/* Display list of DBpedia references */}
+                          {dbpediaData.all_results && dbpediaData.all_results.length > 0 ? (
+                            <div className="dbpedia-results">
+                              <h4>🔍 Résultats DBpedia ({dbpediaData.all_results.length})</h4>
+                              <ol className="dbpedia-results-list">
+                                {dbpediaData.all_results.map((result, index) => (
+                                  <li key={index} className="dbpedia-result-item">
+                                    <div className="dbpedia-result-content">
+                                      <strong className="dbpedia-result-title">{result.title}</strong>
+                                      <a 
+                                        href={result.uri} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="dbpedia-result-uri"
+                                      >
+                                        {result.uri}
+                                      </a>
+                                    </div>
+                                  </li>
+                                ))}
+                              </ol>
+                            </div>
+                          ) : dbpediaData.results && dbpediaData.results.length > 0 ? (
+                            <div className="dbpedia-results">
+                              <h4>🔍 Résultats DBpedia ({dbpediaData.results.length})</h4>
+                              <ol className="dbpedia-results-list">
+                                {dbpediaData.results.map((result, index) => (
+                                  <li key={index} className="dbpedia-result-item">
+                                    <div className="dbpedia-result-content">
+                                      <strong className="dbpedia-result-title">{result.title}</strong>
+                                      <a 
+                                        href={result.uri} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="dbpedia-result-uri"
+                                      >
+                                        {result.uri}
+                                      </a>
+                                    </div>
+                                  </li>
+                                ))}
+                              </ol>
+                            </div>
+                          ) : null}
+                          
+                          {/* Display primary result (first result) */}
+                          {dbpediaData.title && dbpediaData.uri && (
+                            <div className="dbpedia-primary">
+                              <h4>📌 Résultat principal</h4>
+                              <div className="dbpedia-item">
+                                <label>🏷️ Titre:</label>
+                                <p className="term-text">{dbpediaData.title}</p>
+                              </div>
+                              <div className="dbpedia-item">
+                                <label>🔗 URI:</label>
+                                <a 
+                                  href={dbpediaData.uri} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="dbpedia-uri-link"
+                                >
+                                  {dbpediaData.uri}
+                                </a>
+                              </div>
+                            </div>
+                          )}
+                          
+                          {/* Legacy fields for backward compatibility */}
+                          {dbpediaData.abstract && (
+                            <div className="dbpedia-item">
+                              <label>📖 Description:</label>
+                              <p className="abstract-text">
+                                {typeof dbpediaData.abstract === 'string' 
+                                  ? dbpediaData.abstract 
+                                  : (dbpediaData.abstract.value || dbpediaData.abstract)}
+                              </p>
+                            </div>
+                          )}
+                          <div className="dbpedia-grid">
+                            {dbpediaData.population && (
+                              <div className="dbpedia-stat">
+                                <label>👥 Population:</label>
+                                <span>
+                                  {typeof dbpediaData.population === 'string'
+                                    ? parseInt(dbpediaData.population).toLocaleString('fr-FR')
+                                    : parseInt(dbpediaData.population.value || dbpediaData.population).toLocaleString('fr-FR')}
+                                </span>
+                              </div>
+                            )}
+                            {dbpediaData.country && (
+                              <div className="dbpedia-stat">
+                                <label>🌍 Pays:</label>
+                                <span>
+                                  {typeof dbpediaData.country === 'string'
+                                    ? dbpediaData.country
+                                    : (dbpediaData.country.value || dbpediaData.country)}
+                                </span>
+                              </div>
+                            )}
+                            {dbpediaData.latitude && dbpediaData.longitude && (
+                              <div className="dbpedia-stat">
+                                <label>📍 Coordonnées:</label>
+                                <span>
+                                  {typeof dbpediaData.latitude === 'string'
+                                    ? `${parseFloat(dbpediaData.latitude).toFixed(4)}, ${parseFloat(dbpediaData.longitude).toFixed(4)}`
+                                    : `${parseFloat(dbpediaData.latitude.value || dbpediaData.latitude).toFixed(4)}, ${parseFloat(dbpediaData.longitude.value || dbpediaData.longitude).toFixed(4)}`}
+                                </span>
+                                <a 
+                                  href={`https://www.openstreetmap.org/?mlat=${
+                                    typeof dbpediaData.latitude === 'string' 
+                                      ? dbpediaData.latitude 
+                                      : (dbpediaData.latitude.value || dbpediaData.latitude)
+                                  }&mlon=${
+                                    typeof dbpediaData.longitude === 'string'
+                                      ? dbpediaData.longitude
+                                      : (dbpediaData.longitude.value || dbpediaData.longitude)
+                                  }&zoom=12`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="map-link"
+                                >
+                                  🗺️ Voir sur la carte
+                                </a>
+                              </div>
+                            )}
+                          </div>
+                          <div className="dbpedia-info">
+                            <p className="info-badge">
+                              ℹ️ Ces données proviennent de DBpedia (Linked Data), démontrant l'interopérabilité du Web Sémantique.
+                            </p>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="no-dbpedia">
+                      <p>Aucune donnée DBpedia disponible pour ce projet.</p>
+                      <button 
+                        className="btn-enrich"
+                        onClick={() => selectedProjet && fetchDBpediaEnrichment(selectedProjet.projet)}
+                      >
+                        🔄 Charger les données DBpedia
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="modal-footer">
+              <button 
+                className="btn-secondary"
+                onClick={() => {
+          setShowDetailsModal(false);
+          setSelectedProjet(null);
+                  setDbpediaData(null);
+                  setActiveTab('info');
+                }}
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

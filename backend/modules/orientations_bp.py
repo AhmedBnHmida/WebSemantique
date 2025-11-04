@@ -3,6 +3,7 @@
 from flask import Blueprint, jsonify, request
 from sparql_utils import sparql_utils
 from modules.validators import validate_orientation
+from modules.dbpedia_service import dbpedia_service
 import uuid
 
 orientations_bp = Blueprint('orientations', __name__)
@@ -260,6 +261,71 @@ def search_orientations():
     try:
         results = sparql_utils.execute_query(query)
         return jsonify(results)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@orientations_bp.route('/orientations-academiques/facets', methods=['GET'])
+def get_orientations_facets():
+    """Récupère les facettes pour la navigation filtrée"""
+    query_type = f"""
+    PREFIX ont: <{PREFIX}>
+    SELECT ?typeOrientation (COUNT(DISTINCT ?orientation) as ?count)
+    WHERE {{
+        ?orientation a ont:OrientationAcademique .
+        ?orientation ont:typeOrientation ?typeOrientation .
+    }}
+    GROUP BY ?typeOrientation
+    ORDER BY DESC(?count)
+    """
+    query_specialite = f"""
+    PREFIX ont: <{PREFIX}>
+    SELECT ?specialite ?nomSpecialite (COUNT(DISTINCT ?orientation) as ?count)
+    WHERE {{
+        ?orientation a ont:OrientationAcademique .
+        ?orientation ont:recommandeSpecialite ?specialite .
+        ?specialite ont:nomSpecialite ?nomSpecialite .
+    }}
+    GROUP BY ?specialite ?nomSpecialite
+    ORDER BY DESC(?count)
+    LIMIT 20
+    """
+    try:
+        facets = {
+            "by_type": sparql_utils.execute_query(query_type),
+            "by_specialite": sparql_utils.execute_query(query_specialite)
+        }
+        return jsonify(facets)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@orientations_bp.route('/orientations-academiques/<path:orientation_id>/dbpedia-enrich', methods=['GET'])
+def enrich_orientation_with_dbpedia(orientation_id):
+    """Enrich orientation data with DBpedia information"""
+    try:
+        query = f"""
+        PREFIX ont: <{PREFIX}>
+        SELECT ?objectifOrientation ?typeOrientation
+        WHERE {{
+            <{orientation_id}> a ont:OrientationAcademique .
+            OPTIONAL {{ <{orientation_id}> ont:objectifOrientation ?objectifOrientation . }}
+            OPTIONAL {{ <{orientation_id}> ont:typeOrientation ?typeOrientation . }}
+        }}
+        LIMIT 1
+        """
+        results = sparql_utils.execute_query(query)
+        if not results:
+            return jsonify({"error": "Orientation non trouvée"}), 404
+        orientation_data = results[0]
+        search_term = request.args.get('term') or orientation_data.get("objectifOrientation") or orientation_data.get("typeOrientation", "")
+        enriched_data = {"orientation": orientation_data, "search_term": search_term, "dbpedia_enrichment": None}
+        if search_term:
+            dbpedia_results = dbpedia_service.search_entities(search_term)
+            if dbpedia_results.get("results") and len(dbpedia_results["results"]) > 0:
+                first_result = dbpedia_results["results"][0]
+                enriched_data["dbpedia_enrichment"] = {"title": first_result["title"], "uri": first_result["uri"], "all_results": dbpedia_results["results"][:5]}
+            else:
+                enriched_data["dbpedia_enrichment"] = dbpedia_results
+        return jsonify(enriched_data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

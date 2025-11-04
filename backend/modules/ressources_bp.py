@@ -3,6 +3,7 @@
 from flask import Blueprint, jsonify, request
 from sparql_utils import sparql_utils
 from modules.validators import validate_ressource
+from modules.dbpedia_service import dbpedia_service
 import uuid
 
 ressources_bp = Blueprint('ressources', __name__)
@@ -18,13 +19,16 @@ def get_all_ressources():
     """Get all pedagogical resources"""
     query = f"""
     PREFIX ont: <{PREFIX}>
-    SELECT ?ressource ?titreRessource ?typeRessource ?technologie ?nomTechnologie
+    SELECT ?ressource ?titreRessource ?typeRessource ?formatRessource ?urlRessource
+           ?technologie ?nomTechnologie
     WHERE {{
         ?ressource a ont:RessourcePedagogique .
         OPTIONAL {{ ?ressource ont:titreRessource ?titreRessource . }}
         OPTIONAL {{ ?ressource ont:typeRessource ?typeRessource . }}
+        OPTIONAL {{ ?ressource ont:formatRessource ?formatRessource . }}
+        OPTIONAL {{ ?ressource ont:urlRessource ?urlRessource . }}
         OPTIONAL {{
-            ?technologie ont:hebergeRessource ?ressource .
+            ?ressource ont:estHebergePar ?technologie .
             ?technologie ont:nomTechnologie ?nomTechnologie .
         }}
     }}
@@ -38,16 +42,19 @@ def get_all_ressources():
 
 @ressources_bp.route('/ressources-pedagogiques/<ressource_id>', methods=['GET'])
 def get_ressource(ressource_id):
-    """Get a specific resource"""
+    """Get a specific pedagogical resource"""
     query = f"""
     PREFIX ont: <{PREFIX}>
-    SELECT ?ressource ?titreRessource ?typeRessource ?technologie ?nomTechnologie
+    SELECT ?ressource ?titreRessource ?typeRessource ?formatRessource ?urlRessource
+           ?technologie ?nomTechnologie
     WHERE {{
         <{ressource_id}> a ont:RessourcePedagogique .
         OPTIONAL {{ <{ressource_id}> ont:titreRessource ?titreRessource . }}
         OPTIONAL {{ <{ressource_id}> ont:typeRessource ?typeRessource . }}
+        OPTIONAL {{ <{ressource_id}> ont:formatRessource ?formatRessource . }}
+        OPTIONAL {{ <{ressource_id}> ont:urlRessource ?urlRessource . }}
         OPTIONAL {{
-            ?technologie ont:hebergeRessource <{ressource_id}> .
+            <{ressource_id}> ont:estHebergePar ?technologie .
             ?technologie ont:nomTechnologie ?nomTechnologie .
         }}
     }}
@@ -60,31 +67,31 @@ def get_ressource(ressource_id):
 
 @ressources_bp.route('/ressources-pedagogiques', methods=['POST'])
 def create_ressource():
-    """Create a new resource"""
+    """Create a new pedagogical resource"""
     data = request.json
-    
     errors = validate_ressource(data)
     if errors:
         return jsonify({"errors": errors}), 400
     
     ressource_uri = generate_ressource_uri(data.get('titreRessource'))
     
-    insert_parts = [
-        f"<{ressource_uri}> a ont:RessourcePedagogique",
-        f"; ont:titreRessource \"{data.get('titreRessource')}\""
-    ]
-    
-    if data.get('typeRessource'):
-        insert_parts.append(f"; ont:typeRessource \"{data.get('typeRessource')}\"")
-    if data.get('technologie'):
-        insert_parts.append(f"<{data.get('technologie')}> ont:hebergeRessource <{ressource_uri}> .")
-    
     query = f"""
     PREFIX ont: <{PREFIX}>
-    INSERT DATA {{
-        {' '.join(insert_parts)} .
-    }}
+    INSERT {{
+        <{ressource_uri}> a ont:RessourcePedagogique .
+        <{ressource_uri}> ont:titreRessource "{data.get('titreRessource')}" .
     """
+    
+    if data.get('typeRessource'):
+        query += f'        <{ressource_uri}> ont:typeRessource "{data.get("typeRessource")}" .\n'
+    if data.get('formatRessource'):
+        query += f'        <{ressource_uri}> ont:formatRessource "{data.get("formatRessource")}" .\n'
+    if data.get('urlRessource'):
+        query += f'        <{ressource_uri}> ont:urlRessource <{data.get("urlRessource")}> .\n'
+    if data.get('technologie'):
+        query += f'        <{ressource_uri}> ont:estHebergePar <{data.get("technologie")}> .\n'
+    
+    query += "    }"
     
     try:
         result = sparql_utils.execute_update(query)
@@ -96,110 +103,108 @@ def create_ressource():
 
 @ressources_bp.route('/ressources-pedagogiques/<ressource_id>', methods=['PUT'])
 def update_ressource(ressource_id):
-    """Update a resource"""
+    """Update a pedagogical resource"""
     data = request.json
-    
-    errors = validate_ressource(data)
+    errors = validate_ressource(data, is_update=True)
     if errors:
         return jsonify({"errors": errors}), 400
     
+    # Delete existing properties
     delete_query = f"""
     PREFIX ont: <{PREFIX}>
     DELETE {{
         <{ressource_id}> ?p ?o .
-        ?tech ont:hebergeRessource <{ressource_id}> .
     }}
     WHERE {{
         <{ressource_id}> ?p ?o .
-        OPTIONAL {{ ?tech ont:hebergeRessource <{ressource_id}> . }}
     }}
     """
     
-    insert_parts = [f"<{ressource_id}> a ont:RessourcePedagogique"]
+    # Insert new properties
+    insert_query = f"""
+    PREFIX ont: <{PREFIX}>
+    INSERT {{
+        <{ressource_id}> a ont:RessourcePedagogique .
+        <{ressource_id}> ont:titreRessource "{data.get('titreRessource')}" .
+    """
     
-    if data.get('titreRessource'):
-        insert_parts.append(f"; ont:titreRessource \"{data.get('titreRessource')}\"")
     if data.get('typeRessource'):
-        insert_parts.append(f"; ont:typeRessource \"{data.get('typeRessource')}\"")
-    
-    query_parts = [f"PREFIX ont: <{PREFIX}>\nINSERT DATA {{ {' '.join(insert_parts)} . }}"]
-    
+        insert_query += f'        <{ressource_id}> ont:typeRessource "{data.get("typeRessource")}" .\n'
+    if data.get('formatRessource'):
+        insert_query += f'        <{ressource_id}> ont:formatRessource "{data.get("formatRessource")}" .\n'
+    if data.get('urlRessource'):
+        insert_query += f'        <{ressource_id}> ont:urlRessource <{data.get("urlRessource")}> .\n'
     if data.get('technologie'):
-        query_parts.append(f"INSERT DATA {{ <{data.get('technologie')}> ont:hebergeRessource <{ressource_id}> . }}")
+        insert_query += f'        <{ressource_id}> ont:estHebergePar <{data.get("technologie")}> .\n'
+    
+    insert_query += "    }"
     
     try:
-        sparql_utils.execute_update(delete_query)
-        for insert_q in query_parts:
-            sparql_utils.execute_update(insert_q)
+        # Execute delete first
+        delete_result = sparql_utils.execute_update(delete_query)
+        if "error" in delete_result:
+            return jsonify(delete_result), 500
+        
+        # Then insert new data
+        insert_result = sparql_utils.execute_update(insert_query)
+        if "error" in insert_result:
+            return jsonify(insert_result), 500
+        
         return jsonify({"message": "Ressource mise à jour avec succès"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @ressources_bp.route('/ressources-pedagogiques/<ressource_id>', methods=['DELETE'])
 def delete_ressource(ressource_id):
-    """Delete a resource"""
-    # Construct full URI if not already a full URI
-    if ressource_id.startswith('http://') or ressource_id.startswith('https://'):
-        ressource_uri = ressource_id
-    else:
-        if ressource_id.startswith(PREFIX):
-            ressource_uri = ressource_id
-        else:
-            ressource_uri = f"{PREFIX}{ressource_id}"
-    
-    # Delete triples where ressource is subject
-    query1 = f"""
+    """Delete a pedagogical resource"""
+    query = f"""
     PREFIX ont: <{PREFIX}>
-    DELETE WHERE {{
-        <{ressource_uri}> ?p ?o .
+    DELETE {{
+        <{ressource_id}> ?p ?o .
     }}
-    """
-    
-    # Delete triples with reverse relationships
-    query2 = f"""
-    PREFIX ont: <{PREFIX}>
-    DELETE WHERE {{
-        ?tech ont:hebergeRessource <{ressource_uri}> .
+    WHERE {{
+        <{ressource_id}> ?p ?o .
     }}
     """
     
     try:
-        result1 = sparql_utils.execute_update(query1)
-        if "error" in result1:
-            return jsonify(result1), 500
-        
-        result2 = sparql_utils.execute_update(query2)
-        if "error" in result2:
-            return jsonify(result2), 500
-        
+        result = sparql_utils.execute_update(query)
+        if "error" in result:
+            return jsonify(result), 500
         return jsonify({"message": "Ressource supprimée avec succès"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @ressources_bp.route('/ressources-pedagogiques/search', methods=['POST'])
 def search_ressources():
-    """Search resources"""
+    """Search resources by criteria"""
     data = request.json
     filters = []
     
     query = f"""
     PREFIX ont: <{PREFIX}>
-    SELECT ?ressource ?titreRessource ?typeRessource
+    SELECT ?ressource ?titreRessource ?typeRessource ?formatRessource ?urlRessource
     WHERE {{
         ?ressource a ont:RessourcePedagogique .
-        OPTIONAL {{ ?ressource ont:titreRessource ?titreRessource . }}
-        OPTIONAL {{ ?ressource ont:typeRessource ?typeRessource . }}
     """
     
     if data.get('titreRessource'):
-        filters.append(f'REGEX(?titreRessource, "{data.get("titreRessource")}", "i")')
+        filters.append(f'FILTER(CONTAINS(LCASE(?titreRessource), LCASE("{data.get("titreRessource")}")))')
+    
     if data.get('typeRessource'):
-        filters.append(f'REGEX(?typeRessource, "{data.get("typeRessource")}", "i")')
+        filters.append(f'?ressource ont:typeRessource "{data.get("typeRessource")}" .')
     
     if filters:
-        query += " FILTER(" + " && ".join(filters) + ")"
+        query += "        " + " .\n        ".join(filters) + " .\n"
     
-    query += "} ORDER BY ?titreRessource"
+    query += """
+        OPTIONAL { ?ressource ont:titreRessource ?titreRessource . }
+        OPTIONAL { ?ressource ont:typeRessource ?typeRessource . }
+        OPTIONAL { ?ressource ont:formatRessource ?formatRessource . }
+        OPTIONAL { ?ressource ont:urlRessource ?urlRessource . }
+    }
+    ORDER BY ?titreRessource
+    """
     
     try:
         results = sparql_utils.execute_query(query)
@@ -207,3 +212,66 @@ def search_ressources():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@ressources_bp.route('/ressources-pedagogiques/facets', methods=['GET'])
+def get_ressources_facets():
+    """Récupère les facettes pour la navigation filtrée"""
+    query_type = f"""
+    PREFIX ont: <{PREFIX}>
+    SELECT ?typeRessource (COUNT(DISTINCT ?ressource) as ?count)
+    WHERE {{
+        ?ressource a ont:RessourcePedagogique .
+        ?ressource ont:typeRessource ?typeRessource .
+    }}
+    GROUP BY ?typeRessource
+    ORDER BY DESC(?count)
+    """
+    query_technologie = f"""
+    PREFIX ont: <{PREFIX}>
+    SELECT ?technologie ?nomTechnologie (COUNT(DISTINCT ?ressource) as ?count)
+    WHERE {{
+        ?technologie ont:hebergeRessource ?ressource .
+        ?technologie ont:nomTechnologie ?nomTechnologie .
+    }}
+    GROUP BY ?technologie ?nomTechnologie
+    ORDER BY DESC(?count)
+    LIMIT 20
+    """
+    try:
+        facets = {
+            "by_type": sparql_utils.execute_query(query_type),
+            "by_technologie": sparql_utils.execute_query(query_technologie)
+        }
+        return jsonify(facets)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@ressources_bp.route('/ressources-pedagogiques/<path:ressource_id>/dbpedia-enrich', methods=['GET'])
+def enrich_ressource_with_dbpedia(ressource_id):
+    """Enrich ressource data with DBpedia information"""
+    try:
+        query = f"""
+        PREFIX ont: <{PREFIX}>
+        SELECT ?titreRessource ?typeRessource
+        WHERE {{
+            <{ressource_id}> a ont:RessourcePedagogique .
+            OPTIONAL {{ <{ressource_id}> ont:titreRessource ?titreRessource . }}
+            OPTIONAL {{ <{ressource_id}> ont:typeRessource ?typeRessource . }}
+        }}
+        LIMIT 1
+        """
+        results = sparql_utils.execute_query(query)
+        if not results:
+            return jsonify({"error": "Ressource non trouvée"}), 404
+        ressource_data = results[0]
+        search_term = request.args.get('term') or ressource_data.get("titreRessource") or ressource_data.get("typeRessource", "")
+        enriched_data = {"ressource": ressource_data, "search_term": search_term, "dbpedia_enrichment": None}
+        if search_term:
+            dbpedia_results = dbpedia_service.search_entities(search_term)
+            if dbpedia_results.get("results") and len(dbpedia_results["results"]) > 0:
+                first_result = dbpedia_results["results"][0]
+                enriched_data["dbpedia_enrichment"] = {"title": first_result["title"], "uri": first_result["uri"], "all_results": dbpedia_results["results"][:5]}
+            else:
+                enriched_data["dbpedia_enrichment"] = dbpedia_results
+        return jsonify(enriched_data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

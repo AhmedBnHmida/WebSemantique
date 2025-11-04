@@ -29,8 +29,15 @@ const OrientationsAcademiques = () => {
     total: 0
   });
 
+  // Facets state for dynamic filters
+  const [facets, setFacets] = useState({
+    by_type: [],
+    by_specialite: []
+  });
+
   useEffect(() => {
     fetchOrientations();
+    fetchFacets();
   }, []);
 
   useEffect(() => {
@@ -52,6 +59,17 @@ const OrientationsAcademiques = () => {
       setError('Erreur lors du chargement des orientations');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchFacets = async () => {
+    try {
+      const response = await orientationsAPI.getFacets();
+      if (response.data) {
+        setFacets(response.data);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des facettes:', error);
     }
   };
 
@@ -158,7 +176,9 @@ const OrientationsAcademiques = () => {
     try {
       const response = await orientationsAPI.getById(orientation.orientation);
       const details = Array.isArray(response.data) ? response.data[0] : response.data;
-      setSelectedOrientation(details || orientation);
+      // Merge API response with original orientation data to ensure all fields are available
+      const mergedData = { ...orientation, ...details };
+      setSelectedOrientation(mergedData);
       setShowDetailsModal(true);
     } catch (error) {
       console.error('Erreur lors du chargement des détails:', error);
@@ -240,13 +260,18 @@ const OrientationsAcademiques = () => {
         <div className="filters-grid">
           <div className="filter-group">
             <label className="filter-label">Type</label>
-            <input
-              type="text"
-              placeholder="Type d'orientation..."
-              value={filters.type}
+            <select 
+              value={filters.type} 
               onChange={(e) => handleFilterChange('type', e.target.value)}
-              className="filter-input"
-            />
+              className="filter-select"
+            >
+              <option value="">Tous les types</option>
+              {facets.by_type && facets.by_type.map((facet, index) => (
+                <option key={index} value={facet.typeOrientation || ''}>
+                  {facet.typeOrientation || 'Non spécifié'} ({facet.count || 0})
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="filter-group search-group">

@@ -3,6 +3,7 @@
 from flask import Blueprint, jsonify, request
 from sparql_utils import sparql_utils
 from modules.validators import validate_technologie
+from modules.dbpedia_service import dbpedia_service
 import uuid
 
 technologies_bp = Blueprint('technologies', __name__)
@@ -231,6 +232,70 @@ def search_technologies():
     try:
         results = sparql_utils.execute_query(query)
         return jsonify(results)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@technologies_bp.route('/technologies-educatives/facets', methods=['GET'])
+def get_technologies_facets():
+    """Récupère les facettes pour la navigation filtrée"""
+    query_type = f"""
+    PREFIX ont: <{PREFIX}>
+    SELECT ?typeTechnologie (COUNT(DISTINCT ?technologie) as ?count)
+    WHERE {{
+        ?technologie a ont:TechnologieEducative .
+        ?technologie ont:typeTechnologie ?typeTechnologie .
+    }}
+    GROUP BY ?typeTechnologie
+    ORDER BY DESC(?count)
+    """
+    query_universite = f"""
+    PREFIX ont: <{PREFIX}>
+    SELECT ?universite ?nomUniversite (COUNT(DISTINCT ?technologie) as ?count)
+    WHERE {{
+        ?universite ont:adopteTechnologie ?technologie .
+        ?universite ont:nomUniversite ?nomUniversite .
+    }}
+    GROUP BY ?universite ?nomUniversite
+    ORDER BY DESC(?count)
+    LIMIT 20
+    """
+    try:
+        facets = {
+            "by_type": sparql_utils.execute_query(query_type),
+            "by_universite": sparql_utils.execute_query(query_universite)
+        }
+        return jsonify(facets)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@technologies_bp.route('/technologies-educatives/<path:technologie_id>/dbpedia-enrich', methods=['GET'])
+def enrich_technologie_with_dbpedia(technologie_id):
+    """Enrich technologie data with DBpedia information"""
+    try:
+        query = f"""
+        PREFIX ont: <{PREFIX}>
+        SELECT ?nomTechnologie ?typeTechnologie
+        WHERE {{
+            <{technologie_id}> a ont:TechnologieEducative .
+            OPTIONAL {{ <{technologie_id}> ont:nomTechnologie ?nomTechnologie . }}
+            OPTIONAL {{ <{technologie_id}> ont:typeTechnologie ?typeTechnologie . }}
+        }}
+        LIMIT 1
+        """
+        results = sparql_utils.execute_query(query)
+        if not results:
+            return jsonify({"error": "Technologie non trouvée"}), 404
+        technologie_data = results[0]
+        search_term = request.args.get('term') or technologie_data.get("nomTechnologie") or technologie_data.get("typeTechnologie", "")
+        enriched_data = {"technologie": technologie_data, "search_term": search_term, "dbpedia_enrichment": None}
+        if search_term:
+            dbpedia_results = dbpedia_service.search_entities(search_term)
+            if dbpedia_results.get("results") and len(dbpedia_results["results"]) > 0:
+                first_result = dbpedia_results["results"][0]
+                enriched_data["dbpedia_enrichment"] = {"title": first_result["title"], "uri": first_result["uri"], "all_results": dbpedia_results["results"][:5]}
+            else:
+                enriched_data["dbpedia_enrichment"] = dbpedia_results
+        return jsonify(enriched_data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

@@ -1,22 +1,12 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import logging
-from modules.campRes import api_routes
 import os
-from modules.personne import personne_bp  # Updated import
-from modules.locations import locations_bp
-from modules.specialite_bp import specialite_bp  # New import
-from modules.universite_bp import universite_bp  # New import
-from modules.users import users_bp
+from modules.personne import personne_bp
+from modules.specialite_bp import specialite_bp
+from modules.universite_bp import universite_bp
 from modules.search import search_bp
-from modules.blogs import blogs_bp
-from modules.reservations import reservations_bp
-from modules.certifications import certifications_bp
-from modules.sponsors import sponsors_bp
-from modules.volunteers import volunteers_bp
-from modules.assignments import assignments_bp
 from sparql_utils import sparql_utils
-from modules.reviews import reviews_bp
 from modules.cours_bp import cours_bp
 from modules.competences_bp import competences_bp
 from modules.projets_bp import projets_bp
@@ -32,22 +22,11 @@ CORS(app)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Enregistrement des routes
-app.register_blueprint(api_routes, url_prefix='/api')
-app.register_blueprint(personne_bp, url_prefix='/api')  # Updated blueprint registration
-app.register_blueprint(specialite_bp, url_prefix='/api')  # New blueprint registration
-app.register_blueprint(locations_bp, url_prefix='/api')
-app.register_blueprint(universite_bp, url_prefix='/api')  # New blueprint registration
-app.register_blueprint(users_bp, url_prefix='/api')
+# Enregistrement des routes - Education domain only
+app.register_blueprint(personne_bp, url_prefix='/api')
+app.register_blueprint(specialite_bp, url_prefix='/api')
+app.register_blueprint(universite_bp, url_prefix='/api')
 app.register_blueprint(search_bp, url_prefix='/api')
-app.register_blueprint(reservations_bp, url_prefix='/api')
-app.register_blueprint(certifications_bp, url_prefix='/api')
-app.register_blueprint(sponsors_bp, url_prefix='/api')
-app.register_blueprint(volunteers_bp, url_prefix='/api')
-app.register_blueprint(assignments_bp, url_prefix='/api')
-app.register_blueprint(blogs_bp, url_prefix='/api')
-app.register_blueprint(reviews_bp, url_prefix='/api')
-# Education domain blueprints
 app.register_blueprint(cours_bp, url_prefix='/api')
 app.register_blueprint(competences_bp, url_prefix='/api')
 app.register_blueprint(projets_bp, url_prefix='/api')

@@ -35,8 +35,16 @@ const Personnes = () => {
     byUniversite: {}
   });
 
+  // Facets state for dynamic filters
+  const [facets, setFacets] = useState({
+    by_role: [],
+    by_universite: [],
+    by_specialite: []
+  });
+
   useEffect(() => {
     fetchPersonnes();
+    fetchFacets();
   }, []);
 
   useEffect(() => {
@@ -62,6 +70,17 @@ const Personnes = () => {
       setError('Erreur lors du chargement des personnes');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchFacets = async () => {
+    try {
+      const response = await personnesAPI.getFacets();
+      if (response.data) {
+        setFacets(response.data);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des facettes:', error);
     }
   };
 
@@ -237,7 +256,9 @@ const Personnes = () => {
       const response = await personnesAPI.getById(personne.personne);
       // Handle both object and array responses
       const details = Array.isArray(response.data) ? response.data[0] : response.data;
-      setSelectedPersonne(details || personne);
+      // Merge API response with original personne data to ensure all fields are available
+      const mergedData = { ...personne, ...details };
+      setSelectedPersonne(mergedData);
       setShowDetailsModal(true);
     } catch (error) {
       console.error('Erreur lors du chargement des détails:', error);
@@ -359,10 +380,11 @@ const Personnes = () => {
               className="filter-select"
             >
               <option value="">Tous les rôles</option>
-              <option value="étudiant">Étudiants</option>
-              <option value="enseignant">Enseignants</option>
-              <option value="assistant">Assistants</option>
-              <option value="professeur">Professeurs</option>
+              {facets.by_role && facets.by_role.map((facet, index) => (
+                <option key={index} value={facet.typePersonneLabel?.toLowerCase() || facet.typePersonne?.split('#').pop()?.toLowerCase() || ''}>
+                  {facet.typePersonneLabel || facet.typePersonne?.split('#').pop() || 'Non spécifié'} ({facet.count || 0})
+                </option>
+              ))}
             </select>
           </div>
 
@@ -374,9 +396,11 @@ const Personnes = () => {
               className="filter-select"
             >
               <option value="">Toutes les universités</option>
-              <option value="Hassan II">Université Hassan II</option>
-              <option value="Rabat">Université de Rabat</option>
-              <option value="Marrakech">Université de Marrakech</option>
+              {facets.by_universite && facets.by_universite.map((facet, index) => (
+                <option key={index} value={facet.nomUniversite || ''}>
+                  {facet.nomUniversite || 'Non spécifié'} ({facet.count || 0})
+                </option>
+              ))}
             </select>
           </div>
 

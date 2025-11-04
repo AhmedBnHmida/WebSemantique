@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from sparql_utils import sparql_utils
 from modules.validators import validate_specialite
+from modules.dbpedia_service import dbpedia_service
 import uuid
 
 specialite_bp = Blueprint('specialite', __name__)
@@ -51,9 +52,21 @@ def get_all_specialites():
         print(f"Error fetching specialites: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
-@specialite_bp.route('/specialites/<specialite_id>', methods=['GET'])
+def normalize_specialite_id(specialite_id):
+    """Normalize specialite ID to full URI format"""
+    from urllib.parse import unquote
+    specialite_id = unquote(specialite_id)
+    
+    if not specialite_id.startswith('http://') and not specialite_id.startswith('https://'):
+        if not specialite_id.startswith(PREFIX):
+            specialite_id = f"{PREFIX}{specialite_id}"
+    
+    return specialite_id
+
+@specialite_bp.route('/specialites/<path:specialite_id>', methods=['GET'])
 def get_specialite(specialite_id):
     """Récupère une spécialité spécifique avec tous ses détails"""
+    specialite_id = normalize_specialite_id(specialite_id)
     query = f"""
     PREFIX ont: <http://www.education-intelligente.org/ontologie#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -255,9 +268,10 @@ def get_specialite_cours(specialite_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@specialite_bp.route('/specialites/<specialite_id>/etudiants', methods=['GET'])
+@specialite_bp.route('/specialites/<path:specialite_id>/etudiants', methods=['GET'])
 def get_specialite_etudiants(specialite_id):
     """Récupère tous les étudiants d'une spécialité"""
+    specialite_id = normalize_specialite_id(specialite_id)
     query = f"""
     PREFIX ont: <http://www.education-intelligente.org/ontologie#>
     SELECT ?etudiant ?nom ?prenom ?email ?telephone ?dateNaissance 
@@ -287,9 +301,10 @@ def get_specialite_etudiants(specialite_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@specialite_bp.route('/specialites/<specialite_id>/competences', methods=['GET'])
+@specialite_bp.route('/specialites/<path:specialite_id>/competences', methods=['GET'])
 def get_specialite_competences(specialite_id):
     """Récupère toutes les compétences développées dans une spécialité"""
+    specialite_id = normalize_specialite_id(specialite_id)
     query = f"""
     PREFIX ont: <http://www.education-intelligente.org/ontologie#>
     SELECT ?competence ?nomCompetence ?typeCompetence ?niveauCompetence 
@@ -334,6 +349,75 @@ def get_specialites_stats():
     try:
         results = sparql_utils.execute_query(query)
         return jsonify(results[0] if results else {})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@specialite_bp.route('/specialites/facets', methods=['GET'])
+def get_specialites_facets():
+    """Récupère les facettes pour la navigation filtrée - comptages par catégorie"""
+    # Facettes par type de spécialité
+    query_type = """
+    PREFIX ont: <http://www.education-intelligente.org/ontologie#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    
+    SELECT ?typeSpecialite (COUNT(DISTINCT ?specialite) as ?count)
+    WHERE {
+        ?specialite rdf:type ?typeSpecialite .
+        FILTER(?typeSpecialite IN (ont:Specialite, ont:SpecialiteInformatique, 
+                                   ont:SpecialiteDataScience, ont:SpecialiteIngenierie, 
+                                   ont:SpecialiteSciences, ont:SpecialiteMedecine,
+                                   ont:SpecialiteEconomie, ont:SpecialiteDroit, 
+                                   ont:SpecialiteLettres))
+    }
+    GROUP BY ?typeSpecialite
+    ORDER BY DESC(?count)
+    """
+    
+    # Facettes par niveau de diplôme
+    query_niveau = """
+    PREFIX ont: <http://www.education-intelligente.org/ontologie#>
+    
+    SELECT ?niveauDiplome (COUNT(DISTINCT ?specialite) as ?count)
+    WHERE {
+        ?specialite a ont:Specialite .
+        ?specialite ont:niveauDiplome ?niveauDiplome .
+    }
+    GROUP BY ?niveauDiplome
+    ORDER BY DESC(?count)
+    """
+    
+    # Facettes par université
+    query_universite = """
+    PREFIX ont: <http://www.education-intelligente.org/ontologie#>
+    
+    SELECT ?universite ?nomUniversite (COUNT(DISTINCT ?specialite) as ?count)
+    WHERE {
+        ?specialite a ont:Specialite .
+        ?specialite ont:estOffertePar ?universite .
+        ?universite ont:nomUniversite ?nomUniversite .
+    }
+    GROUP BY ?universite ?nomUniversite
+    ORDER BY DESC(?count)
+    LIMIT 20
+    """
+    
+    try:
+        facets = {
+            "by_type": sparql_utils.execute_query(query_type),
+            "by_niveau": sparql_utils.execute_query(query_niveau),
+            "by_universite": sparql_utils.execute_query(query_universite)
+        }
+        
+        # Clean up type URIs for frontend
+        for facet in facets["by_type"]:
+            if "typeSpecialite" in facet:
+                uri = facet["typeSpecialite"]
+                if "#" in uri:
+                    facet["typeSpecialiteLabel"] = uri.split("#")[-1]
+                else:
+                    facet["typeSpecialiteLabel"] = uri.split("/")[-1]
+        
+        return jsonify(facets)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -432,9 +516,10 @@ def create_specialite():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@specialite_bp.route('/specialites/<specialite_id>', methods=['PUT'])
+@specialite_bp.route('/specialites/<path:specialite_id>', methods=['PUT'])
 def update_specialite(specialite_id):
     """Update a specialite"""
+    specialite_id = normalize_specialite_id(specialite_id)
     data = request.json
     
     errors = validate_specialite(data)
@@ -485,9 +570,10 @@ def update_specialite(specialite_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@specialite_bp.route('/specialites/<specialite_id>', methods=['DELETE'])
+@specialite_bp.route('/specialites/<path:specialite_id>', methods=['DELETE'])
 def delete_specialite(specialite_id):
     """Delete a specialite"""
+    specialite_id = normalize_specialite_id(specialite_id)
     # Construct full URI if not already a full URI
     if specialite_id.startswith('http://') or specialite_id.startswith('https://'):
         specialite_uri = specialite_id
@@ -510,5 +596,78 @@ def delete_specialite(specialite_id):
         if "error" in result:
             return jsonify(result), 500
         return jsonify({"message": "Spécialité supprimée avec succès"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@specialite_bp.route('/specialites/<path:specialite_id>/dbpedia-enrich', methods=['GET'])
+def enrich_specialite_with_dbpedia(specialite_id):
+    """
+    Enrich specialite data with DBpedia information (Linked Data integration)
+    Accepts optional 'term' query parameter to search for specific term
+    If no term provided, uses the specialité name
+    """
+    try:
+        specialite_id = normalize_specialite_id(specialite_id)
+        
+        # Get the specialite name
+        query = f"""
+        PREFIX ont: <{PREFIX}>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        SELECT ?nomSpecialite ?ville ?pays ?nomUniversite ?description
+        WHERE {{
+            <{specialite_id}> rdf:type ?type .
+            FILTER(?type IN (ont:Specialite, ont:SpecialiteInformatique, ont:SpecialiteDataScience, 
+                             ont:SpecialiteIngenierie, ont:SpecialiteSciences, ont:SpecialiteMedecine,
+                             ont:SpecialiteEconomie, ont:SpecialiteDroit, ont:SpecialiteLettres))
+            OPTIONAL {{ <{specialite_id}> ont:nomSpecialite ?nomSpecialite . }}
+            OPTIONAL {{ <{specialite_id}> ont:description ?description . }}
+            OPTIONAL {{
+                <{specialite_id}> ont:estOffertePar ?universite .
+                ?universite ont:nomUniversite ?nomUniversite .
+                OPTIONAL {{ ?universite ont:ville ?ville . }}
+                OPTIONAL {{ ?universite ont:pays ?pays . }}
+            }}
+        }}
+        LIMIT 1
+        """
+        
+        results = sparql_utils.execute_query(query)
+        
+        if not results:
+            return jsonify({"error": "Spécialité non trouvée"}), 404
+        
+        specialite_data = results[0]
+        
+        # Get search term from query parameter or use specialité name
+        search_term = request.args.get('term')
+        if not search_term:
+            # Prefer nomSpecialite over description for better DBpedia matching
+            search_term = specialite_data.get("nomSpecialite") or specialite_data.get("description", "")
+        
+        enriched_data = {
+            "specialite": specialite_data,
+            "search_term": search_term,
+            "dbpedia_enrichment": None
+        }
+        
+        # Enrich with DBpedia using the search term (use search_entities for better results)
+        if search_term:
+            # Use search_entities to get a list of references
+            dbpedia_results = dbpedia_service.search_entities(search_term)
+            
+            # If we got results, return the first one for backward compatibility
+            if dbpedia_results.get("results") and len(dbpedia_results["results"]) > 0:
+                first_result = dbpedia_results["results"][0]
+                enriched_data["dbpedia_enrichment"] = {
+                    "title": first_result["title"],
+                    "uri": first_result["uri"],
+                    "all_results": dbpedia_results["results"][:5]  # Include top 5 for reference
+                }
+            else:
+                # Return error if no results
+                enriched_data["dbpedia_enrichment"] = dbpedia_results
+        
+        return jsonify(enriched_data)
+        
     except Exception as e:
         return jsonify({"error": str(e)}), 500

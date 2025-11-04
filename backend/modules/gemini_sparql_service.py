@@ -102,53 +102,56 @@ class GeminiSPARQLTransformer:
             original_question = taln_analysis.get('original_question', '')
             if original_question:
                 return self.transform_question_to_sparql(original_question)
-            return self._get_fallback_query("events")
+            return self._get_fallback_query("personnes")
     
     def _build_prompt(self, question: str) -> str:
-        """Build the prompt for Gemini - FOCUS ON DYNAMIC GENERATION"""
-        return f"""You are a SPARQL query generator for an ecological events platform. Convert the natural language question to a valid SPARQL query.
+        """Build the prompt for Gemini - Education domain only"""
+        return f"""You are a SPARQL query generator for an educational platform. Convert the natural language question to a valid SPARQL query.
 
 ONTOLOGY CONTEXT:
-Prefix: eco: <http://www.semanticweb.org/eco-ontology#>
+PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+PREFIX ont: <http://www.education-intelligente.org/ontologie#>
 
 MAIN CLASSES:
-- Event, Location, User, Campaign, Resource, Reservation, Certification, Sponsor, Donation
+- Personne (Person): Etudiant (Student), Enseignant (Teacher), Professeur (Professor), Assistant, Encadrant (Supervisor)
+- Universite (University): UniversitePublique (Public), UniversitePrivee (Private)
+- Specialite (Specialization): SpecialiteInformatique, SpecialiteDataScience, SpecialiteIngenierie, etc.
+- Cours (Course): CoursTheorique (Theoretical), CoursPratique (Practical)
+- Competence (Competency/Skill)
+- ProjetAcademique (Academic Project)
+- RessourcePedagogique (Pedagogical Resource)
+- TechnologieEducative (Educational Technology)
+- Evaluation (Assessment/Exam)
+- OrientationAcademique (Academic Orientation)
 
-EVENT PROPERTIES:
-- eventTitle, eventDate, eventDescription, maxParticipants, isLocatedAt, isOrganizedBy, eventStatus, duration, eventImages, eventType
-
-LOCATION PROPERTIES:
-- locationName, address, city, country, capacity, price, reserved, inRepair, locationDescription, latitude, longitude, locationImages, locationType
-
-USER PROPERTIES:
-- firstName, lastName, email, role, phone, registrationDate
-
-RESERVATION PROPERTIES:
-- belongsToUser, confirmedBy, numberOfTickets, reservationStatus, reservationDate
-
-CERTIFICATION PROPERTIES:
-- awardedTo, issuedBy, certificateCode, pointsEarned, certificationType
-
-SPONSOR PROPERTIES:
-- companyName, industry, contactEmail, phoneNumber, website
-
-DONATION PROPERTIES:
-- donationAmount (or amount for FinancialDonation), currency, dateDonated, description, estimatedValue, hoursDonated, fundsEvent
+KEY PROPERTIES:
+- Personne: nom, prenom, email, telephone, dateNaissance, role
+- Etudiant: numeroMatricule, niveauEtude, moyenneGenerale, appartientA, specialiseEn, suitCours
+- Enseignant: grade, anciennete, appartientA, enseigne
+- Universite: nomUniversite, ville, pays, nombreEtudiants, offre, emploie
+- Specialite: nomSpecialite, codeSpecialite, description, estOffertePar, faitPartieDe
+- Cours: intitule, codeCours, creditsECTS, semestre, volumeHoraire, langueCours, faitPartieDe, enseignePar
+- Competence: nomCompetence, description, niveau
+- ProjetAcademique: nomProjet, description, dateDebut, dateFin
+- RessourcePedagogique: nomRessource, description, typeRessource
+- TechnologieEducative: nomTechnologie, description, typeTechnologie
+- Evaluation: typeEvaluation, dateEvaluation, note
+- OrientationAcademique: typeOrientation, dateOrientation
 
 IMPORTANT QUERY PATTERNS:
-- For event type questions: Use FILTER with CONTAINS/REGEX on eventTitle, eventDescription, or eventType
-- For location type questions: Use FILTER with CONTAINS/REGEX on locationName, locationType, or address
-- For date filters: Use FILTER(?date >= NOW()) for future, FILTER(?date < NOW()) for past
-- For city filters: FILTER(CONTAINS(LCASE(STR(?city)), "cityname"))
+- For Personne queries: Use UNION to include all subclasses (Etudiant, Enseignant, etc.)
+- For Cours queries: Use UNION to include CoursTheorique and CoursPratique
+- For Universite queries: Use UNION to include UniversitePublique and UniversitePrivee
 - For text searches: Use FILTER(CONTAINS(LCASE(STR(?field)), "searchterm"))
-- For available locations: FILTER(!BOUND(?reserved) || ?reserved = false) && FILTER(!BOUND(?inRepair) || ?inRepair = false)
+- For date filters: Use FILTER(?date >= NOW()) for future, FILTER(?date < NOW()) for past
+- For city filters: FILTER(CONTAINS(LCASE(STR(?ville)), "cityname"))
 
 CRITICAL RULES:
-1. Always use PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
+1. Always use PREFIX edu: <http://www.education-intelligente.org/ontologie#> or PREFIX ont: <http://www.education-intelligente.org/ontologie#>
 2. Use OPTIONAL for properties that might not exist
 3. Use ORDER BY when appropriate for sorting
 4. Use LIMIT 20-50 to prevent too many results
-5. Make location properties OPTIONAL (locationName, city, etc.)
+5. Use UNION for multiple entity types or subclasses
 6. Return ONLY the SPARQL query, no explanations
 7. Be creative and adapt to the specific question
 
@@ -211,48 +214,44 @@ SPARQL QUERY:"""
                 rel_texts.append(f"{rel['subject']} -> {rel['predicate']} -> {rel['object']}")
             relationship_context = f"RELATIONSHIPS: {'; '.join(rel_texts)}"
         
-        return f"""You are an expert SPARQL query generator for an ecological events platform. Generate a precise SPARQL query based on the structured analysis provided below.
+        return f"""You are an expert SPARQL query generator for an educational platform. Generate a precise SPARQL query based on the structured analysis provided below.
 
 ONTOLOGY CONTEXT:
-PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-PREFIX webprotege: <http://webprotege.stanford.edu/>
+PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+PREFIX ont: <http://www.education-intelligente.org/ontologie#>
 
-MAIN CLASSES AND THEIR PROPERTIES:
-- Event (eco:Event): eventTitle, eventDate, eventDescription, maxParticipants, isLocatedAt, isOrganizedBy, eventStatus, duration, eventImages, eventType
-- EducationalEvent (eco:EducationalEvent): eventTitle, eventDate, eventDescription, maxParticipants, isLocatedAt, isOrganizedBy, eventStatus, duration, eventImages, eventType
-- EntertainmentEvent (eco:EntertainmentEvent): eventTitle, eventDate, eventDescription, maxParticipants, isLocatedAt, isOrganizedBy, eventStatus, duration, eventImages, eventType
-- CompetitiveEvent (eco:CompetitiveEvent): eventTitle, eventDate, eventDescription, maxParticipants, isLocatedAt, isOrganizedBy, eventStatus, duration, eventImages, eventType
-- SocializationEvent (eco:SocializationEvent): eventTitle, eventDate, eventDescription, maxParticipants, isLocatedAt, isOrganizedBy, eventStatus, duration, eventImages, eventType
-- Location (eco:Location): locationName, address, city, country, capacity, price, reserved, inRepair, locationDescription, latitude, longitude, locationImages, locationType
-- Indoor (eco:Indoor): locationName, address, city, country, capacity, price, reserved, inRepair, locationDescription, latitude, longitude, locationImages, locationType
-- Outdoor (eco:Outdoor): locationName, address, city, country, capacity, price, reserved, inRepair, locationDescription, latitude, longitude, locationImages, locationType
-- VirtualPlatform (eco:VirtualPlatform): locationName, address, city, country, capacity, price, reserved, inRepair, locationDescription, latitude, longitude, locationImages, locationType
-- Campaign (eco:Campaign): campaignName, campaignDescription, campaignStatus, startDate, endDate, goal, targetAmount, fundsRaised
-- AwarenessCampaign (eco:AwarenessCampaign): campaignName, campaignDescription, campaignStatus, startDate, endDate, goal
-- CleanupCampaign (eco:CleanupCampaign): campaignName, campaignDescription, campaignStatus, startDate, endDate, goal
-- EventCampaign (eco:EventCampaign): campaignName, campaignDescription, campaignStatus, startDate, endDate, goal, targetParticipants
-- FundingCampaign (eco:FundingCampaign): campaignName, campaignDescription, campaignStatus, startDate, endDate, goal, targetAmount, fundsRaised
-- Resource (eco:Resource): resourceName, resourceDescription, resourceCategory, quantityAvailable, unitCost, resourceType
-- DigitalResource (eco:DigitalResource): resourceName, resourceDescription, resourceCategory, quantityAvailable, unitCost, resourceType
-- EquipmentResource (eco:EquipmentResource): resourceName, resourceDescription, resourceCategory, quantityAvailable, unitCost, equipmentType
-- FinancialResource (eco:FinancialResource): resourceName, resourceDescription, resourceCategory, quantityAvailable, unitCost, currency
-- HumanResource (eco:HumanResource): resourceName, resourceDescription, resourceCategory, quantityAvailable, unitCost, skillLevel
-- MaterialResource (eco:MaterialResource): resourceName, resourceDescription, resourceCategory, quantityAvailable, unitCost, materialType
-- Volunteer (webprotege:RCXXzqv27uFuX5nYU81XUvw): phone (webprotege:R8BxRbqkCT2nIQCr5UoVlXD), healthIssues (webprotege:R9F95BAS8WtbTv8ZGBaPe42), motivation (webprotege:R9PW79FzwQKWuQYdTdYlHzN), experience (webprotege:R9tdW5crNU837y5TemwdNfR), skills (webprotege:RBqpxvMVBnwM1Wb6OhzTpHf)
-- Assignment (webprotege:Rj2A7xNWLfpNcbE4HJMKqN): startDate (webprotege:RD3Wor03BEPInfzUaMNVPC7), status (webprotege:RDT3XEARggTy1BIBKDXXrmx), rating (webprotege:RRatingAssignment)
-- Certification (eco:Certification): certificateCode, pointsEarned, certificationType, awardedTo, issuedBy
-- Reservation (eco:Reservation): seatNumber, status, belongsToUser, confirmedBy, numberOfTickets, reservationDate
-- Blog (eco:Blog): blogTitle, blogContent, category, publicationDate
-- Sponsor (eco:Sponsor): companyName, industry, contactEmail, phoneNumber, website, hasSponsorshipLevel, makesDonation
-- SponsorshipLevel (eco:SponsorshipLevel): levelName, minAmount, benefits
-- BronzeSponsor (eco:BronzeSponsor): levelName, minAmount, benefits
-- SilverSponsor (eco:SilverSponsor): levelName, minAmount, benefits
-- GoldSponsor (eco:GoldSponsor): levelName, minAmount, benefits
-- PlatinumSponsor (eco:PlatinumSponsor): levelName, minAmount, benefits
-- Donation (eco:Donation): dateDonated, note, donationType, fundsEvent
-- FinancialDonation (eco:FinancialDonation): dateDonated, note, donationType, amount, currency, paymentMethod
-- MaterialDonation (eco:MaterialDonation): dateDonated, note, donationType, itemDescription, estimatedValue, quantity
-- ServiceDonation (eco:ServiceDonation): dateDonated, note, donationType, serviceDescription, hoursDonated
+MAIN CLASSES AND THEIR PROPERTIES (Education Domain):
+- Personne (edu:Personne): nom, prenom, email, telephone, dateNaissance, role
+  - Etudiant (edu:Etudiant): nom, prenom, email, telephone, numeroMatricule, niveauEtude, moyenneGenerale, appartientA, specialiseEn, suitCours
+  - EtudiantLicence (edu:EtudiantLicence): same as Etudiant
+  - EtudiantMaster (edu:EtudiantMaster): same as Etudiant
+  - EtudiantDoctorat (edu:EtudiantDoctorat): same as Etudiant
+  - Enseignant (edu:Enseignant): nom, prenom, email, telephone, grade, anciennete, appartientA, enseigne
+  - Professeur (edu:Professeur): same as Enseignant
+  - Assistant (edu:Assistant): same as Enseignant
+  - Encadrant (edu:Encadrant): same as Enseignant
+- Universite (edu:Universite): nomUniversite, anneeFondation, ville, pays, nombreEtudiants, rangNational, siteWeb, offre, emploie, adopteTechnologie
+  - UniversitePublique (edu:UniversitePublique): same as Universite
+  - UniversitePrivee (edu:UniversitePrivee): same as Universite
+- Specialite (edu:Specialite): nomSpecialite, codeSpecialite, description, dureeFormation, niveauDiplome, nombreModules, estOffertePar, faitPartieDe, formePour
+  - SpecialiteInformatique (edu:SpecialiteInformatique): same as Specialite
+  - SpecialiteDataScience (edu:SpecialiteDataScience): same as Specialite
+  - SpecialiteIngenierie (edu:SpecialiteIngenierie): same as Specialite
+  - SpecialiteSciences (edu:SpecialiteSciences): same as Specialite
+  - SpecialiteMedecine (edu:SpecialiteMedecine): same as Specialite
+  - SpecialiteEconomie (edu:SpecialiteEconomie): same as Specialite
+  - SpecialiteDroit (edu:SpecialiteDroit): same as Specialite
+  - SpecialiteLettres (edu:SpecialiteLettres): same as Specialite
+- Cours (edu:Cours): intitule, codeCours, creditsECTS, semestre, volumeHoraire, langueCours, faitPartieDe, enseignePar
+  - CoursTheorique (edu:CoursTheorique): same as Cours
+  - CoursPratique (edu:CoursPratique): same as Cours
+- Competence (edu:Competence): nomCompetence, description, niveau, estFormeePar
+- ProjetAcademique (edu:ProjetAcademique): nomProjet, description, dateDebut, dateFin, typeProjet, estRealisePar, concerne
+- RessourcePedagogique (edu:RessourcePedagogique): nomRessource, description, typeRessource, estUtiliseDans
+- TechnologieEducative (edu:TechnologieEducative): nomTechnologie, description, typeTechnologie, estUtilisePar
+- Evaluation (edu:Evaluation): typeEvaluation, dateEvaluation, note, estRealisePar, concerne
+- OrientationAcademique (edu:OrientationAcademique): typeOrientation, dateOrientation, concerne
+  - EntretienConseiller (edu:EntretienConseiller): same as OrientationAcademique
 
 ANALYSIS RESULTS:
 Original Question: "{original_question}"
@@ -270,55 +269,127 @@ Original Question: "{original_question}"
 {relationship_context}
 
 QUERY GENERATION RULES:
-1. Always use PREFIX eco: <http://www.semanticweb.org/eco-ontology#> and PREFIX webprotege: <http://webprotege.stanford.edu/>
-2. Use webprotege: classes for main entities (webprotege:Event, webprotege:Location, etc.)
-3. Use eco: properties for entity attributes (eco:eventTitle, eco:locationName, etc.)
-4. CRITICAL: Always use proper SPARQL syntax: ?entity eco:property ?variable
-5. Use OPTIONAL for properties that might not exist
-6. Use FILTER with CONTAINS/REGEX for text searches
-7. Use FILTER with date comparisons for temporal queries
-8. Use FILTER with city/location matching for location queries
-9. Use ORDER BY when appropriate for sorting
-10. Use LIMIT 20-50 to prevent too many results
-11. Use GROUP BY and COUNT for counting queries
-12. Use UNION for multiple entity types
-13. Make location properties OPTIONAL (locationName, city, etc.)
-14. Return ONLY the SPARQL query, no explanations
-15. Be precise based on the detected entities and intent
+1. Always use PREFIX edu: <http://www.education-intelligente.org/ontologie#> or PREFIX ont: <http://www.education-intelligente.org/ontologie#>
+2. For education domain entities, use edu: or ont: prefix (edu:Personne, edu:Universite, edu:Cours, etc.)
+3. For education properties, use edu: prefix (edu:nom, edu:prenom, edu:nomUniversite, edu:intitule, etc.)
+4. CRITICAL: Always use proper SPARQL syntax: ?entity edu:property ?variable
+6. Use OPTIONAL for properties that might not exist
+7. Use FILTER with CONTAINS/REGEX for text searches: FILTER(CONTAINS(LCASE(STR(?nom)), "searchterm"))
+8. Use FILTER with date comparisons for temporal queries: FILTER(?date >= NOW()) for future
+9. Use FILTER with city/location matching for location queries: FILTER(CONTAINS(LCASE(STR(?ville)), "cityname"))
+10. Use ORDER BY when appropriate for sorting: ORDER BY ?nom
+11. Use LIMIT 20-50 to prevent too many results
+12. Use GROUP BY and COUNT for counting queries: SELECT (COUNT(?entity) as ?count)
+13. Use UNION for multiple entity types or subclasses
+14. For Personne queries, use UNION to include all subclasses (Etudiant, Enseignant, etc.)
+15. For Cours queries, use UNION to include all subclasses (CoursTheorique, CoursPratique)
+16. Return ONLY the SPARQL query, no explanations
+17. Be precise based on the detected entities and intent
 
-SPARQL SYNTAX EXAMPLES:
-- Correct: ?event a eco:Event . ?event eco:eventTitle ?title .
-- Correct: ?event a eco:EducationalEvent . ?event eco:eventTitle ?title .
-- Correct: ?campaign a eco:Campaign . ?campaign eco:campaignName ?name .
-- Correct: ?volunteer a webprotege:RCXXzqv27uFuX5nYU81XUvw . ?volunteer webprotege:R8BxRbqkCT2nIQCr5UoVlXD ?phone .
-- Correct: ?assignment a webprotege:Rj2A7xNWLfpNcbE4HJMKqN . ?assignment webprotege:RDT3XEARggTy1BIBKDXXrmx ?status .
-- Incorrect: eco:eventTitle ?title (missing subject)
-- Incorrect: ?event eco:eventTitle (missing object)
+SPARQL SYNTAX EXAMPLES (Education Domain):
+- Correct: ?personne a edu:Personne . ?personne edu:nom ?nom . ?personne edu:prenom ?prenom .
+- Correct: ?etudiant a edu:Etudiant . ?etudiant edu:nom ?nom . ?etudiant edu:numeroMatricule ?matricule .
+- Correct: ?universite a edu:Universite . ?universite edu:nomUniversite ?nom .
+- Correct: ?cours a edu:Cours . ?cours edu:intitule ?intitule . ?cours edu:codeCours ?code .
+- Correct: ?specialite a edu:Specialite . ?specialite edu:nomSpecialite ?nom .
+- Correct: ?competence a edu:Competence . ?competence edu:nomCompetence ?nom .
+- Incorrect: edu:nom ?nom (missing subject)
+- Incorrect: ?personne edu:nom (missing object)
 
-IMPORTANT: For events, use UNION to include all event types:
+IMPORTANT: For education domain entities, use UNION to include all subclasses:
+
+For Personnes (People):
 {{
-  ?event a eco:Event .
-  ?event eco:eventTitle ?title .
+  ?personne a edu:Personne .
+  ?personne edu:nom ?nom .
 }}
 UNION
 {{
-  ?event a eco:EducationalEvent .
-  ?event eco:eventTitle ?title .
+  ?personne a edu:Etudiant .
+  ?personne edu:nom ?nom .
 }}
 UNION
 {{
-  ?event a eco:EntertainmentEvent .
-  ?event eco:eventTitle ?title .
+  ?personne a edu:Enseignant .
+  ?personne edu:nom ?nom .
+}}
+
+For Cours (Courses):
+{{
+  ?cours a edu:Cours .
+  ?cours edu:intitule ?intitule .
 }}
 UNION
 {{
-  ?event a eco:CompetitiveEvent .
-  ?event eco:eventTitle ?title .
+  ?cours a edu:CoursTheorique .
+  ?cours edu:intitule ?intitule .
 }}
 UNION
 {{
-  ?event a eco:SocializationEvent .
-  ?event eco:eventTitle ?title .
+  ?cours a edu:CoursPratique .
+  ?cours edu:intitule ?intitule .
+}}
+
+For Universites (Universities):
+{{
+  ?universite a edu:Universite .
+  ?universite edu:nomUniversite ?nom .
+}}
+UNION
+{{
+  ?universite a edu:UniversitePublique .
+  ?universite edu:nomUniversite ?nom .
+}}
+UNION
+{{
+  ?universite a edu:UniversitePrivee .
+  ?universite edu:nomUniversite ?nom .
+}}
+
+For Specialites (Specializations):
+{{
+  ?specialite a edu:Specialite .
+  ?specialite edu:nomSpecialite ?nom .
+}}
+UNION
+{{
+  ?specialite a edu:SpecialiteInformatique .
+  ?specialite edu:nomSpecialite ?nom .
+}}
+UNION
+{{
+  ?specialite a edu:SpecialiteDataScience .
+  ?specialite edu:nomSpecialite ?nom .
+}}
+
+For Evaluations (Assessments):
+{{
+  ?evaluation a edu:Evaluation .
+  ?evaluation edu:typeEvaluation ?type .
+}}
+
+For ProjetsAcademiques (Academic Projects):
+{{
+  ?projet a edu:ProjetAcademique .
+  ?projet edu:nomProjet ?nom .
+}}
+
+For RessourcesPedagogiques (Pedagogical Resources):
+{{
+  ?ressource a edu:RessourcePedagogique .
+  ?ressource edu:nomRessource ?nom .
+}}
+
+For TechnologiesEducatives (Educational Technologies):
+{{
+  ?technologie a edu:TechnologieEducative .
+  ?technologie edu:nomTechnologie ?nom .
+}}
+
+For OrientationsAcademiques (Academic Orientations):
+{{
+  ?orientation a edu:OrientationAcademique .
+  ?orientation edu:typeOrientation ?type .
 }}
 
 Generate a SPARQL query that accurately addresses the user's intent using the detected entities and relationships:
@@ -346,9 +417,13 @@ SPARQL QUERY:"""
         
         query = '\n'.join(query_lines).strip()
         
-        # Ensure PREFIX is included
-        if 'PREFIX eco:' not in query:
-            query = f"PREFIX eco: <http://www.semanticweb.org/eco-ontology#>\n{query}"
+        # Ensure PREFIX is included - education domain only
+        if 'edu:' in query or 'ont:' in query:
+            if 'PREFIX edu:' not in query and 'PREFIX ont:' not in query:
+                query = f"PREFIX edu: <http://www.education-intelligente.org/ontologie#>\n{query}"
+        elif 'PREFIX edu:' not in query:
+            # Default to education domain
+            query = f"PREFIX edu: <http://www.education-intelligente.org/ontologie#>\n{query}"
             
         return query
     
@@ -356,7 +431,7 @@ SPARQL QUERY:"""
         """Validate and clean the SPARQL query"""
         # Basic validation
         if not query or 'SELECT' not in query:
-            return self._get_fallback_query("events")
+            return self._get_fallback_query("personnes")
         
         # Fix common SPARQL syntax errors
         lines = query.split('\n')
@@ -369,13 +444,13 @@ SPARQL QUERY:"""
                 continue
             
             # Fix missing subject in property statements
-            if line.startswith('eco:') and not line.startswith('eco: '):
+            if (line.startswith('edu:') or line.startswith('ont:')) and not (line.startswith('edu: ') or line.startswith('ont: ')):
                 # This is a property without a subject, skip it
                 print(f"DEBUG: Skipping malformed line: {line}")
                 continue
             
             # Fix incomplete triple patterns
-            if line.endswith('eco:') and not line.endswith('eco: .'):
+            if (line.endswith('edu:') or line.endswith('ont:')) and not (line.endswith('edu: .') or line.endswith('ont: .')):
                 # This is an incomplete triple, skip it
                 print(f"DEBUG: Skipping incomplete triple: {line}")
                 continue
@@ -384,601 +459,335 @@ SPARQL QUERY:"""
         
         query = '\n'.join(fixed_lines)
         
-        # Ensure location properties are optional
-        if '?location eco:locationName ?locationName' in query and 'OPTIONAL' not in query:
-            query = query.replace(
-                '?location eco:locationName ?locationName .',
-                'OPTIONAL { ?location eco:locationName ?locationName . }'
-            )
-        
-        if '?location eco:city ?city' in query and 'OPTIONAL' not in query:
-            query = query.replace(
-                '?location eco:city ?city .',
-                'OPTIONAL { ?location eco:city ?city . }'
-            )
-        
         # Ensure LIMIT is reasonable
         if 'LIMIT' not in query:
             query += '\nLIMIT 50'
 
-        # Defensive fix: some generated queries expect a property eco:donationType
-        # to be present on donation instances, but in the ontology we model
-        # type via rdf:type (e.g. eco:FinancialDonation) and many individuals
-        # don't have eco:donationType. Make such patterns optional so queries
-        # still return donation rows when donationType is absent.
-        try:
-            # Replace required donationType triples with OPTIONAL blocks
-            query = re.sub(r"\?donation\s+eco:donationType\s+\?donationType\s*\.", \
-                           "OPTIONAL { ?donation eco:donationType ?donationType . }", query)
-        except Exception as e:
-            print(f"DEBUG: failed to apply donationType defensive fix: {e}")
-
-        # Defensive fix: queries that require '?donation a eco:Donation .' or that
-        # ask for a specific donation subclass (e.g. eco:ServiceDonation) can miss
-        # individuals typed in related subclasses. Replace any direct type check
-        # on ?donation for a class whose name ends with 'Donation' with a UNION
-        # covering the known donation classes so instances typed with subclasses
-        # are still matched.
-        try:
-            def _donation_union_replacer(m):
-                cls = m.group(1)
-                # Only apply when the matched class name ends with 'Donation'
-                if not cls or not cls.endswith('Donation'):
-                    return m.group(0)
-                unions = [
-                    "{ ?donation a eco:Donation . }",
-                    "{ ?donation a eco:FinancialDonation . }",
-                    "{ ?donation a eco:MaterialDonation . }",
-                    "{ ?donation a eco:ServiceDonation . }"
-                ]
-                return " UNION ".join(unions)
-
-            query = re.sub(r"\?donation\s+a\s+eco:([A-Za-z0-9_]+)\s*\.", _donation_union_replacer, query)
-        except Exception as e:
-            print(f"DEBUG: failed to apply donation subclass union fix: {e}")
-
-        # If the result set includes donations coming from UNIONs, the same
-        # donation node can be matched multiple times (once per matching union
-        # branch). Ensure a DISTINCT select for donation queries to remove
-        # duplicate rows.
-        try:
-            if '?donation' in query and 'SELECT DISTINCT' not in query:
-                # Replace the first occurrence of SELECT with SELECT DISTINCT
-                query = re.sub(r"SELECT\s", "SELECT DISTINCT ", query, count=1)
-        except Exception as e:
-            print(f"DEBUG: failed to enforce DISTINCT on donation queries: {e}")
-
         return query
     
     def _get_fallback_query(self, question: str) -> str:
-        """Simple fallback for emergency cases only"""
+        """Simple fallback for emergency cases only - Education domain"""
         question_lower = question.lower()
         
-        # Specific handling for volunteer queries
-        if 'volontaire' in question_lower or 'volunteer' in question_lower:
-            # "compétences" or "skills"
-            if 'compétence' in question_lower or 'skill' in question_lower or 'compétences' in question_lower:
+        # Specific handling for Personne queries
+        if 'personne' in question_lower or 'person' in question_lower or 'personnes' in question_lower or 'people' in question_lower:
                 return """
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        SELECT ?label ?skills ?activityLevel
-        WHERE {
-            ?volunteer a webprotege:RCXXzqv27uFuX5nYU81XUvw .
-            ?volunteer webprotege:RBqpxvMVBnwM1Wb6OhzTpHf ?skills .
-            OPTIONAL { ?volunteer rdfs:label ?label }
-            OPTIONAL { ?volunteer webprotege:RCHqvY6cUdoI8XfAt441VX0 ?activityLevel }
-        }
-        ORDER BY ?label
-        LIMIT 50
-        """
-            # "expérience" or "experience"
-            elif 'expérience' in question_lower or 'experience' in question_lower:
-                return """
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        SELECT ?label ?experience ?activityLevel ?skills
-        WHERE {
-            ?volunteer a webprotege:RCXXzqv27uFuX5nYU81XUvw .
-            ?volunteer webprotege:R9tdW5crNU837y5TemwdNfR ?experience .
-            OPTIONAL { ?volunteer rdfs:label ?label }
-            OPTIONAL { ?volunteer webprotege:RCHqvY6cUdoI8XfAt441VX0 ?activityLevel }
-            OPTIONAL { ?volunteer webprotege:RBqpxvMVBnwM1Wb6OhzTpHf ?skills }
-        }
-        ORDER BY ?label
-        LIMIT 50
-        """
-            # "contacts" or "contact"
-            elif 'contact' in question_lower:
-                return """
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        SELECT ?label ?phone ?email
-        WHERE {
-            ?volunteer a webprotege:RCXXzqv27uFuX5nYU81XUvw .
-            OPTIONAL { ?volunteer rdfs:label ?label }
-            OPTIONAL { ?volunteer webprotege:R8BxRbqkCT2nIQCr5UoVlXD ?phone }
-            OPTIONAL { 
-                ?volunteer webprotege:RBNk0vvVsRh8FjaWPGT0XCO ?user .
-                ?user rdfs:comment ?email
-            }
-        }
-        ORDER BY ?label
-        LIMIT 50
-        """
-            # Default: all volunteers
-            else:
-                return """
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        SELECT ?volunteer ?label ?phone ?activityLevel ?skills ?experience
-        WHERE {
-            ?volunteer a webprotege:RCXXzqv27uFuX5nYU81XUvw .
-            OPTIONAL { ?volunteer rdfs:label ?label }
-            OPTIONAL { ?volunteer webprotege:R8BxRbqkCT2nIQCr5UoVlXD ?phone }
-            OPTIONAL { ?volunteer webprotege:RCHqvY6cUdoI8XfAt441VX0 ?activityLevel }
-            OPTIONAL { ?volunteer webprotege:RBqpxvMVBnwM1Wb6OhzTpHf ?skills }
-            OPTIONAL { ?volunteer webprotege:R9tdW5crNU837y5TemwdNfR ?experience }
-        }
-        ORDER BY ?label
-        LIMIT 50
-        """
-        
-        # Specific handling for assignment queries
-        if 'assignement' in question_lower or 'assignment' in question_lower:
-            # "approuvés" or "approved"
-            if 'approuvé' in question_lower or 'approuvés' in question_lower or 'approved' in question_lower:
-                return """
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        SELECT ?assignment ?label ?status ?rating ?startDate
-        WHERE {
-            ?assignment a webprotege:Rj2A7xNWLfpNcbE4HJMKqN .
-            ?assignment webprotege:RDT3XEARggTy1BIBKDXXrmx ?status .
-            FILTER(CONTAINS(LCASE(STR(?status)), "approuv") || CONTAINS(LCASE(STR(?status)), "approved") || LCASE(STR(?status)) = "approved")
-            OPTIONAL { ?assignment rdfs:label ?label }
-            OPTIONAL { ?assignment webprotege:RRatingAssignment ?rating }
-            OPTIONAL { ?assignment webprotege:RD3Wor03BEPInfzUaMNVPC7 ?startDate }
-        }
-        ORDER BY ?assignment
-        LIMIT 50
-        """
-            # "rejetés" or "rejected"
-            elif 'rejeté' in question_lower or 'rejetés' in question_lower or 'rejected' in question_lower:
-                return """
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        SELECT ?assignment ?label ?status ?rating ?startDate
-        WHERE {
-            ?assignment a webprotege:Rj2A7xNWLfpNcbE4HJMKqN .
-            ?assignment webprotege:RDT3XEARggTy1BIBKDXXrmx ?status .
-            FILTER(CONTAINS(LCASE(STR(?status)), "rejet") || CONTAINS(LCASE(STR(?status)), "rejected") || LCASE(STR(?status)) = "rejected")
-            OPTIONAL { ?assignment rdfs:label ?label }
-            OPTIONAL { ?assignment webprotege:RRatingAssignment ?rating }
-            OPTIONAL { ?assignment webprotege:RD3Wor03BEPInfzUaMNVPC7 ?startDate }
-        }
-        ORDER BY ?assignment
-        LIMIT 50
-        """
-            # "statistiques" or "statistics"
-            elif 'statistique' in question_lower or 'statistics' in question_lower:
-                return """
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        SELECT (COUNT(?assignment) as ?totalAssignments) 
-               (COUNT(?approved) as ?approvedCount)
-               (COUNT(?rejected) as ?rejectedCount)
-               (COUNT(?pending) as ?pendingCount)
-               (AVG(?rating) as ?averageRating)
-        WHERE {
-            ?assignment a webprotege:Rj2A7xNWLfpNcbE4HJMKqN .
-            OPTIONAL { 
-                ?assignment webprotege:RDT3XEARggTy1BIBKDXXrmx ?status .
-                FILTER(CONTAINS(LCASE(STR(?status)), "approuv") || CONTAINS(LCASE(STR(?status)), "approved") || LCASE(STR(?status)) = "approved")
-                BIND(?assignment as ?approved)
-            }
-            OPTIONAL { 
-                ?assignment webprotege:RDT3XEARggTy1BIBKDXXrmx ?status .
-                FILTER(CONTAINS(LCASE(STR(?status)), "rejet") || CONTAINS(LCASE(STR(?status)), "rejected") || LCASE(STR(?status)) = "rejected")
-                BIND(?assignment as ?rejected)
-            }
-            OPTIONAL { 
-                ?assignment webprotege:RDT3XEARggTy1BIBKDXXrmx ?status .
-                FILTER(LCASE(STR(?status)) = "pending" || LCASE(STR(?status)) = "en attente")
-                BIND(?assignment as ?pending)
-            }
-            OPTIONAL { ?assignment webprotege:RRatingAssignment ?rating }
-        }
-        """
-            # "notes" or "ratings"
-            elif 'note' in question_lower or 'rating' in question_lower:
-                return """
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        SELECT ?assignment ?label ?rating ?status
-        WHERE {
-            ?assignment a webprotege:Rj2A7xNWLfpNcbE4HJMKqN .
-            ?assignment webprotege:RRatingAssignment ?rating .
-            OPTIONAL { ?assignment rdfs:label ?label }
-            OPTIONAL { ?assignment webprotege:RDT3XEARggTy1BIBKDXXrmx ?status }
-        }
-        ORDER BY DESC(?rating)
-        LIMIT 50
-        """
-            # Default: all assignments
-            else:
-                return """
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        SELECT ?assignment ?label ?status ?rating ?startDate
-        WHERE {
-            ?assignment a webprotege:Rj2A7xNWLfpNcbE4HJMKqN .
-            OPTIONAL { ?assignment rdfs:label ?label }
-            OPTIONAL { ?assignment webprotege:RDT3XEARggTy1BIBKDXXrmx ?status }
-            OPTIONAL { ?assignment webprotege:RRatingAssignment ?rating }
-            OPTIONAL { ?assignment webprotege:RD3Wor03BEPInfzUaMNVPC7 ?startDate }
-        }
-        ORDER BY ?assignment
-        LIMIT 50
-        """
-        
-        # Specific handling for reservation queries
-        if 'réservation' in question_lower or 'reservation' in question_lower or 'reserve' in question_lower:
-            # "par événement" or "by event" means group by event with count
-            if 'par événement' in question_lower or 'by event' in question_lower or 'par event' in question_lower:
-                return """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        SELECT ?eventTitle (COUNT(?reservation) as ?reservationCount)
-        WHERE {
-            ?reservation a eco:Reservation .
-            OPTIONAL {
-                ?reservation webprotege:R8r5yxVXnZfa0TwP5biVHiL ?event .
-                ?event eco:eventTitle ?eventTitle .
-            }
-        }
-        GROUP BY ?eventTitle
-        ORDER BY ?eventTitle
-        LIMIT 50
-        """
-            elif 'confirmée' in question_lower or 'confirmed' in question_lower or 'confirme' in question_lower:
-                return """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        SELECT ?reservation ?seatNumber ?status ?eventTitle ?userName ?userLastName ?userEmail
-        WHERE {
-            ?reservation a eco:Reservation .
-            ?reservation webprotege:R9wdyKGFoajnFCFN4oqnwHr ?status .
-            FILTER(LCASE(STR(?status)) = "confirmed" || LCASE(STR(?status)) = "confirmée" || LCASE(STR(?status)) = "confirme")
-            OPTIONAL { ?reservation webprotege:R7QgAmvOpBSpwRmRrDZL8VE ?seatNumber }
-            OPTIONAL {
-                ?reservation webprotege:R8r5yxVXnZfa0TwP5biVHiL ?event .
-                ?event eco:eventTitle ?eventTitle .
-            }
-            OPTIONAL {
-                ?reservation eco:belongsToUser ?user .
-                ?user eco:firstName ?userName .
-                OPTIONAL { ?user eco:lastName ?userLastName }
-                OPTIONAL { ?user eco:email ?userEmail }
-            }
-        }
-        ORDER BY ?reservation
-        LIMIT 50
-        """
-            elif 'en attente' in question_lower or 'pending' in question_lower or 'attente' in question_lower:
-                return """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        SELECT ?reservation ?seatNumber ?status ?eventTitle ?userName ?userLastName ?userEmail
-        WHERE {
-            ?reservation a eco:Reservation .
-            ?reservation webprotege:R9wdyKGFoajnFCFN4oqnwHr ?status .
-            FILTER(LCASE(STR(?status)) = "pending" || LCASE(STR(?status)) = "attente" || LCASE(STR(?status)) = "en attente")
-            OPTIONAL { ?reservation webprotege:R7QgAmvOpBSpwRmRrDZL8VE ?seatNumber }
-            OPTIONAL {
-                ?reservation webprotege:R8r5yxVXnZfa0TwP5biVHiL ?event .
-                ?event eco:eventTitle ?eventTitle .
-            }
-            OPTIONAL {
-                ?reservation eco:belongsToUser ?user .
-                ?user eco:firstName ?userName .
-                OPTIONAL { ?user eco:lastName ?userLastName }
-                OPTIONAL { ?user eco:email ?userEmail }
-            }
-        }
-        ORDER BY ?reservation
-        LIMIT 50
-        """
-            else:
-                return """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        SELECT ?reservation ?seatNumber ?status ?eventTitle ?userName ?userLastName ?userEmail
-        WHERE {
-            ?reservation a eco:Reservation .
-            OPTIONAL { ?reservation webprotege:R7QgAmvOpBSpwRmRrDZL8VE ?seatNumber }
-            OPTIONAL { ?reservation webprotege:R9wdyKGFoajnFCFN4oqnwHr ?status }
-            OPTIONAL {
-                ?reservation webprotege:R8r5yxVXnZfa0TwP5biVHiL ?event .
-                ?event eco:eventTitle ?eventTitle .
-            }
-            OPTIONAL {
-                ?reservation eco:belongsToUser ?user .
-                ?user eco:firstName ?userName .
-                OPTIONAL { ?user eco:lastName ?userLastName }
-                OPTIONAL { ?user eco:email ?userEmail }
-            }
-        }
-        ORDER BY ?reservation
-        LIMIT 50
-        """
-        
-        # Specific handling for certification queries
-        if 'certification' in question_lower or 'certificat' in question_lower:
-            # "qui a reçu" or "who received" - show recipients
-            if 'qui a reçu' in question_lower or 'who received' in question_lower or 'qui a reçu' in question_lower:
-                return """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        SELECT ?awardedToName ?awardedToEmail (COUNT(?certification) as ?certificationCount) (SUM(?pointsEarned) as ?totalPoints)
-        WHERE {
-            ?certification a eco:Certification .
-            ?certification eco:awardedTo ?recipient .
-            ?recipient eco:firstName ?awardedToName .
-            OPTIONAL { ?recipient eco:email ?awardedToEmail }
-            OPTIONAL { ?certification webprotege:R9gsGMKtVBKEAd4d8I75UkC ?pointsEarned }
-        }
-        GROUP BY ?awardedToName ?awardedToEmail
-        ORDER BY DESC(?certificationCount)
-        LIMIT 50
-        """
-            # "qui émet" or "who issues" - show issuers
-            elif 'qui émet' in question_lower or 'who issues' in question_lower or 'who issues' in question_lower or 'émet' in question_lower:
-                return """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        SELECT ?issuerName ?issuerEmail (COUNT(?certification) as ?issuedCount)
-        WHERE {
-            ?certification a eco:Certification .
-            ?certification eco:issuedBy ?issuer .
-            ?issuer eco:firstName ?issuerName .
-            OPTIONAL { ?issuer eco:email ?issuerEmail }
-        }
-        GROUP BY ?issuerName ?issuerEmail
-        ORDER BY DESC(?issuedCount)
-        LIMIT 50
-        """
-            # "quels types" or "what types" - show certification types
-            elif 'quels types' in question_lower or 'what types' in question_lower or 'type' in question_lower:
-                return """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        SELECT ?type (COUNT(?certification) as ?certificationCount)
-        WHERE {
-            ?certification a eco:Certification .
-            ?certification webprotege:RBPJvon09P5n1GLdLbu2esV ?type .
-        }
-        GROUP BY ?type
-        ORDER BY DESC(?certificationCount)
-        LIMIT 50
-        """
-            # "par points" or "by points" means order by points
-            elif 'par points' in question_lower or 'by points' in question_lower:
-                return """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        SELECT ?certification ?certificateCode ?pointsEarned ?type ?issuerName ?awardedToName ?eventTitle
-        WHERE {
-            ?certification a eco:Certification .
-            OPTIONAL { ?certification webprotege:R9QGoktbkOBbsLkvgjicNA8 ?certificateCode }
-            OPTIONAL { ?certification webprotege:R9gsGMKtVBKEAd4d8I75UkC ?pointsEarned }
-            OPTIONAL { ?certification webprotege:RBPJvon09P5n1GLdLbu2esV ?type }
-            OPTIONAL {
-                ?certification eco:issuedBy ?issuer .
-                ?issuer eco:firstName ?issuerName .
-            }
-            OPTIONAL {
-                ?certification eco:awardedTo ?recipient .
-                ?recipient eco:firstName ?awardedToName .
-            }
-            OPTIONAL {
-                ?reservation a eco:Reservation .
-                ?reservation eco:belongsToUser ?recipient .
-                ?reservation webprotege:R8r5yxVXnZfa0TwP5biVHiL ?event .
-                ?event eco:eventTitle ?eventTitle .
-            }
-        }
-        ORDER BY DESC(?pointsEarned)
-        LIMIT 50
-        """
-            # "émise" or "issued" - show all issued certifications with details
-            elif 'émis' in question_lower or 'issued' in question_lower or 'émises' in question_lower:
-                return """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        SELECT ?certification ?certificateCode ?pointsEarned ?type ?issuerName ?awardedToName ?eventTitle
-        WHERE {
-            ?certification a eco:Certification .
-            OPTIONAL { ?certification webprotege:R9QGoktbkOBbsLkvgjicNA8 ?certificateCode }
-            OPTIONAL { ?certification webprotege:R9gsGMKtVBKEAd4d8I75UkC ?pointsEarned }
-            OPTIONAL { ?certification webprotege:RBPJvon09P5n1GLdLbu2esV ?type }
-            OPTIONAL {
-                ?certification eco:issuedBy ?issuer .
-                ?issuer eco:firstName ?issuerName .
-            }
-            OPTIONAL {
-                ?certification eco:awardedTo ?recipient .
-                ?recipient eco:firstName ?awardedToName .
-            }
-            OPTIONAL {
-                ?reservation a eco:Reservation .
-                ?reservation eco:belongsToUser ?recipient .
-                ?reservation webprotege:R8r5yxVXnZfa0TwP5biVHiL ?event .
-                ?event eco:eventTitle ?eventTitle .
-            }
-        }
-        ORDER BY ?certification
-        LIMIT 50
-        """
-            else:
-                return """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        SELECT ?certification ?certificateCode ?pointsEarned ?type ?issuerName ?awardedToName ?eventTitle
-        WHERE {
-            ?certification a eco:Certification .
-            OPTIONAL { ?certification webprotege:R9QGoktbkOBbsLkvgjicNA8 ?certificateCode }
-            OPTIONAL { ?certification webprotege:R9gsGMKtVBKEAd4d8I75UkC ?pointsEarned }
-            OPTIONAL { ?certification webprotege:RBPJvon09P5n1GLdLbu2esV ?type }
-            OPTIONAL {
-                ?certification eco:issuedBy ?issuer .
-                ?issuer eco:firstName ?issuerName .
-            }
-            OPTIONAL {
-                ?certification eco:awardedTo ?recipient .
-                ?recipient eco:firstName ?awardedToName .
-            }
-            OPTIONAL {
-                ?reservation a eco:Reservation .
-                ?reservation eco:belongsToUser ?recipient .
-                ?reservation webprotege:R8r5yxVXnZfa0TwP5biVHiL ?event .
-                ?event eco:eventTitle ?eventTitle .
-            }
-        }
-        ORDER BY ?certification
-        LIMIT 50
-        """
-        
-        # Specific handling for campaign queries
-        if 'campagne' in question_lower or 'campaign' in question_lower:
-            if 'active' in question_lower or 'actif' in question_lower:
-                return """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        SELECT ?campaignName ?campaignDescription ?campaignStatus ?startDate ?endDate ?goal
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT ?personne ?nom ?prenom ?email ?telephone ?role
         WHERE {
             {
-                ?campaign a eco:Campaign .
-                ?campaign eco:campaignName ?campaignName .
-                ?campaign eco:campaignStatus ?campaignStatus .
-                FILTER(LCASE(STR(?campaignStatus)) = "active" || LCASE(STR(?campaignStatus)) = "actif")
+                ?personne a edu:Personne .
             }
             UNION
             {
-                ?campaign a eco:CleanupCampaign .
-                ?campaign eco:campaignName ?campaignName .
-                ?campaign eco:campaignStatus ?campaignStatus .
-                FILTER(LCASE(STR(?campaignStatus)) = "active" || LCASE(STR(?campaignStatus)) = "actif")
+                ?personne a edu:Etudiant .
             }
             UNION
             {
-                ?campaign a eco:AwarenessCampaign .
-                ?campaign eco:campaignName ?campaignName .
-                ?campaign eco:campaignStatus ?campaignStatus .
-                FILTER(LCASE(STR(?campaignStatus)) = "active" || LCASE(STR(?campaignStatus)) = "actif")
+                ?personne a edu:Enseignant .
             }
-            UNION
-            {
-                ?campaign a eco:FundingCampaign .
-                ?campaign eco:campaignName ?campaignName .
-                ?campaign eco:campaignStatus ?campaignStatus .
-                FILTER(LCASE(STR(?campaignStatus)) = "active" || LCASE(STR(?campaignStatus)) = "actif")
-            }
-            UNION
-            {
-                ?campaign a eco:EventCampaign .
-                ?campaign eco:campaignName ?campaignName .
-                ?campaign eco:campaignStatus ?campaignStatus .
-                FILTER(LCASE(STR(?campaignStatus)) = "active" || LCASE(STR(?campaignStatus)) = "actif")
-            }
-            OPTIONAL { ?campaign eco:campaignDescription ?campaignDescription }
-            OPTIONAL { ?campaign eco:startDate ?startDate }
-            OPTIONAL { ?campaign eco:endDate ?endDate }
-            OPTIONAL { ?campaign eco:goal ?goal }
+            OPTIONAL { ?personne edu:nom ?nom }
+            OPTIONAL { ?personne edu:prenom ?prenom }
+            OPTIONAL { ?personne edu:email ?email }
+            OPTIONAL { ?personne edu:telephone ?telephone }
+            OPTIONAL { ?personne edu:role ?role }
         }
-        ORDER BY ?campaignName
-        LIMIT 50
-        """
-            else:
-                return """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        SELECT ?campaignName ?campaignDescription ?campaignStatus ?startDate ?endDate ?goal
-        WHERE {
-            ?campaign a eco:Campaign .
-            ?campaign eco:campaignName ?campaignName .
-            OPTIONAL { ?campaign eco:campaignDescription ?campaignDescription }
-            OPTIONAL { ?campaign eco:campaignStatus ?campaignStatus }
-            OPTIONAL { ?campaign eco:startDate ?startDate }
-            OPTIONAL { ?campaign eco:endDate ?endDate }
-            OPTIONAL { ?campaign eco:goal ?goal }
-        }
-        ORDER BY ?campaignName
+        ORDER BY ?nom
         LIMIT 50
         """
         
+        # Specific handling for Etudiant queries
+        if 'étudiant' in question_lower or 'etudiant' in question_lower or 'student' in question_lower:
+                return """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT ?etudiant ?nom ?prenom ?email ?numeroMatricule ?niveauEtude ?moyenneGenerale
+        WHERE {
+            {
+                ?etudiant a edu:Etudiant .
+            }
+            UNION
+            {
+                ?etudiant a edu:EtudiantLicence .
+            }
+            UNION
+            {
+                ?etudiant a edu:EtudiantMaster .
+            }
+            UNION
+            {
+                ?etudiant a edu:EtudiantDoctorat .
+            }
+            OPTIONAL { ?etudiant edu:nom ?nom }
+            OPTIONAL { ?etudiant edu:prenom ?prenom }
+            OPTIONAL { ?etudiant edu:email ?email }
+            OPTIONAL { ?etudiant edu:numeroMatricule ?numeroMatricule }
+            OPTIONAL { ?etudiant edu:niveauEtude ?niveauEtude }
+            OPTIONAL { ?etudiant edu:moyenneGenerale ?moyenneGenerale }
+        }
+        ORDER BY ?nom
+        LIMIT 50
+        """
+        
+        # Specific handling for Enseignant queries
+        if 'enseignant' in question_lower or 'teacher' in question_lower or 'professeur' in question_lower or 'professor' in question_lower:
+                return """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT ?enseignant ?nom ?prenom ?email ?grade ?anciennete
+        WHERE {
+            {
+                ?enseignant a edu:Enseignant .
+            }
+            UNION
+            {
+                ?enseignant a edu:Professeur .
+            }
+            UNION
+            {
+                ?enseignant a edu:Assistant .
+            }
+            UNION
+            {
+                ?enseignant a edu:Encadrant .
+            }
+            OPTIONAL { ?enseignant edu:nom ?nom }
+            OPTIONAL { ?enseignant edu:prenom ?prenom }
+            OPTIONAL { ?enseignant edu:email ?email }
+            OPTIONAL { ?enseignant edu:grade ?grade }
+            OPTIONAL { ?enseignant edu:anciennete ?anciennete }
+        }
+        ORDER BY ?nom
+        LIMIT 50
+        """
+        
+        # Specific handling for Universite queries
+        if 'université' in question_lower or 'universite' in question_lower or 'university' in question_lower:
+                return """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT ?universite ?nomUniversite ?ville ?pays ?nombreEtudiants
+        WHERE {
+            {
+                ?universite a edu:Universite .
+            }
+            UNION
+            {
+                ?universite a edu:UniversitePublique .
+            }
+            UNION
+            {
+                ?universite a edu:UniversitePrivee .
+            }
+            OPTIONAL { ?universite edu:nomUniversite ?nomUniversite }
+            OPTIONAL { ?universite edu:ville ?ville }
+            OPTIONAL { ?universite edu:pays ?pays }
+            OPTIONAL { ?universite edu:nombreEtudiants ?nombreEtudiants }
+        }
+        ORDER BY ?nomUniversite
+        LIMIT 50
+        """
+        
+        # Specific handling for Specialite queries
+        if 'spécialité' in question_lower or 'specialite' in question_lower or 'specialization' in question_lower:
+                return """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT ?specialite ?nomSpecialite ?codeSpecialite ?description
+        WHERE {
+            ?specialite a edu:Specialite .
+            OPTIONAL { ?specialite edu:nomSpecialite ?nomSpecialite }
+            OPTIONAL { ?specialite edu:codeSpecialite ?codeSpecialite }
+            OPTIONAL { ?specialite edu:description ?description }
+        }
+        ORDER BY ?nomSpecialite
+        LIMIT 50
+        """
+        
+        # Specific handling for Cours queries
+        if 'cours' in question_lower or 'course' in question_lower:
+                return """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT ?cours ?intitule ?codeCours ?creditsECTS ?semestre
+        WHERE {
+            {
+                ?cours a edu:Cours .
+            }
+            UNION
+            {
+                ?cours a edu:CoursTheorique .
+            }
+            UNION
+            {
+                ?cours a edu:CoursPratique .
+            }
+            OPTIONAL { ?cours edu:intitule ?intitule }
+            OPTIONAL { ?cours edu:codeCours ?codeCours }
+            OPTIONAL { ?cours edu:creditsECTS ?creditsECTS }
+            OPTIONAL { ?cours edu:semestre ?semestre }
+        }
+        ORDER BY ?intitule
+        LIMIT 50
+        """
+        
+        # Specific handling for Competence queries
+        if 'compétence' in question_lower or 'competence' in question_lower or 'skill' in question_lower:
+                return """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT ?competence ?nomCompetence ?description ?niveau
+        WHERE {
+            ?competence a edu:Competence .
+            OPTIONAL { ?competence edu:nomCompetence ?nomCompetence }
+            OPTIONAL { ?competence edu:description ?description }
+            OPTIONAL { ?competence edu:niveau ?niveau }
+        }
+        ORDER BY ?nomCompetence
+        LIMIT 50
+        """
+        
+        # Specific handling for ProjetAcademique queries
+        if 'projet' in question_lower or 'project' in question_lower:
+                return """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT ?projet ?nomProjet ?description ?dateDebut ?dateFin
+        WHERE {
+            ?projet a edu:ProjetAcademique .
+            OPTIONAL { ?projet edu:nomProjet ?nomProjet }
+            OPTIONAL { ?projet edu:description ?description }
+            OPTIONAL { ?projet edu:dateDebut ?dateDebut }
+            OPTIONAL { ?projet edu:dateFin ?dateFin }
+        }
+        ORDER BY ?nomProjet
+        LIMIT 50
+        """
+        
+        # Specific handling for RessourcePedagogique queries
+        if 'ressource' in question_lower or 'resource' in question_lower:
+                return """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT ?ressource ?nomRessource ?description ?typeRessource
+        WHERE {
+            ?ressource a edu:RessourcePedagogique .
+            OPTIONAL { ?ressource edu:nomRessource ?nomRessource }
+            OPTIONAL { ?ressource edu:description ?description }
+            OPTIONAL { ?ressource edu:typeRessource ?typeRessource }
+        }
+        ORDER BY ?nomRessource
+        LIMIT 50
+        """
+        
+        # Specific handling for TechnologieEducative queries
+        if 'technologie' in question_lower or 'technology' in question_lower:
+                return """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT ?technologie ?nomTechnologie ?description ?typeTechnologie
+        WHERE {
+            ?technologie a edu:TechnologieEducative .
+            OPTIONAL { ?technologie edu:nomTechnologie ?nomTechnologie }
+            OPTIONAL { ?technologie edu:description ?description }
+            OPTIONAL { ?technologie edu:typeTechnologie ?typeTechnologie }
+        }
+        ORDER BY ?nomTechnologie
+        LIMIT 50
+        """
+        
+        # Specific handling for Evaluation queries
+        if 'évaluation' in question_lower or 'evaluation' in question_lower or 'examen' in question_lower or 'exam' in question_lower:
+                return """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT ?evaluation ?typeEvaluation ?dateEvaluation ?note
+        WHERE {
+            ?evaluation a edu:Evaluation .
+            OPTIONAL { ?evaluation edu:typeEvaluation ?typeEvaluation }
+            OPTIONAL { ?evaluation edu:dateEvaluation ?dateEvaluation }
+            OPTIONAL { ?evaluation edu:note ?note }
+        }
+        ORDER BY ?dateEvaluation
+        LIMIT 50
+        """
+        
+        # Specific handling for OrientationAcademique queries
+        if 'orientation' in question_lower or 'orientation' in question_lower:
+                return """
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
+        SELECT ?orientation ?typeOrientation ?dateOrientation
+        WHERE {
+            {
+                ?orientation a edu:OrientationAcademique .
+            }
+            UNION
+            {
+                ?orientation a edu:EntretienConseiller .
+            }
+            OPTIONAL { ?orientation edu:typeOrientation ?typeOrientation }
+            OPTIONAL { ?orientation edu:dateOrientation ?dateOrientation }
+        }
+        ORDER BY ?dateOrientation
+        LIMIT 50
+        """
+        
+        # Default fallback query for education domain
         return """
-        PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-        PREFIX webprotege: <http://webprotege.stanford.edu/>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX edu: <http://www.education-intelligente.org/ontologie#>
         SELECT ?item ?name ?type
         WHERE {
             {
-                ?item a eco:Event ;
-                     eco:eventTitle ?name .
-                BIND("Event" as ?type)
+                ?item a edu:Personne .
+                OPTIONAL { ?item edu:nom ?nom1 . ?item edu:prenom ?prenom1 . }
+                BIND(CONCAT(COALESCE(?nom1, ""), " ", COALESCE(?prenom1, "")) as ?name)
+                BIND("Personne" as ?type)
             }
             UNION
             {
-                ?item a eco:EducationalEvent ;
-                     eco:eventTitle ?name .
-                BIND("EducationalEvent" as ?type)
+                ?item a edu:Universite .
+                ?item edu:nomUniversite ?name .
+                BIND("Universite" as ?type)
             }
             UNION
             {
-                ?item a eco:EntertainmentEvent ;
-                     eco:eventTitle ?name .
-                BIND("EntertainmentEvent" as ?type)
+                ?item a edu:Specialite .
+                ?item edu:nomSpecialite ?name .
+                BIND("Specialite" as ?type)
             }
             UNION
             {
-                ?item a eco:CompetitiveEvent ;
-                     eco:eventTitle ?name .
-                BIND("CompetitiveEvent" as ?type)
+                ?item a edu:Cours .
+                ?item edu:intitule ?name .
+                BIND("Cours" as ?type)
             }
             UNION
             {
-                ?item a eco:Location ;
-                     eco:locationName ?name .
-                BIND("Location" as ?type)
+                ?item a edu:Competence .
+                ?item edu:nomCompetence ?name .
+                BIND("Competence" as ?type)
             }
             UNION
             {
-                ?item a webprotege:RCXXzqv27uFuX5nYU81XUvw ;
-                     rdfs:label ?name .
-                BIND("Volunteer" as ?type)
+                ?item a edu:ProjetAcademique .
+                ?item edu:nomProjet ?name .
+                BIND("ProjetAcademique" as ?type)
             }
             UNION
             {
-                ?item a webprotege:Rj2A7xNWLfpNcbE4HJMKqN ;
-                     rdfs:label ?name .
-                BIND("Assignment" as ?type)
+                ?item a edu:RessourcePedagogique .
+                ?item edu:nomRessource ?name .
+                BIND("RessourcePedagogique" as ?type)
             }
             UNION
             {
-                ?item a eco:Campaign ;
-                     eco:campaignName ?name .
-                BIND("Campaign" as ?type)
+                ?item a edu:TechnologieEducative .
+                ?item edu:nomTechnologie ?name .
+                BIND("TechnologieEducative" as ?type)
             }
             UNION
             {
-                ?item a eco:Sponsor ;
-                     eco:companyName ?name .
-                BIND("Sponsor" as ?type)
+                ?item a edu:Evaluation .
+                ?item edu:typeEvaluation ?name .
+                BIND("Evaluation" as ?type)
             }
             UNION
             {
-                ?item a eco:Donation ;
-                     eco:dateDonated ?name .
-                BIND("Donation" as ?type)
+                ?item a edu:OrientationAcademique .
+                ?item edu:typeOrientation ?name .
+                BIND("OrientationAcademique" as ?type)
             }
         }
         ORDER BY ?type ?name
-        LIMIT 20
+        LIMIT 50
         """

@@ -10,6 +10,7 @@ const Competences = () => {
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
     type: '',
+    niveau: '',
     search: ''
   });
 
@@ -30,8 +31,16 @@ const Competences = () => {
     parType: {}
   });
 
+  // Facets state for dynamic filters
+  const [facets, setFacets] = useState({
+    by_type: [],
+    by_niveau: [],
+    by_specialite: []
+  });
+
   useEffect(() => {
     fetchCompetences();
+    fetchFacets();
   }, []);
 
   useEffect(() => {
@@ -53,6 +62,17 @@ const Competences = () => {
       setError('Erreur lors du chargement des compétences');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchFacets = async () => {
+    try {
+      const response = await competencesAPI.getFacets();
+      if (response.data) {
+        setFacets(response.data);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des facettes:', error);
     }
   };
 
@@ -80,6 +100,13 @@ const Competences = () => {
       });
     }
 
+    if (filters.niveau) {
+      filtered = filtered.filter(competence => {
+        const niveau = competence.niveauCompetence?.toLowerCase() || '';
+        return niveau.includes(filters.niveau.toLowerCase());
+      });
+    }
+
     if (filters.search) {
       filtered = filtered.filter(competence => {
         const nom = competence.nomCompetence?.toLowerCase() || '';
@@ -104,6 +131,7 @@ const Competences = () => {
   const clearFilters = () => {
     setFilters({
       type: '',
+      niveau: '',
       search: ''
     });
   };
@@ -177,7 +205,9 @@ const Competences = () => {
     try {
       const response = await competencesAPI.getById(competence.competence);
       const details = Array.isArray(response.data) ? response.data[0] : response.data;
-      setSelectedCompetence(details || competence);
+      // Merge API response with original competence data to ensure all fields are available
+      const mergedData = { ...competence, ...details };
+      setSelectedCompetence(mergedData);
       setShowDetailsModal(true);
     } catch (error) {
       console.error('Erreur lors du chargement des détails:', error);
@@ -267,9 +297,27 @@ const Competences = () => {
               className="filter-select"
             >
               <option value="">Tous les types</option>
-              <option value="Technique">Technique</option>
-              <option value="Transversale">Transversale</option>
-              <option value="Recherche">Recherche</option>
+              {facets.by_type && facets.by_type.map((facet, index) => (
+                <option key={index} value={facet.typeCompetence || ''}>
+                  {facet.typeCompetence || 'Non spécifié'} ({facet.count || 0})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="filter-group">
+            <label className="filter-label">Niveau</label>
+            <select 
+              value={filters.niveau || ''} 
+              onChange={(e) => handleFilterChange('niveau', e.target.value)}
+              className="filter-select"
+            >
+              <option value="">Tous les niveaux</option>
+              {facets.by_niveau && facets.by_niveau.map((facet, index) => (
+                <option key={index} value={facet.niveauCompetence || ''}>
+                  {facet.niveauCompetence || 'Non spécifié'} ({facet.count || 0})
+                </option>
+              ))}
             </select>
           </div>
 

@@ -3,6 +3,7 @@
 from flask import Blueprint, jsonify, request
 from sparql_utils import sparql_utils
 from modules.validators import validate_evaluation
+from modules.dbpedia_service import dbpedia_service
 import uuid
 
 evaluations_bp = Blueprint('evaluations', __name__)
@@ -237,6 +238,87 @@ def search_evaluations():
     try:
         results = sparql_utils.execute_query(query)
         return jsonify(results)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@evaluations_bp.route('/evaluations/facets', methods=['GET'])
+def get_evaluations_facets():
+    """Récupère les facettes pour la navigation filtrée"""
+    query_type = f"""
+    PREFIX ont: <{PREFIX}>
+    SELECT ?typeEvaluation (COUNT(DISTINCT ?evaluation) as ?count)
+    WHERE {{
+        ?evaluation a ont:Evaluation .
+        ?evaluation ont:typeEvaluation ?typeEvaluation .
+    }}
+    GROUP BY ?typeEvaluation
+    ORDER BY DESC(?count)
+    """
+    query_cours = f"""
+    PREFIX ont: <{PREFIX}>
+    SELECT ?cours ?intitule (COUNT(DISTINCT ?evaluation) as ?count)
+    WHERE {{
+        ?evaluation a ont:Evaluation .
+        ?evaluation ont:porteSur ?cours .
+        ?cours ont:intitule ?intitule .
+    }}
+    GROUP BY ?cours ?intitule
+    ORDER BY DESC(?count)
+    LIMIT 20
+    """
+    query_competence = f"""
+    PREFIX ont: <{PREFIX}>
+    SELECT ?competence ?nomCompetence (COUNT(DISTINCT ?evaluation) as ?count)
+    WHERE {{
+        ?evaluation a ont:Evaluation .
+        ?evaluation ont:mesureCompetence ?competence .
+        ?competence ont:nomCompetence ?nomCompetence .
+    }}
+    GROUP BY ?competence ?nomCompetence
+    ORDER BY DESC(?count)
+    LIMIT 20
+    """
+    try:
+        facets = {
+            "by_type": sparql_utils.execute_query(query_type),
+            "by_cours": sparql_utils.execute_query(query_cours),
+            "by_competence": sparql_utils.execute_query(query_competence)
+        }
+        return jsonify(facets)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@evaluations_bp.route('/evaluations/<path:evaluation_id>/dbpedia-enrich', methods=['GET'])
+def enrich_evaluation_with_dbpedia(evaluation_id):
+    """Enrich evaluation data with DBpedia information"""
+    try:
+        query = f"""
+        PREFIX ont: <{PREFIX}>
+        SELECT ?typeEvaluation ?intituleCours
+        WHERE {{
+            <{evaluation_id}> a ont:Evaluation .
+            OPTIONAL {{ <{evaluation_id}> ont:typeEvaluation ?typeEvaluation . }}
+            OPTIONAL {{
+                <{evaluation_id}> ont:evalue ?cours .
+                ?cours ont:intitule ?intituleCours .
+            }}
+        }}
+        LIMIT 1
+        """
+        results = sparql_utils.execute_query(query)
+        if not results:
+            return jsonify({"error": "Évaluation non trouvée"}), 404
+        evaluation_data = results[0]
+        search_term = request.args.get('term') or evaluation_data.get("typeEvaluation") or evaluation_data.get("intituleCours", "")
+        enriched_data = {"evaluation": evaluation_data, "search_term": search_term, "dbpedia_enrichment": None}
+        if search_term:
+            dbpedia_results = dbpedia_service.search_entities(search_term)
+            if dbpedia_results.get("results") and len(dbpedia_results["results"]) > 0:
+                first_result = dbpedia_results["results"][0]
+                enriched_data["dbpedia_enrichment"] = {"title": first_result["title"], "uri": first_result["uri"], "all_results": dbpedia_results["results"][:5]}
+            else:
+                enriched_data["dbpedia_enrichment"] = dbpedia_results
+        return jsonify(enriched_data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

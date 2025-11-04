@@ -29,8 +29,15 @@ const RessourcesPedagogiques = () => {
     total: 0
   });
 
+  // Facets state for dynamic filters
+  const [facets, setFacets] = useState({
+    by_type: [],
+    by_technologie: []
+  });
+
   useEffect(() => {
     fetchRessources();
+    fetchFacets();
   }, []);
 
   useEffect(() => {
@@ -52,6 +59,17 @@ const RessourcesPedagogiques = () => {
       setError('Erreur lors du chargement des ressources');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchFacets = async () => {
+    try {
+      const response = await ressourcesAPI.getFacets();
+      if (response.data) {
+        setFacets(response.data);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des facettes:', error);
     }
   };
 
@@ -160,7 +178,9 @@ const RessourcesPedagogiques = () => {
     try {
       const response = await ressourcesAPI.getById(ressource.ressource);
       const details = Array.isArray(response.data) ? response.data[0] : response.data;
-      setSelectedRessource(details || ressource);
+      // Merge API response with original ressource data to ensure all fields are available
+      const mergedData = { ...ressource, ...details };
+      setSelectedRessource(mergedData);
       setShowDetailsModal(true);
     } catch (error) {
       console.error('Erreur lors du chargement des détails:', error);
@@ -247,10 +267,11 @@ const RessourcesPedagogiques = () => {
               className="filter-select"
             >
               <option value="">Tous les types</option>
-              <option value="Article scientifique">Article scientifique</option>
-              <option value="Livre">Livre</option>
-              <option value="Vidéo">Vidéo</option>
-              <option value="Documentation">Documentation</option>
+              {facets.by_type && facets.by_type.map((facet, index) => (
+                <option key={index} value={facet.typeRessource || ''}>
+                  {facet.typeRessource || 'Non spécifié'} ({facet.count || 0})
+                </option>
+              ))}
             </select>
           </div>
 
