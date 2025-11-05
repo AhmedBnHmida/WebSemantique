@@ -1,4 +1,4 @@
-# 🌿 Eco Platform - Projet Web Sémantique
+# 🌿 Projet Web Sémantique
 
 Plateforme de gestion des campagnes écologiques utilisant une ontologie OWL.
 
