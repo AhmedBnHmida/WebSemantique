@@ -20,6 +20,7 @@ api.interceptors.response.use(
 
 export const searchAPI = {
   semanticSearch: (question) => api.post('/search', { question }),
+  dbpediaSearch: (text) => api.post('/dbpedia/search', { text }),
 };
 
 export const sponsorsAPI = {
@@ -72,7 +73,17 @@ export const personnesAPI = {
   // CRUD operations
   create: (data) => api.post('/personnes', data),
   update: (id, data) => api.put(`/personnes/${id}`, data),
-  delete: (id) => api.delete(`/personnes/${id}`)
+  delete: (id) => api.delete(`/personnes/${id}`),
+  
+  // Faceted navigation
+  getFacets: () => api.get('/personnes/facets'),
+  
+  // Linked Data integration (DBpedia)
+  enrichWithDBpedia: (id, term = null) => {
+    const url = `/personnes/${id}/dbpedia-enrich`;
+    const params = term ? { params: { term } } : {};
+    return api.get(url, params);
+  }
 };
 
 // NEW: Specialité API endpoints
@@ -114,7 +125,17 @@ export const specialitesAPI = {
   // CRUD operations
   create: (data) => api.post('/specialites', data),
   update: (id, data) => api.put(`/specialites/${id}`, data),
-  delete: (id) => api.delete(`/specialites/${id}`)
+  delete: (id) => api.delete(`/specialites/${id}`),
+  
+  // Faceted navigation
+  getFacets: () => api.get('/specialites/facets'),
+  
+  // DBpedia enrichment (supports optional term parameter)
+  enrichWithDBpedia: (id, term = null) => {
+    const url = `/specialites/${id}/dbpedia-enrich`;
+    const params = term ? { params: { term } } : {};
+    return api.get(url, params);
+  }
 };
 
 // NEW: Université API endpoints
@@ -164,7 +185,13 @@ export const universitesAPI = {
   // CRUD operations
   create: (data) => api.post('/universites', data),
   update: (id, data) => api.put(`/universites/${id}`, data),
-  delete: (id) => api.delete(`/universites/${id}`)
+  delete: (id) => api.delete(`/universites/${id}`),
+  
+  // Faceted navigation (stats includes facets)
+  getFacets: () => api.get('/universites/stats'),
+  
+  // Linked Data integration (DBpedia)
+  enrichWithDBpedia: (id) => api.get(`/universites/${id}/dbpedia-enrich`)
 };
 
 export const ontologyAPI = {
@@ -231,7 +258,13 @@ export const coursAPI = {
   search: (filters) => api.post('/cours/search', filters),
   create: (data) => api.post('/cours', data),
   update: (id, data) => api.put(`/cours/${id}`, data),
-  delete: (id) => api.delete(`/cours/${id}`)
+  delete: (id) => api.delete(`/cours/${id}`),
+  getFacets: () => api.get('/cours/facets'),
+  enrichWithDBpedia: (id, term = null) => {
+    const url = `/cours/${id}/dbpedia-enrich`;
+    const params = term ? { params: { term } } : {};
+    return api.get(url, params);
+  }
 };
 
 // Competences API endpoints
@@ -241,17 +274,27 @@ export const competencesAPI = {
   search: (filters) => api.post('/competences/search', filters),
   create: (data) => api.post('/competences', data),
   update: (id, data) => api.put(`/competences/${id}`, data),
-  delete: (id) => api.delete(`/competences/${id}`)
+  delete: (id) => api.delete(`/competences/${id}`),
+  getFacets: () => api.get('/competences/facets'),
+  enrichWithDBpedia: (id, term = null) => {
+    const url = `/competences/${id}/dbpedia-enrich`;
+    const params = term ? { params: { term } } : {};
+    return api.get(url, params);
+  }
 };
 
-// Projets Academiques API endpoints
+  // Projets Academiques API endpoints
 export const projetsAPI = {
   getAll: () => api.get('/projets-academiques'),
   getById: (id) => api.get(`/projets-academiques/${id}`),
   search: (filters) => api.post('/projets-academiques/search', filters),
   create: (data) => api.post('/projets-academiques', data),
   update: (id, data) => api.put(`/projets-academiques/${id}`, data),
-  delete: (id) => api.delete(`/projets-academiques/${id}`)
+  delete: (id) => api.delete(`/projets-academiques/${id}`),
+  getFacets: () => api.get('/projets-academiques/facets'),
+  
+  // Linked Data integration (DBpedia)
+  enrichWithDBpedia: (id) => api.get(`/projets-academiques/${id}/dbpedia-enrich`)
 };
 
 // Ressources Pedagogiques API endpoints
@@ -261,7 +304,13 @@ export const ressourcesAPI = {
   search: (filters) => api.post('/ressources-pedagogiques/search', filters),
   create: (data) => api.post('/ressources-pedagogiques', data),
   update: (id, data) => api.put(`/ressources-pedagogiques/${id}`, data),
-  delete: (id) => api.delete(`/ressources-pedagogiques/${id}`)
+  delete: (id) => api.delete(`/ressources-pedagogiques/${id}`),
+  getFacets: () => api.get('/ressources-pedagogiques/facets'),
+  enrichWithDBpedia: (id, term = null) => {
+    const url = `/ressources-pedagogiques/${id}/dbpedia-enrich`;
+    const params = term ? { params: { term } } : {};
+    return api.get(url, params);
+  }
 };
 
 // Technologies Educatives API endpoints
@@ -271,7 +320,13 @@ export const technologiesAPI = {
   search: (filters) => api.post('/technologies-educatives/search', filters),
   create: (data) => api.post('/technologies-educatives', data),
   update: (id, data) => api.put(`/technologies-educatives/${id}`, data),
-  delete: (id) => api.delete(`/technologies-educatives/${id}`)
+  delete: (id) => api.delete(`/technologies-educatives/${id}`),
+  getFacets: () => api.get('/technologies-educatives/facets'),
+  enrichWithDBpedia: (id, term = null) => {
+    const url = `/technologies-educatives/${id}/dbpedia-enrich`;
+    const params = term ? { params: { term } } : {};
+    return api.get(url, params);
+  }
 };
 
 // Evaluations API endpoints
@@ -281,7 +336,13 @@ export const evaluationsAPI = {
   search: (filters) => api.post('/evaluations/search', filters),
   create: (data) => api.post('/evaluations', data),
   update: (id, data) => api.put(`/evaluations/${id}`, data),
-  delete: (id) => api.delete(`/evaluations/${id}`)
+  delete: (id) => api.delete(`/evaluations/${id}`),
+  getFacets: () => api.get('/evaluations/facets'),
+  enrichWithDBpedia: (id, term = null) => {
+    const url = `/evaluations/${id}/dbpedia-enrich`;
+    const params = term ? { params: { term } } : {};
+    return api.get(url, params);
+  }
 };
 
 // Orientations Academiques API endpoints
@@ -291,7 +352,13 @@ export const orientationsAPI = {
   search: (filters) => api.post('/orientations-academiques/search', filters),
   create: (data) => api.post('/orientations-academiques', data),
   update: (id, data) => api.put(`/orientations-academiques/${id}`, data),
-  delete: (id) => api.delete(`/orientations-academiques/${id}`)
+  delete: (id) => api.delete(`/orientations-academiques/${id}`),
+  getFacets: () => api.get('/orientations-academiques/facets'),
+  enrichWithDBpedia: (id, term = null) => {
+    const url = `/orientations-academiques/${id}/dbpedia-enrich`;
+    const params = term ? { params: { term } } : {};
+    return api.get(url, params);
+  }
 };
 
 export default api;

@@ -28,6 +28,8 @@ const Universites = () => {
   const [selectedUniversite, setSelectedUniversite] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [activeTab, setActiveTab] = useState('info');
+  const [dbpediaData, setDbpediaData] = useState(null);
+  const [loadingDBpedia, setLoadingDBpedia] = useState(false);
   
   // CRUD Modal states
   const [modalState, setModalState] = useState({
@@ -40,6 +42,7 @@ const Universites = () => {
   useEffect(() => {
     fetchUniversites();
     fetchSpecialites();
+    fetchFacets();
   }, []);
 
   useEffect(() => {
@@ -248,14 +251,41 @@ const Universites = () => {
     try {
       // Fetch detailed information for the selected university
       const response = await universitesAPI.getById(universite.universite);
-      setSelectedUniversite(response.data);
+      const details = Array.isArray(response.data) ? response.data[0] : response.data;
+      // Merge API response with original universite data to ensure all fields are available
+      const mergedData = { ...universite, ...details };
+      setSelectedUniversite(mergedData);
       setShowDetailsModal(true);
       setActiveTab('info');
+      
+      // Fetch DBpedia enrichment if city is available
+      if (universite.ville || mergedData.ville) {
+        fetchDBpediaEnrichment(universite.universite);
+      }
     } catch (error) {
       console.error('Erreur lors du chargement des détails:', error);
       setSelectedUniversite(universite);
       setShowDetailsModal(true);
       setActiveTab('info');
+    }
+  };
+
+  const fetchDBpediaEnrichment = async (universiteId) => {
+    try {
+      setLoadingDBpedia(true);
+      const response = await universitesAPI.enrichWithDBpedia(universiteId);
+      if (response.data) {
+        if (response.data.dbpedia_enrichment) {
+          setDbpediaData(response.data.dbpedia_enrichment);
+        } else if (response.data.error) {
+          setDbpediaData({ error: response.data.error });
+        }
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des données DBpedia:', error);
+      setDbpediaData({ error: 'Erreur lors du chargement des données DBpedia' });
+    } finally {
+      setLoadingDBpedia(false);
     }
   };
 
@@ -301,12 +331,37 @@ const Universites = () => {
     }
   };
 
+  const [facets, setFacets] = useState({
+    by_type: [],
+    by_pays: [],
+    by_ville: []
+  });
+
+  const fetchFacets = async () => {
+    try {
+      const response = await universitesAPI.getFacets();
+      if (response.data && response.data.facets) {
+        setFacets(response.data.facets);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des facettes:', error);
+    }
+  };
+
   const getVilleOptions = () => {
+    // Use facets if available, otherwise fallback to existing logic
+    if (facets.by_ville && facets.by_ville.length > 0) {
+      return facets.by_ville.map(f => f.ville).filter(Boolean);
+    }
     const villes = [...new Set(universites.map(u => u.ville).filter(Boolean))];
     return villes.sort();
   };
 
   const getPaysOptions = () => {
+    // Use facets if available, otherwise fallback to existing logic
+    if (facets.by_pays && facets.by_pays.length > 0) {
+      return facets.by_pays.map(f => f.pays).filter(Boolean);
+    }
     const pays = [...new Set(universites.map(u => u.pays).filter(Boolean))];
     return pays.sort();
   };
@@ -425,11 +480,19 @@ const Universites = () => {
               className="filter-select"
             >
               <option value="">Toutes les villes</option>
-              {getVilleOptions().map((ville, index) => (
-                <option key={index} value={ville}>
-                  {ville}
-                </option>
-              ))}
+              {facets.by_ville && facets.by_ville.length > 0 ? (
+                facets.by_ville.map((facet, index) => (
+                  <option key={index} value={facet.ville || ''}>
+                    {facet.ville || 'Non spécifié'} ({facet.count || 0})
+                  </option>
+                ))
+              ) : (
+                getVilleOptions().map((ville, index) => (
+                  <option key={index} value={ville}>
+                    {ville}
+                  </option>
+                ))
+              )}
             </select>
           </div>
 
@@ -441,11 +504,19 @@ const Universites = () => {
               className="filter-select"
             >
               <option value="">Tous les pays</option>
-              {getPaysOptions().map((pays, index) => (
-                <option key={index} value={pays}>
-                  {pays}
-                </option>
-              ))}
+              {facets.by_pays && facets.by_pays.length > 0 ? (
+                facets.by_pays.map((facet, index) => (
+                  <option key={index} value={facet.pays || ''}>
+                    {facet.pays || 'Non spécifié'} ({facet.count || 0})
+                  </option>
+                ))
+              ) : (
+                getPaysOptions().map((pays, index) => (
+                  <option key={index} value={pays}>
+                    {pays}
+                  </option>
+                ))
+              )}
             </select>
           </div>
 
@@ -589,13 +660,23 @@ const Universites = () => {
 
       {/* Details Modal */}
       {showDetailsModal && selectedUniversite && (
-        <div className="modal-overlay" onClick={() => setShowDetailsModal(false)}>
+        <div className="modal-overlay" onClick={() => {
+          setShowDetailsModal(false);
+          setSelectedUniversite(null);
+          setDbpediaData(null);
+          setActiveTab('info');
+        }}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <h2>{selectedUniversite.nomUniversite}</h2>
               <button 
                 className="modal-close"
-                onClick={() => setShowDetailsModal(false)}
+                onClick={() => {
+                  setShowDetailsModal(false);
+                  setSelectedUniversite(null);
+                  setDbpediaData(null);
+                  setActiveTab('info');
+                }}
               >
                 ×
               </button>
@@ -626,10 +707,18 @@ const Universites = () => {
               >
                 Étudiants
               </button>
+              {dbpediaData && (
+                <button 
+                  className={`tab-button ${activeTab === 'dbpedia' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('dbpedia')}
+                >
+                  🌐 DBpedia Info
+                </button>
+              )}
             </div>
 
             <div className="modal-body">
-              {activeTab === 'info' && (
+              {activeTab === 'info' && selectedUniversite && (
                 <div className="tab-content">
                   <div className="detail-section">
                     <h3>Informations générales</h3>
@@ -640,7 +729,18 @@ const Universites = () => {
                       </div>
                       <div className="detail-item">
                         <label>Ville:</label>
-                        <span>{selectedUniversite.ville || 'Non spécifié'}</span>
+                        <span>
+                          {selectedUniversite.ville || 'Non spécifié'}
+                          {selectedUniversite.ville && (
+                            <button 
+                              className="btn-enrich-inline"
+                              onClick={() => fetchDBpediaEnrichment(selectedUniversite.universite)}
+                              title="Enrichir avec DBpedia"
+                            >
+                              🌐
+                            </button>
+                          )}
+                        </span>
                       </div>
                       <div className="detail-item">
                         <label>Pays:</label>
@@ -745,12 +845,182 @@ const Universites = () => {
                   )}
                 </div>
               )}
+
+              {activeTab === 'dbpedia' && (
+                <div className="tab-content">
+                  <h3>🌐 Informations DBpedia (Linked Data)</h3>
+                  {loadingDBpedia ? (
+                    <div className="loading-state">
+                      <div className="loading-spinner-small"></div>
+                      <p>Chargement des données DBpedia...</p>
+                    </div>
+                  ) : dbpediaData ? (
+                    <div className="dbpedia-section">
+                      {dbpediaData.error ? (
+                        <div className="dbpedia-error">
+                          <p>⚠️ {dbpediaData.error}</p>
+                          <p className="help-text">Les données DBpedia ne sont pas disponibles pour "{dbpediaData.search_text || dbpediaData.term || 'ce terme'}".</p>
+                        </div>
+                      ) : (
+                        <>
+                          {/* Display list of DBpedia references */}
+                          {dbpediaData.all_results && dbpediaData.all_results.length > 0 ? (
+                            <div className="dbpedia-results">
+                              <h4>🔍 Résultats DBpedia ({dbpediaData.all_results.length})</h4>
+                              <ol className="dbpedia-results-list">
+                                {dbpediaData.all_results.map((result, index) => (
+                                  <li key={index} className="dbpedia-result-item">
+                                    <div className="dbpedia-result-content">
+                                      <strong className="dbpedia-result-title">{result.title}</strong>
+                                      <a 
+                                        href={result.uri} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="dbpedia-result-uri"
+                                      >
+                                        {result.uri}
+                                      </a>
+                                    </div>
+                                  </li>
+                                ))}
+                              </ol>
+                            </div>
+                          ) : dbpediaData.results && dbpediaData.results.length > 0 ? (
+                            <div className="dbpedia-results">
+                              <h4>🔍 Résultats DBpedia ({dbpediaData.results.length})</h4>
+                              <ol className="dbpedia-results-list">
+                                {dbpediaData.results.map((result, index) => (
+                                  <li key={index} className="dbpedia-result-item">
+                                    <div className="dbpedia-result-content">
+                                      <strong className="dbpedia-result-title">{result.title}</strong>
+                                      <a 
+                                        href={result.uri} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="dbpedia-result-uri"
+                                      >
+                                        {result.uri}
+                                      </a>
+                                    </div>
+                                  </li>
+                                ))}
+                              </ol>
+                            </div>
+                          ) : null}
+                          
+                          {/* Display primary result (first result) */}
+                          {dbpediaData.title && dbpediaData.uri && (
+                            <div className="dbpedia-primary">
+                              <h4>📌 Résultat principal</h4>
+                              <div className="dbpedia-item">
+                                <label>🏷️ Titre:</label>
+                                <p className="term-text">{dbpediaData.title}</p>
+                              </div>
+                              <div className="dbpedia-item">
+                                <label>🔗 URI:</label>
+                                <a 
+                                  href={dbpediaData.uri} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="dbpedia-uri-link"
+                                >
+                                  {dbpediaData.uri}
+                                </a>
+                              </div>
+                            </div>
+                          )}
+                          
+                          {/* Legacy fields for backward compatibility */}
+                          {dbpediaData.abstract && (
+                            <div className="dbpedia-item">
+                              <label>📖 Description:</label>
+                              <p className="abstract-text">
+                                {typeof dbpediaData.abstract === 'string' 
+                                  ? dbpediaData.abstract 
+                                  : (dbpediaData.abstract.value || dbpediaData.abstract)}
+                              </p>
+                            </div>
+                          )}
+                          <div className="dbpedia-grid">
+                            {dbpediaData.population && (
+                              <div className="dbpedia-stat">
+                                <label>👥 Population:</label>
+                                <span>
+                                  {typeof dbpediaData.population === 'string'
+                                    ? parseInt(dbpediaData.population).toLocaleString('fr-FR')
+                                    : parseInt(dbpediaData.population.value || dbpediaData.population).toLocaleString('fr-FR')}
+                                </span>
+                              </div>
+                            )}
+                            {dbpediaData.country && (
+                              <div className="dbpedia-stat">
+                                <label>🌍 Pays:</label>
+                                <span>
+                                  {typeof dbpediaData.country === 'string'
+                                    ? dbpediaData.country
+                                    : (dbpediaData.country.value || dbpediaData.country)}
+                                </span>
+                              </div>
+                            )}
+                            {dbpediaData.latitude && dbpediaData.longitude && (
+                              <div className="dbpedia-stat">
+                                <label>📍 Coordonnées:</label>
+                                <span>
+                                  {typeof dbpediaData.latitude === 'string'
+                                    ? `${parseFloat(dbpediaData.latitude).toFixed(4)}, ${parseFloat(dbpediaData.longitude).toFixed(4)}`
+                                    : `${parseFloat(dbpediaData.latitude.value || dbpediaData.latitude).toFixed(4)}, ${parseFloat(dbpediaData.longitude.value || dbpediaData.longitude).toFixed(4)}`}
+                                </span>
+                                <a 
+                                  href={`https://www.openstreetmap.org/?mlat=${
+                                    typeof dbpediaData.latitude === 'string' 
+                                      ? dbpediaData.latitude 
+                                      : (dbpediaData.latitude.value || dbpediaData.latitude)
+                                  }&mlon=${
+                                    typeof dbpediaData.longitude === 'string'
+                                      ? dbpediaData.longitude
+                                      : (dbpediaData.longitude.value || dbpediaData.longitude)
+                                  }&zoom=12`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="map-link"
+                                >
+                                  🗺️ Voir sur la carte
+                                </a>
+                              </div>
+                            )}
+                          </div>
+                          <div className="dbpedia-info">
+                            <p className="info-badge">
+                              ℹ️ Ces données proviennent de DBpedia (Linked Data), démontrant l'interopérabilité du Web Sémantique.
+                            </p>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="no-dbpedia">
+                      <p>Aucune donnée DBpedia disponible pour cette université.</p>
+                      <button 
+                        className="btn-enrich"
+                        onClick={() => selectedUniversite && fetchDBpediaEnrichment(selectedUniversite.universite)}
+                      >
+                        🔄 Charger les données DBpedia
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="modal-footer">
               <button 
                 className="btn-secondary"
-                onClick={() => setShowDetailsModal(false)}
+                onClick={() => {
+                  setShowDetailsModal(false);
+                  setSelectedUniversite(null);
+                  setDbpediaData(null);
+                  setActiveTab('info');
+                }}
               >
                 Fermer
               </button>
@@ -1311,7 +1581,244 @@ const Universites = () => {
           padding: 20px;
         }
 
-        .modal-footer {
+        /* DBpedia Integration Styles */
+        .dbpedia-section {
+          padding: 16px;
+          background: #f8fafc;
+          border-radius: 8px;
+          border-left: 4px solid #3b82f6;
+        }
+
+        .dbpedia-item {
+          margin-bottom: 16px;
+        }
+
+        .dbpedia-item label {
+          display: block;
+          font-weight: 600;
+          color: #1e293b;
+          margin-bottom: 8px;
+        }
+
+        .abstract-text {
+          font-size: 0.875rem;
+          line-height: 1.6;
+          color: #64748b;
+          text-align: justify;
+        }
+
+        .dbpedia-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 16px;
+          margin-top: 16px;
+        }
+
+        .dbpedia-stat {
+          padding: 12px;
+          background: white;
+          border-radius: 8px;
+          border: 1px solid #e5e7eb;
+        }
+
+        .dbpedia-stat label {
+          display: block;
+          font-weight: 500;
+          color: #374151;
+          margin-bottom: 4px;
+          font-size: 0.875rem;
+        }
+
+        .dbpedia-stat span {
+          display: block;
+          color: #1e293b;
+          font-size: 0.875rem;
+        }
+
+        .map-link {
+          display: inline-block;
+          margin-top: 8px;
+          color: #3b82f6;
+          text-decoration: none;
+          font-size: 0.875rem;
+          transition: color 0.2s;
+        }
+
+        .map-link:hover {
+          color: #2563eb;
+          text-decoration: underline;
+        }
+
+        .dbpedia-info {
+          margin-top: 16px;
+          padding: 12px;
+          background: #eff6ff;
+          border-radius: 6px;
+          border-left: 3px solid #3b82f6;
+        }
+
+        .info-badge {
+          font-size: 0.75rem;
+          color: #1e40af;
+          margin: 0;
+          line-height: 1.4;
+        }
+
+        .dbpedia-error {
+          padding: 16px;
+          background: #fef2f2;
+          border-radius: 8px;
+          border-left: 4px solid #ef4444;
+        }
+
+        .dbpedia-error p {
+          margin: 0 0 8px 0;
+          color: #dc2626;
+        }
+
+        .help-text {
+          font-size: 0.875rem;
+          color: #6b7280;
+          margin: 0;
+        }
+
+        .no-dbpedia {
+          text-align: center;
+          padding: 40px 20px;
+        }
+
+        .no-dbpedia p {
+          color: #64748b;
+          margin-bottom: 16px;
+        }
+
+        .btn-enrich, .btn-enrich-inline {
+          background: #3b82f6;
+          color: white;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 0.875rem;
+          font-weight: 500;
+          transition: background 0.2s;
+        }
+
+        .btn-enrich:hover {
+          background: #2563eb;
+        }
+
+        .btn-enrich-inline {
+          padding: 4px 8px;
+          margin-left: 8px;
+          font-size: 0.75rem;
+        }
+
+        .btn-enrich-inline:hover {
+          background: #1d4ed8;
+        }
+
+        .loading-state {
+          text-align: center;
+          padding: 40px 20px;
+        }
+
+          .loading-spinner-small {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #f1f5f9;
+            border-left: 3px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+          }
+
+          /* DBpedia Results List Styles */
+          .dbpedia-results {
+            margin-bottom: 24px;
+          }
+
+          .dbpedia-results h4 {
+            margin: 0 0 16px 0;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1e293b;
+          }
+
+          .dbpedia-results-list {
+            list-style: decimal;
+            padding-left: 24px;
+            margin: 0;
+          }
+
+          .dbpedia-result-item {
+            margin-bottom: 16px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+            transition: box-shadow 0.2s;
+          }
+
+          .dbpedia-result-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          }
+
+          .dbpedia-result-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+          }
+
+          .dbpedia-result-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+          }
+
+          .dbpedia-result-uri {
+            font-size: 0.875rem;
+            color: #3b82f6;
+            text-decoration: none;
+            word-break: break-all;
+            transition: color 0.2s;
+          }
+
+          .dbpedia-result-uri:hover {
+            color: #1e40af;
+            text-decoration: underline;
+          }
+
+          .dbpedia-primary {
+            margin-bottom: 24px;
+            padding: 16px;
+            background: #eff6ff;
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+          }
+
+          .dbpedia-primary h4 {
+            margin: 0 0 12px 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+          }
+
+          .dbpedia-uri-link {
+            font-size: 0.875rem;
+            color: #3b82f6;
+            text-decoration: none;
+            word-break: break-all;
+            transition: color 0.2s;
+          }
+
+          .dbpedia-uri-link:hover {
+            color: #1e40af;
+            text-decoration: underline;
+          }
+
+          .modal-footer {
           padding: 20px 24px;
           border-top: 1px solid #e5e7eb;
           display: flex;

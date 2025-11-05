@@ -3,6 +3,7 @@
 from flask import Blueprint, jsonify, request
 from sparql_utils import sparql_utils
 from modules.validators import validate_projet
+from modules.dbpedia_service import dbpedia_service
 import uuid
 
 projets_bp = Blueprint('projets', __name__)
@@ -18,10 +19,13 @@ def get_all_projets():
     """Get all academic projects"""
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?projet ?titreProjet ?domaineProjet ?typeProjet ?noteProjet ?etudiant ?nomEtudiant ?prenomEtudiant
            ?universite ?nomUniversite
     WHERE {{
-        ?projet a ont:ProjetAcademique .
+        ?projet a ?type .
+        ?type rdfs:subClassOf* ont:ProjetAcademique .
         OPTIONAL {{ ?projet ont:titreProjet ?titreProjet . }}
         OPTIONAL {{ ?projet ont:domaineProjet ?domaineProjet . }}
         OPTIONAL {{ ?projet ont:typeProjet ?typeProjet . }}
@@ -44,17 +48,32 @@ def get_all_projets():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@projets_bp.route('/projets-academiques/<projet_id>', methods=['GET'])
+def normalize_projet_id(projet_id):
+    """Normalize projet ID to full URI format"""
+    from urllib.parse import unquote
+    projet_id = unquote(projet_id)
+    
+    if not projet_id.startswith('http://') and not projet_id.startswith('https://'):
+        if not projet_id.startswith(PREFIX):
+            projet_id = f"{PREFIX}{projet_id}"
+    
+    return projet_id
+
+@projets_bp.route('/projets-academiques/<path:projet_id>', methods=['GET'])
 def get_projet(projet_id):
     """Get a specific project"""
+    projet_id = normalize_projet_id(projet_id)
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?projet ?titreProjet ?domaineProjet ?typeProjet ?noteProjet
            ?etudiant ?nomEtudiant ?prenomEtudiant
            ?competence ?nomCompetence
            ?orientation ?objectifOrientation
     WHERE {{
-        <{projet_id}> a ont:ProjetAcademique .
+        <{projet_id}> a ?type .
+        ?type rdfs:subClassOf* ont:ProjetAcademique .
         OPTIONAL {{ <{projet_id}> ont:titreProjet ?titreProjet . }}
         OPTIONAL {{ <{projet_id}> ont:domaineProjet ?domaineProjet . }}
         OPTIONAL {{ <{projet_id}> ont:typeProjet ?typeProjet . }}
@@ -122,9 +141,10 @@ def create_projet():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@projets_bp.route('/projets-academiques/<projet_id>', methods=['PUT'])
+@projets_bp.route('/projets-academiques/<path:projet_id>', methods=['PUT'])
 def update_projet(projet_id):
     """Update a project"""
+    projet_id = normalize_projet_id(projet_id)
     data = request.json
     
     errors = validate_projet(data)
@@ -173,9 +193,10 @@ def update_projet(projet_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@projets_bp.route('/projets-academiques/<projet_id>', methods=['DELETE'])
+@projets_bp.route('/projets-academiques/<path:projet_id>', methods=['DELETE'])
 def delete_projet(projet_id):
     """Delete a project"""
+    projet_id = normalize_projet_id(projet_id)
     # Construct full URI if not already a full URI
     if projet_id.startswith('http://') or projet_id.startswith('https://'):
         projet_uri = projet_id
@@ -208,9 +229,12 @@ def search_projets():
     
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?projet ?titreProjet ?domaineProjet ?typeProjet ?noteProjet
     WHERE {{
-        ?projet a ont:ProjetAcademique .
+        ?projet a ?type .
+        ?type rdfs:subClassOf* ont:ProjetAcademique .
         OPTIONAL {{ ?projet ont:titreProjet ?titreProjet . }}
         OPTIONAL {{ ?projet ont:domaineProjet ?domaineProjet . }}
         OPTIONAL {{ ?projet ont:typeProjet ?typeProjet . }}
@@ -232,6 +256,129 @@ def search_projets():
     try:
         results = sparql_utils.execute_query(query)
         return jsonify(results)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@projets_bp.route('/projets-academiques/facets', methods=['GET'])
+def get_projets_facets():
+    """Récupère les facettes pour la navigation filtrée"""
+    query_type = f"""
+    PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    SELECT ?typeProjet (COUNT(DISTINCT ?projet) as ?count)
+    WHERE {{
+        ?projet a ?type .
+        ?type rdfs:subClassOf* ont:ProjetAcademique .
+        ?projet ont:typeProjet ?typeProjet .
+    }}
+    GROUP BY ?typeProjet
+    ORDER BY DESC(?count)
+    """
+    query_domaine = f"""
+    PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    SELECT ?domaineProjet (COUNT(DISTINCT ?projet) as ?count)
+    WHERE {{
+        ?projet a ?type .
+        ?type rdfs:subClassOf* ont:ProjetAcademique .
+        ?projet ont:domaineProjet ?domaineProjet .
+    }}
+    GROUP BY ?domaineProjet
+    ORDER BY DESC(?count)
+    """
+    query_universite = f"""
+    PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    SELECT ?universite ?nomUniversite (COUNT(DISTINCT ?projet) as ?count)
+    WHERE {{
+        ?projet a ?type .
+        ?type rdfs:subClassOf* ont:ProjetAcademique .
+        ?projet ont:estOrganisePar ?universite .
+        ?universite ont:nomUniversite ?nomUniversite .
+    }}
+    GROUP BY ?universite ?nomUniversite
+    ORDER BY DESC(?count)
+    LIMIT 20
+    """
+    try:
+        facets = {
+            "by_type": sparql_utils.execute_query(query_type),
+            "by_domaine": sparql_utils.execute_query(query_domaine),
+            "by_universite": sparql_utils.execute_query(query_universite)
+        }
+        return jsonify(facets)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@projets_bp.route('/projets-academiques/<path:projet_id>/dbpedia-enrich', methods=['GET'])
+def enrich_projet_with_dbpedia(projet_id):
+    """Enrich projet data with DBpedia information via university city (Linked Data integration)"""
+    try:
+        projet_id = normalize_projet_id(projet_id)
+        
+        # First get the projet and its university's city
+        query = f"""
+        PREFIX ont: <{PREFIX}>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        SELECT ?titreProjet ?ville ?pays ?nomUniversite
+        WHERE {{
+            <{projet_id}> a ?type .
+            ?type rdfs:subClassOf* ont:ProjetAcademique .
+            OPTIONAL {{ <{projet_id}> ont:titreProjet ?titreProjet . }}
+            OPTIONAL {{
+                <{projet_id}> ont:estOrganisePar ?universite .
+                ?universite ont:nomUniversite ?nomUniversite .
+                OPTIONAL {{ ?universite ont:ville ?ville . }}
+                OPTIONAL {{ ?universite ont:pays ?pays . }}
+            }}
+        }}
+        LIMIT 1
+        """
+        
+        results = sparql_utils.execute_query(query)
+        
+        if not results:
+            return jsonify({"error": "Projet non trouvé"}), 404
+        
+        projet_data = results[0]
+        city_name = projet_data.get("ville")
+        titre_projet = projet_data.get("titreProjet")
+        
+        # Get search term from query parameter or use projet title/city
+        search_term = request.args.get('term')
+        if not search_term:
+            # Prefer titreProjet over ville for better DBpedia matching
+            search_term = titre_projet or city_name
+        
+        enriched_data = {
+            "projet": projet_data,
+            "search_term": search_term,
+            "dbpedia_enrichment": None
+        }
+        
+        # Enrich with DBpedia using the search term (use search_entities for better results)
+        if search_term:
+            # Use search_entities to get a list of references
+            dbpedia_results = dbpedia_service.search_entities(search_term)
+            
+            # If we got results, return the first one for backward compatibility
+            if dbpedia_results.get("results") and len(dbpedia_results["results"]) > 0:
+                first_result = dbpedia_results["results"][0]
+                enriched_data["dbpedia_enrichment"] = {
+                    "title": first_result["title"],
+                    "uri": first_result["uri"],
+                    "all_results": dbpedia_results["results"][:5]  # Include top 5 for reference
+                }
+            else:
+                # Return error if no results
+                enriched_data["dbpedia_enrichment"] = dbpedia_results
+        
+        return jsonify(enriched_data)
+        
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

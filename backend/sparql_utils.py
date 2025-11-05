@@ -15,8 +15,26 @@ class SPARQLUtils:
     def execute_query(self, query):
         """Exécute une requête SPARQL et retourne les résultats"""
         try:
-            self.sparql.setQuery(query)
-            results = self.sparql.query().convert()
+            # Normalize line endings but keep intended formatting (SPARQL comments rely on newlines)
+            query = query.replace('\r', '').strip()
+
+            # Use POST for all queries to avoid URL length limits
+            # Create a fresh wrapper instance to ensure method is set correctly
+            query_wrapper = SPARQLWrapper(self.endpoint + "/query")
+            query_wrapper.setReturnFormat(JSON)
+            query_wrapper.setMethod(POST)
+            query_wrapper.setQuery(query)
+            
+            # Debug: log query details and verify it's complete
+            if len(query) > 900:
+                print(f"DEBUG: Executing long query ({len(query)} chars) via POST")
+                print(f"DEBUG: Query starts: {query[:100]}...")
+                print(f"DEBUG: Query ends: ...{query[-50:]}")
+                # Verify query is complete (ends with DESC or appropriate closing)
+                if not (query.endswith('DESC') or query.endswith('ASC') or query.endswith('}')):
+                    print(f"WARNING: Query may be incomplete! Ends with: {query[-20:]}")
+            
+            results = query_wrapper.query().convert()
             
             # Formater les résultats
             formatted_results = []

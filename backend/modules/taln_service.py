@@ -6,6 +6,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Try to import Gemini for NLP analysis
+try:
+    import google.generativeai as genai
+    GEMINI_AVAILABLE = True
+except ImportError:
+    GEMINI_AVAILABLE = False
+    print("WARNING: google-generativeai not installed. Install with: pip install google-generativeai")
+
 class TALNService:
     """
     Service for Text Analysis and Language Processing (TALN) API integration.
@@ -61,7 +69,7 @@ class TALNService:
                     "temporal_expressions": True,
                     "location_expressions": True
                 },
-                "domain": "ecological_events",  # Domain-specific analysis
+                "domain": "education",  # Education domain analysis
                 "ontology_mapping": True
             }
             
@@ -208,19 +216,18 @@ class TALNService:
         }
     
     def _map_to_ontology_class(self, entity_type: str) -> str:
-        """Map TALN entity types to our ontology classes"""
+        """Map TALN entity types to education domain ontology classes"""
         mapping = {
-            "PERSON": "webprotege:User",
-            "ORGANIZATION": "webprotege:User",  # Organizations can be users
-            "LOCATION": "webprotege:Location",
-            "GPE": "webprotege:Location",  # Geopolitical entity
-            "EVENT": "webprotege:Event",
-            "FACILITY": "webprotege:Location",
-            "WORK_OF_ART": "webprotege:Event",  # Events can be works of art
-            "LAW": "webprotege:Campaign",  # Laws can be campaigns
-            "LANGUAGE": "webprotege:Resource",  # Language resources
-            "MONEY": "webprotege:Resource",  # Financial resources
-            "PERCENT": "webprotege:Resource",  # Percentage resources
+            "PERSON": "edu:Personne",  # People in education context
+            "ORGANIZATION": "edu:Universite",  # Organizations in education are universities
+            "LOCATION": "location_property",  # Location info stored as properties (ville, pays) on Universite
+            "GPE": "location_property",  # Geopolitical entity (country/city) stored as properties
+            "EVENT": "edu:Evaluation",  # Events in education context might be evaluations
+            "FACILITY": "location_property",  # Facilities stored as location properties
+            "WORK_OF_ART": "edu:RessourcePedagogique",  # Educational resources
+            "LANGUAGE": "edu:Competence",  # Language as a competency
+            "MONEY": "numeric",  # Financial information
+            "PERCENT": "numeric",  # Percentage information (grades, etc.)
             "DATE": "temporal",
             "TIME": "temporal",
             "QUANTITY": "numeric",
@@ -243,47 +250,51 @@ class TALNService:
         relationships = []
         keywords = []
         
-        # Extract entity types based on keywords - CORRECTED FROM RDF ANALYSIS
+        # Extract entity types based on keywords - EDUCATION DOMAIN ENTITIES
         entity_keywords = {
-            # Events (eco: namespace)
-            "eco:Event": ["événement", "event", "évènement", "evenement", "événements", "events", "manifestation", "manifestations"],
-            "eco:EducationalEvent": ["atelier", "ateliers", "workshop", "workshops", "formation", "formations", "training", "trainings", "séminaire", "séminaires", "seminar", "seminars", "conférence", "conférences", "conference", "conferences", "cours", "course", "courses", "éducation", "education"],
-            "eco:EntertainmentEvent": ["festival", "festivals", "fête", "fêtes", "party", "parties", "concert", "concerts", "spectacle", "spectacles", "show", "shows", "divertissement", "entertainment", "loisir", "loisirs", "leisure"],
-            "eco:CompetitiveEvent": ["compétition", "compétitions", "competition", "competitions", "challenge", "challenges", "défi", "défis", "contest", "contests", "tournoi", "tournois", "tournament", "tournaments", "marathon", "marathons"],
-            "eco:SocializationEvent": ["socialisation", "socialization", "réseautage", "networking", "rencontre", "meeting", "social"],
+            # Education Domain Entities (edu: or ont: namespace)
+            # Personnes (People)
+            "edu:Personne": ["personne", "person", "personnes", "people", "individu", "individus", "individu", "individual"],
+            "edu:Etudiant": ["étudiant", "etudiant", "student", "étudiants", "students", "élève", "eleve", "pupil", "apprenant", "learner"],
+            "edu:Enseignant": ["enseignant", "teacher", "professeur", "professor", "prof", "instructeur", "instructor", "formateur", "trainer"],
+            "edu:Professeur": ["professeur", "professor", "prof", "professeurs", "professors"],
+            "edu:Assistant": ["assistant", "assistants", "aide", "helper"],
+            "edu:Encadrant": ["encadrant", "supervisor", "encadrants", "supervisors", "tuteur", "tutor"],
             
-            # Campaigns (eco: namespace)
-            "eco:Campaign": ["campagne", "campaign", "initiative", "initiatives"],
-            "eco:AwarenessCampaign": ["campagne", "campaign", "sensibilisation", "awareness", "information", "éducation"],
-            "eco:CleanupCampaign": ["nettoyage", "cleanup", "ramassage", "collecte", "déchets", "waste"],
-            "eco:FundingCampaign": ["financement", "funding", "don", "donation", "collecte", "fundraising"],
+            # Universites (Universities)
+            "edu:Universite": ["université", "universite", "university", "universités", "universities", "établissement", "etablissement", "institution", "institut", "institute"],
+            "edu:UniversitePublique": ["université publique", "public university", "université d'état", "public university"],
+            "edu:UniversitePrivee": ["université privée", "private university", "université privée", "private university"],
             
-            # Locations (eco: namespace)
-            "eco:Location": ["location", "lieu", "endroit", "salle", "place", "venue", "local", "site", "adresse", "address"],
-            "eco:Indoor": ["intérieur", "indoor", "salle", "hall", "auditorium", "salle de conférence"],
-            "eco:Outdoor": ["extérieur", "outdoor", "parc", "park", "jardin", "garden", "plage", "beach"],
-            "eco:VirtualPlatform": ["virtuel", "virtual", "en ligne", "online", "webinaire", "webinar"],
+            # Specialites (Specializations)
+            "edu:Specialite": ["spécialité", "specialite", "specialization", "spécialisations", "specializations", "domaine", "field", "discipline", "branche", "branch", "majeure", "major"],
+            "edu:SpecialiteInformatique": ["informatique", "computer science", "informatique", "computing", "IT", "technologie de l'information"],
+            "edu:SpecialiteDataScience": ["data science", "science des données", "data science", "big data", "analytics"],
+            "edu:SpecialiteIngenierie": ["ingénierie", "engineering", "génie", "engineer"],
             
-            # Volunteers (webprotege: namespace)
-            "webprotege:RCXXzqv27uFuX5nYU81XUvw": ["volontaire", "volunteer", "bénévole", "benevole", "volontaires", "volunteers"],
+            # Cours (Courses)
+            "edu:Cours": ["cours", "course", "cours", "courses", "matière", "matiere", "subject", "module", "modules", "cours", "classe", "class"],
+            "edu:CoursTheorique": ["cours théorique", "theoretical course", "cours théorique"],
+            "edu:CoursPratique": ["cours pratique", "practical course", "cours pratique", "travaux pratiques", "TP"],
             
-            # Assignments (webprotege: namespace)
-            "webprotege:Rj2A7xNWLfpNcbE4HJMKqN": ["assignement", "assignment", "assignation", "affectation", "assignements", "assignments"],
+            # Competences (Competencies/Skills)
+            "edu:Competence": ["compétence", "competence", "skill", "skills", "compétences", "competencies", "capacité", "capacity", "aptitude", "aptitude", "savoir-faire", "know-how"],
             
-            # Resources (eco: namespace)
-            "eco:Resource": ["ressource", "resource", "équipement", "equipment", "matériel", "material"],
-            "eco:DigitalResource": ["ressource numérique", "digital resource", "logiciel", "software", "application", "app"],
-            "eco:EquipmentResource": ["équipement", "equipment", "outil", "tool", "matériel", "material"],
-            "eco:HumanResource": ["ressource humaine", "human resource", "personnel", "staff", "équipe", "team"],
+            # ProjetsAcademiques (Academic Projects)
+            "edu:ProjetAcademique": ["projet académique", "academic project", "projet", "project", "projets", "projects", "travail", "work", "recherche", "research"],
             
-            # Reservations (eco: namespace)
-            "eco:Reservation": ["réservation", "reservation", "réserver", "booking", "réservations", "reservations"],
+            # RessourcesPedagogiques (Pedagogical Resources)
+            "edu:RessourcePedagogique": ["ressource pédagogique", "pedagogical resource", "ressource", "resource", "ressources", "resources", "matériel pédagogique", "educational material", "support de cours", "course material"],
             
-            # Blogs (eco: namespace)
-            "eco:Blog": ["blog", "article", "publication", "post", "blogs", "articles"],
+            # TechnologiesEducatives (Educational Technologies)
+            "edu:TechnologieEducative": ["technologie éducative", "educational technology", "technologie", "technology", "technologies", "tech", "outil pédagogique", "educational tool", "plateforme", "platform"],
             
-            # Certifications (eco: namespace)
-            "eco:Certification": ["certification", "certificat", "diplôme", "diploma", "récompense", "reward", "badge"]
+            # Evaluations (Evaluations/Assessments)
+            "edu:Evaluation": ["évaluation", "evaluation", "assessment", "évaluations", "assessments", "examen", "exam", "examens", "exams", "test", "tests", "contrôle", "control", "contrôle continu", "continuous assessment"],
+            
+            # OrientationsAcademiques (Academic Orientations)
+            "edu:OrientationAcademique": ["orientation académique", "academic orientation", "orientation", "orientation", "guidance", "conseil", "counseling", "parcours", "path", "voie", "way"],
+            "edu:EntretienConseiller": ["entretien conseiller", "counselor interview", "entretien", "interview"]
         }
         
         # First pass: exact keyword matching
@@ -301,65 +312,150 @@ class TALNService:
         
         # Second pass: flexible pattern matching for common cases
         if not entities:  # Only if no exact matches found
-            # Check for event-related terms
-            event_terms = ["événement", "event", "évènement", "evenement", "événements", "events"]
-            if any(term in question_lower for term in event_terms):
+            # Check for education domain entities first
+            # Personnes
+            personne_terms = ["personne", "person", "personnes", "people"]
+            if any(term in question_lower for term in personne_terms):
                 entities.append({
-                    "text": "événement",
-                    "type": "Event",
+                    "text": "personne",
+                    "type": "Personne",
                     "category": "domain_entity",
                     "confidence": 0.9,
-                    "ontology_class": "eco:Event"
+                    "ontology_class": "edu:Personne"
                 })
-                print(f"DEBUG: Found entity 'événement' -> eco:Event")
+                print(f"DEBUG: Found entity 'personne' -> edu:Personne")
             
-            # Check for volunteer-related terms
-            volunteer_terms = ["volontaire", "volunteer", "bénévole", "benevole"]
-            if any(term in question_lower for term in volunteer_terms):
+            # Etudiants
+            etudiant_terms = ["étudiant", "etudiant", "student", "étudiants", "students"]
+            if any(term in question_lower for term in etudiant_terms):
                 entities.append({
-                    "text": "volontaire",
-                    "type": "Volunteer",
+                    "text": "étudiant",
+                    "type": "Etudiant",
                     "category": "domain_entity",
                     "confidence": 0.9,
-                    "ontology_class": "webprotege:RCXXzqv27uFuX5nYU81XUvw"
+                    "ontology_class": "edu:Etudiant"
                 })
-                print(f"DEBUG: Found entity 'volontaire' -> webprotege:RCXXzqv27uFuX5nYU81XUvw")
+                print(f"DEBUG: Found entity 'étudiant' -> edu:Etudiant")
             
-            # Check for assignment-related terms
-            assignment_terms = ["assignement", "assignment", "assignation", "affectation"]
-            if any(term in question_lower for term in assignment_terms):
+            # Enseignants
+            enseignant_terms = ["enseignant", "teacher", "professeur", "professor", "prof"]
+            if any(term in question_lower for term in enseignant_terms):
                 entities.append({
-                    "text": "assignement",
-                    "type": "Assignment",
+                    "text": "enseignant",
+                    "type": "Enseignant",
                     "category": "domain_entity",
                     "confidence": 0.9,
-                    "ontology_class": "webprotege:Rj2A7xNWLfpNcbE4HJMKqN"
+                    "ontology_class": "edu:Enseignant"
                 })
-                print(f"DEBUG: Found entity 'assignement' -> webprotege:Rj2A7xNWLfpNcbE4HJMKqN")
+                print(f"DEBUG: Found entity 'enseignant' -> edu:Enseignant")
             
-            # Check for campaign-related terms
-            campaign_terms = ["campagne", "campaign"]
-            if any(term in question_lower for term in campaign_terms):
+            # Universites
+            universite_terms = ["université", "universite", "university", "universités", "universities"]
+            if any(term in question_lower for term in universite_terms):
                 entities.append({
-                    "text": "campagne",
-                    "type": "Campaign",
+                    "text": "université",
+                    "type": "Universite",
                     "category": "domain_entity",
                     "confidence": 0.9,
-                    "ontology_class": "eco:Campaign"
+                    "ontology_class": "edu:Universite"
                 })
-                print(f"DEBUG: Found entity 'campagne' -> eco:Campaign")
+                print(f"DEBUG: Found entity 'université' -> edu:Universite")
             
-            # Check for certification-related terms
-            cert_terms = ["certification", "certificat", "diplôme", "récompense", "badge"]
-            if any(term in question_lower for term in cert_terms):
+            # Specialites
+            specialite_terms = ["spécialité", "specialite", "specialization", "spécialisations", "specializations"]
+            if any(term in question_lower for term in specialite_terms):
                 entities.append({
-                    "text": "certification",
-                    "type": "Certification",
+                    "text": "spécialité",
+                    "type": "Specialite",
                     "category": "domain_entity",
                     "confidence": 0.9,
-                    "ontology_class": "eco:Certification"
+                    "ontology_class": "edu:Specialite"
                 })
-                print(f"DEBUG: Found entity 'certification' -> eco:Certification")
+                print(f"DEBUG: Found entity 'spécialité' -> edu:Specialite")
+            
+            # Cours
+            cours_terms = ["cours", "course", "cours", "courses", "matière", "matiere", "subject", "module"]
+            if any(term in question_lower for term in cours_terms):
+                entities.append({
+                    "text": "cours",
+                    "type": "Cours",
+                    "category": "domain_entity",
+                    "confidence": 0.9,
+                    "ontology_class": "edu:Cours"
+                })
+                print(f"DEBUG: Found entity 'cours' -> edu:Cours")
+            
+            # Competences
+            competence_terms = ["compétence", "competence", "skill", "skills", "compétences", "competencies"]
+            if any(term in question_lower for term in competence_terms):
+                entities.append({
+                    "text": "compétence",
+                    "type": "Competence",
+                    "category": "domain_entity",
+                    "confidence": 0.9,
+                    "ontology_class": "edu:Competence"
+                })
+                print(f"DEBUG: Found entity 'compétence' -> edu:Competence")
+            
+            # ProjetsAcademiques
+            projet_terms = ["projet", "project", "projets", "projects", "travail", "work"]
+            if any(term in question_lower for term in projet_terms):
+                entities.append({
+                    "text": "projet",
+                    "type": "ProjetAcademique",
+                    "category": "domain_entity",
+                    "confidence": 0.9,
+                    "ontology_class": "edu:ProjetAcademique"
+                })
+                print(f"DEBUG: Found entity 'projet' -> edu:ProjetAcademique")
+            
+            # RessourcesPedagogiques
+            ressource_terms = ["ressource", "resource", "ressources", "resources", "matériel", "material"]
+            if any(term in question_lower for term in ressource_terms):
+                entities.append({
+                    "text": "ressource",
+                    "type": "RessourcePedagogique",
+                    "category": "domain_entity",
+                    "confidence": 0.9,
+                    "ontology_class": "edu:RessourcePedagogique"
+                })
+                print(f"DEBUG: Found entity 'ressource' -> edu:RessourcePedagogique")
+            
+            # TechnologiesEducatives
+            technologie_terms = ["technologie", "technology", "technologies", "tech", "outil", "tool"]
+            if any(term in question_lower for term in technologie_terms):
+                entities.append({
+                    "text": "technologie",
+                    "type": "TechnologieEducative",
+                    "category": "domain_entity",
+                    "confidence": 0.9,
+                    "ontology_class": "edu:TechnologieEducative"
+                })
+                print(f"DEBUG: Found entity 'technologie' -> edu:TechnologieEducative")
+            
+            # Evaluations
+            evaluation_terms = ["évaluation", "evaluation", "assessment", "examen", "exam", "test", "tests"]
+            if any(term in question_lower for term in evaluation_terms):
+                entities.append({
+                    "text": "évaluation",
+                    "type": "Evaluation",
+                    "category": "domain_entity",
+                    "confidence": 0.9,
+                    "ontology_class": "edu:Evaluation"
+                })
+                print(f"DEBUG: Found entity 'évaluation' -> edu:Evaluation")
+            
+            # OrientationsAcademiques
+            orientation_terms = ["orientation", "orientation", "guidance", "conseil", "counseling"]
+            if any(term in question_lower for term in orientation_terms):
+                entities.append({
+                    "text": "orientation",
+                    "type": "OrientationAcademique",
+                    "category": "domain_entity",
+                    "confidence": 0.9,
+                    "ontology_class": "edu:OrientationAcademique"
+                })
+                print(f"DEBUG: Found entity 'orientation' -> edu:OrientationAcademique")
         
         print(f"DEBUG: Total entities found: {len(entities)}")
         
@@ -483,3 +579,254 @@ class TALNService:
             context_parts.append(f"RELATIONSHIPS: {'; '.join(rel_texts)}")
         
         return "\n".join(context_parts)
+
+
+class GeminiTALNService(TALNService):
+    """
+    TALN Service that uses Gemini API for NLP analysis instead of external TALN API.
+    This uses Gemini to extract entities, relationships, and semantic information.
+    """
+    
+    def __init__(self):
+        super().__init__()
+        self.gemini_api_key = os.getenv('GEMINI_API_KEY')
+        
+        if not self.gemini_api_key:
+            print("WARNING: GEMINI_API_KEY not found in environment variables")
+            print("Falling back to pattern-based entity extraction...")
+            self.use_fallback = True
+            self.model = None
+        elif not GEMINI_AVAILABLE:
+            print("WARNING: google-generativeai package not installed")
+            print("Install with: pip install google-generativeai")
+            print("Falling back to pattern-based entity extraction...")
+            self.use_fallback = True
+            self.model = None
+        else:
+            try:
+                genai.configure(api_key=self.gemini_api_key)
+                # Use a fast model for analysis
+                try:
+                    self.model = genai.GenerativeModel('models/gemini-2.0-flash-exp')
+                except:
+                    try:
+                        self.model = genai.GenerativeModel('models/gemini-flash-latest')
+                    except:
+                        self.model = genai.GenerativeModel('models/gemini-pro-latest')
+                self.use_fallback = False
+                print("SUCCESS: Gemini TALN Service initialized successfully")
+            except Exception as e:
+                print(f"WARNING: Gemini initialization failed: {e}")
+                print("Falling back to pattern-based entity extraction...")
+                self.use_fallback = True
+                self.model = None
+    
+    def analyze_question(self, question: str) -> Dict[str, Any]:
+        """
+        Analyze a natural language question using Gemini API.
+        Extracts entities, relationships, intent, and semantic information.
+        
+        Args:
+            question (str): The natural language question
+            
+        Returns:
+            Dict containing extracted entities, relationships, intent, and metadata
+        """
+        print(f"DEBUG: Starting Gemini NLP analysis for question: '{question}'")
+        
+        if self.use_fallback or not self.model:
+            print(f"DEBUG: Using fallback analysis (Gemini not configured)")
+            result = self._fallback_analysis(question)
+            print(f"DEBUG: Fallback analysis completed. Entities: {len(result.get('entities', []))}")
+            return result
+        
+        try:
+            print(f"DEBUG: Attempting Gemini API call for NLP analysis...")
+            
+            # Build prompt for Gemini to extract structured information
+            prompt = self._build_gemini_analysis_prompt(question)
+            
+            # Call Gemini for analysis
+            response = self.model.generate_content(
+                prompt,
+                generation_config=genai.types.GenerationConfig(
+                    temperature=0.2,  # Lower temperature for more consistent extraction
+                    top_p=0.8,
+                    top_k=40,
+                    max_output_tokens=1500,
+                )
+            )
+            
+            print(f"DEBUG: Gemini analysis response received")
+            
+            # Parse Gemini response into structured format
+            analysis_result = self._parse_gemini_analysis_response(response.text, question)
+            
+            print(f"DEBUG: Gemini analysis completed. Entities: {len(analysis_result.get('entities', []))}")
+            return analysis_result
+            
+        except Exception as e:
+            print(f"ERROR: Gemini NLP analysis failed: {e}")
+            print(f"DEBUG: Falling back to local analysis")
+            return self._fallback_analysis(question)
+    
+    def _build_gemini_analysis_prompt(self, question: str) -> str:
+        """Build prompt for Gemini to extract structured NLP information"""
+        return f"""You are an expert NLP analyst for an educational platform. Analyze the following French question and extract structured information in JSON format.
+
+Analyze the question and extract:
+1. Entities (Events, Locations, Users, Campaigns, Volunteers, Assignments, Certifications, Reservations, etc.)
+2. Intent (what the user wants: list, count, filter, search, details)
+3. Temporal information (future, past, present, specific dates)
+4. Location information (cities, places mentioned)
+5. Keywords and important terms
+6. Relationships between entities
+
+Return ONLY a valid JSON object with this exact structure:
+{{
+  "entities": [
+    {{
+      "text": "entity text from question",
+      "type": "Personne|Etudiant|Enseignant|Universite|Specialite|Cours|Competence|ProjetAcademique|RessourcePedagogique|TechnologieEducative|Evaluation|OrientationAcademique",
+      "category": "domain_entity",
+      "confidence": 0.9,
+      "ontology_class": "edu:Personne|edu:Etudiant|edu:Enseignant|edu:Universite|edu:Specialite|edu:Cours|edu:Competence|edu:ProjetAcademique|edu:RessourcePedagogique|edu:TechnologieEducative|edu:Evaluation|edu:OrientationAcademique"
+    }}
+  ],
+  "intent": {{
+    "primary_intent": "list|count|filter|search|details",
+    "query_type": "list|count|filter|search|details"
+  }},
+  "temporal_info": {{
+    "relative_time": "future|past|present|null",
+    "time_expressions": ["à venir", "futur", etc.]
+  }},
+  "location_info": {{
+    "locations": ["paris", "tunis", etc.]
+  }},
+  "keywords": [
+    {{
+      "text": "keyword",
+      "importance": 0.8,
+      "category": "content_word"
+    }}
+  ],
+  "relationships": []
+}}
+
+ONTOLOGY CONTEXT (Education Domain):
+- edu:Personne, edu:Etudiant, edu:Enseignant, edu:Professeur, edu:Assistant, edu:Encadrant
+- edu:EtudiantLicence, edu:EtudiantMaster, edu:EtudiantDoctorat
+- edu:Universite, edu:UniversitePublique, edu:UniversitePrivee
+- edu:Specialite, edu:SpecialiteInformatique, edu:SpecialiteDataScience, edu:SpecialiteIngenierie, etc.
+- edu:Cours, edu:CoursTheorique, edu:CoursPratique
+- edu:Competence
+- edu:ProjetAcademique
+- edu:RessourcePedagogique
+- edu:TechnologieEducative
+- edu:Evaluation
+- edu:OrientationAcademique, edu:EntretienConseiller
+
+QUESTION: "{question}"
+
+Return ONLY the JSON object, no explanations:"""
+    
+    def _parse_gemini_analysis_response(self, response_text: str, original_question: str) -> Dict[str, Any]:
+        """Parse Gemini's JSON response into structured analysis format"""
+        try:
+            # Try to extract JSON from response
+            # Remove markdown code blocks if present
+            text = response_text.strip()
+            if "```json" in text:
+                text = text.split("```json")[1].split("```")[0].strip()
+            elif "```" in text:
+                text = text.split("```")[1].split("```")[0].strip()
+            
+            # Try to parse JSON
+            try:
+                analysis_data = json.loads(text)
+            except json.JSONDecodeError:
+                # Try to find JSON object in text
+                import re
+                json_match = re.search(r'\{.*\}', text, re.DOTALL)
+                if json_match:
+                    analysis_data = json.loads(json_match.group())
+                else:
+                    raise ValueError("No JSON found in response")
+            
+            # Structure the response to match expected format
+            result = {
+                "original_question": original_question,
+                "entities": [],
+                "relationships": [],
+                "intent": {
+                    "primary_intent": analysis_data.get("intent", {}).get("primary_intent", "unknown"),
+                    "query_type": analysis_data.get("intent", {}).get("query_type", "general"),
+                    "action_type": None,
+                    "confidence": 0.8
+                },
+                "keywords": [],
+                "temporal_info": {
+                    "time_expressions": analysis_data.get("temporal_info", {}).get("time_expressions", []),
+                    "relative_time": analysis_data.get("temporal_info", {}).get("relative_time"),
+                    "absolute_time": None,
+                    "time_period": None
+                },
+                "location_info": {
+                    "locations": analysis_data.get("location_info", {}).get("locations", []),
+                    "geographical_entities": [],
+                    "spatial_relations": []
+                },
+                "semantic_roles": [],
+                "confidence_scores": {
+                    "overall_confidence": 0.85,
+                    "entity_recognition": 0.9,
+                    "relationship_extraction": 0.7,
+                    "intent_classification": 0.85
+                },
+                "analysis_metadata": {
+                    "language": "fr",
+                    "processing_time": 0.5,
+                    "api_version": "gemini_nlp",
+                    "method": "gemini_analysis"
+                }
+            }
+            
+            # Process entities
+            for entity in analysis_data.get("entities", []):
+                result["entities"].append({
+                    "text": entity.get("text", ""),
+                    "type": entity.get("type", "unknown"),
+                    "category": entity.get("category", "domain_entity"),
+                    "confidence": entity.get("confidence", 0.8),
+                    "start_pos": None,
+                    "end_pos": None,
+                    "ontology_class": entity.get("ontology_class", "unknown")
+                })
+            
+            # Process keywords
+            for keyword in analysis_data.get("keywords", []):
+                result["keywords"].append({
+                    "text": keyword.get("text", ""),
+                    "importance": keyword.get("importance", 0.7),
+                    "category": keyword.get("category", "general"),
+                    "semantic_type": keyword.get("semantic_type", "keyword")
+                })
+            
+            # Process relationships
+            for rel in analysis_data.get("relationships", []):
+                result["relationships"].append({
+                    "subject": rel.get("subject", ""),
+                    "predicate": rel.get("predicate", ""),
+                    "object": rel.get("object", ""),
+                    "confidence": rel.get("confidence", 0.7),
+                    "relation_type": rel.get("relation_type", "unknown")
+                })
+            
+            return result
+            
+        except Exception as e:
+            print(f"ERROR: Failed to parse Gemini analysis response: {e}")
+            print(f"DEBUG: Response text: {response_text[:500]}")
+            # Fallback to pattern matching
+            return self._fallback_analysis(original_question)

@@ -29,8 +29,15 @@ const TechnologiesEducatives = () => {
     total: 0
   });
 
+  // Facets state for dynamic filters
+  const [facets, setFacets] = useState({
+    by_type: [],
+    by_universite: []
+  });
+
   useEffect(() => {
     fetchTechnologies();
+    fetchFacets();
   }, []);
 
   useEffect(() => {
@@ -52,6 +59,17 @@ const TechnologiesEducatives = () => {
       setError('Erreur lors du chargement des technologies');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchFacets = async () => {
+    try {
+      const response = await technologiesAPI.getFacets();
+      if (response.data) {
+        setFacets(response.data);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des facettes:', error);
     }
   };
 
@@ -159,7 +177,9 @@ const TechnologiesEducatives = () => {
     try {
       const response = await technologiesAPI.getById(technologie.technologie);
       const details = Array.isArray(response.data) ? response.data[0] : response.data;
-      setSelectedTechnologie(details || technologie);
+      // Merge API response with original technologie data to ensure all fields are available
+      const mergedData = { ...technologie, ...details };
+      setSelectedTechnologie(mergedData);
       setShowDetailsModal(true);
     } catch (error) {
       console.error('Erreur lors du chargement des détails:', error);
@@ -246,9 +266,11 @@ const TechnologiesEducatives = () => {
               className="filter-select"
             >
               <option value="">Tous les types</option>
-              <option value="Application Mobile">Application Mobile</option>
-              <option value="Plateforme en ligne">Plateforme en ligne</option>
-              <option value="Outil de gestion">Outil de gestion</option>
+              {facets.by_type && facets.by_type.map((facet, index) => (
+                <option key={index} value={facet.typeTechnologie || ''}>
+                  {facet.typeTechnologie || 'Non spécifié'} ({facet.count || 0})
+                </option>
+              ))}
             </select>
           </div>
 

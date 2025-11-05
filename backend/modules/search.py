@@ -1,13 +1,47 @@
 from flask import Blueprint, jsonify, request
 from sparql_utils import sparql_utils
-from modules.taln_service import TALNService
+from modules.taln_service import TALNService, GeminiTALNService
 from modules.gemini_sparql_service import GeminiSPARQLTransformer
+from modules.search_templates import template_engine
+from modules.dbpedia_service import dbpedia_service
+import os
 
 search_bp = Blueprint('search', __name__)
 
 # Initialize services
+# Use GeminiTALNService if GEMINI_API_KEY is available, otherwise fallback to TALNService
+gemini_api_key = os.getenv('GEMINI_API_KEY')
+if gemini_api_key:
+    print("✅ Using GeminiTALNService for NLP analysis (using Gemini API)")
+    taln_service = GeminiTALNService()
+else:
+    print("⚠️ Using TALNService with pattern-based fallback (no Gemini API key)")
 taln_service = TALNService()
+
 gemini_transformer = GeminiSPARQLTransformer()
+
+@search_bp.route('/dbpedia/search', methods=['POST'])
+def dbpedia_search():
+    """Simple DBpedia search endpoint that returns a list of references"""
+    try:
+        data = request.get_json(force=True)
+        search_text = data.get('text', '').strip()
+        
+        if not search_text:
+            return jsonify({"error": "Search text is required"}), 400
+        
+        print(f"🔍 DBpedia search for: {search_text}")
+        
+        # Use the simplified DBpedia service
+        results = dbpedia_service.search_entities(search_text)
+        
+        return jsonify(results)
+        
+    except Exception as e:
+        print(f"Error in DBpedia search: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": f"DBpedia search failed: {str(e)}"}), 500
 
 @search_bp.route('/search', methods=['POST'])
 def semantic_search():
@@ -28,57 +62,66 @@ def semantic_search():
         
         # Step 2: Gemini SPARQL Generation - Generate query from TALN analysis
         print("🤖 Step 2: Gemini SPARQL Generation...")
-        sparql_query = gemini_transformer.transform_taln_analysis_to_sparql(taln_analysis)
-        print(f"✅ SPARQL Query generated: {len(sparql_query)} characters")
+        sparql_query = None
+        method_used = "unknown"
+        
+        try:
+            sparql_query = gemini_transformer.transform_taln_analysis_to_sparql(taln_analysis)
+            method_used = "gemini_taln"
+            print(f"✅ SPARQL Query generated via Gemini: {len(sparql_query)} characters")
+        except Exception as e:
+            print(f"⚠️ Gemini generation failed: {e}, falling back to template engine")
+            sparql_query = template_engine.generate_query(question)
+            method_used = "template_fallback"
+            if sparql_query:
+                print(f"✅ SPARQL Query generated via template: {len(sparql_query)} characters")
         
         if not sparql_query:
-            return jsonify({"error": "Impossible de générer une requête SPARQL"}), 400
-
-        # Heuristic override: if the user asks "who" (qui) about donations, prefer returning sponsors
-        q_lower = question.lower()
+            return jsonify({
+                "error": "Impossible de générer une requête SPARQL",
+                "taln_analysis": taln_analysis,
+                "pipeline_info": {
+                    "method": method_used,
+                    "status": "failed"
+                }
+            }), 500
+        
+        # Step 3: Execute SPARQL query
+        print("⚡ Step 3: Executing SPARQL query...")
         try:
-            if 'qui' in q_lower and 'donat' in q_lower:
-                print("DEBUG: Question asks who made donations - overriding to sponsor query")
-                sparql_query = '''PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-SELECT DISTINCT ?sponsor ?companyName ?donation
-WHERE {
-  ?sponsor a eco:Sponsor .
-  OPTIONAL { ?sponsor eco:companyName ?companyName . }
-  OPTIONAL { ?sponsor eco:makesDonation ?donation . }
-}
-LIMIT 50'''
-                print(f"DEBUG: Overridden SPARQL query (sponsor lookup): {sparql_query[:200]}...")
-        except Exception:
-            # If anything goes wrong with the heuristic, continue with original query
-            pass
-        
-        # Step 3: Execute SPARQL Query
-        print("⚡ Step 3: Executing SPARQL Query...")
-        results = sparql_utils.execute_query(sparql_query)
-        print(f"✅ Query executed. Results: {len(results) if results else 0} rows")
-        
-        # Return comprehensive response
-        return jsonify({
-            "question": question,
-            "taln_analysis": taln_analysis,
-            "sparql_query": sparql_query,
-            "results": results,
-            "pipeline_info": {
-                "taln_confidence": taln_analysis.get('confidence_scores', {}).get('overall_confidence', 0.0),
-                "entities_detected": len(taln_analysis.get('entities', [])),
-                "intent_classified": taln_analysis.get('intent', {}).get('primary_intent', 'unknown'),
-                "query_length": len(sparql_query),
-                "results_count": len(results) if results else 0
-            }
-        })
-        
+            query_results = sparql_utils.execute_query(sparql_query)
+            print(f"✅ Query executed. Results: {len(query_results)}")
+            
+            return jsonify({
+                "results": query_results,
+                "taln_analysis": taln_analysis,
+                "sparql_query": sparql_query,
+                "pipeline_info": {
+                    "method": method_used,
+                    "status": "success",
+                    "results_count": len(query_results)
+                }
+            })
+        except Exception as e:
+            print(f"❌ SPARQL execution failed: {str(e)}")
+            return jsonify({
+                "error": f"Erreur lors de l'exécution de la requête SPARQL: {str(e)}",
+                "taln_analysis": taln_analysis,
+                "sparql_query": sparql_query,
+                "pipeline_info": {
+                    "method": method_used,
+                    "status": "sparql_error"
+                }
+            }), 500
+            
     except Exception as e:
-        print(f"❌ Error in semantic search pipeline: {str(e)}")
-        return jsonify({"error": f"Erreur dans le pipeline de recherche: {str(e)}"}), 500
+        print(f"Error in semantic search: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": f"Erreur dans la recherche sémantique: {str(e)}"}), 500
 
-@search_bp.route('/search/ai', methods=['POST'])
 def ai_search():
-    """Recherche avec IA - Version alternative utilisant directement Gemini"""
+    """Recherche IA - Utilise Gemini pour générer directement une requête SPARQL"""
     try:
         data = request.get_json(force=True)
         question = data.get('question', '').strip()
@@ -86,102 +129,25 @@ def ai_search():
         if not question:
             return jsonify({"error": "Question vide"}), 400
         
-        print(f"🤖 AI Search processing: {question}")
-        
-        # Direct Gemini transformation (fallback method)
-        sparql_query = gemini_transformer.transform_question_to_sparql(question)
+        # Use Gemini to generate SPARQL directly
+        sparql_query = gemini_transformer.generate_sparql_from_question(question)
         
         if not sparql_query:
-            return jsonify({"error": "Impossible de générer une requête SPARQL"}), 400
-        # Heuristic override for 'who made donations' questions
-        q_lower = question.lower()
-        try:
-            if 'qui' in q_lower and 'donat' in q_lower:
-                print("DEBUG: AI Search - question asks who made donations - overriding to sponsor query")
-                sparql_query = '''PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-SELECT DISTINCT ?sponsor ?companyName ?donation
-WHERE {
-  ?sponsor a eco:Sponsor .
-  OPTIONAL { ?sponsor eco:companyName ?companyName . }
-  OPTIONAL { ?sponsor eco:makesDonation ?donation . }
-}
-LIMIT 50'''
-        except Exception:
-            pass
+            return jsonify({"error": "Impossible de générer une requête SPARQL"}), 500
         
-        # Execute query
-        results = sparql_utils.execute_query(sparql_query)
+        # Execute the query
+        query_results = sparql_utils.execute_query(sparql_query)
         
         return jsonify({
-            "question": question,
+            "results": query_results,
             "sparql_query": sparql_query,
-            "results": results,
             "method": "direct_gemini"
         })
         
     except Exception as e:
-        print(f"❌ Error in AI search: {str(e)}")
         return jsonify({"error": f"Erreur dans la recherche IA: {str(e)}"}), 500
 
-@search_bp.route('/search/hybrid', methods=['POST'])
 def hybrid_search():
-    """Recherche hybride - Combine TALN + Gemini + fallback"""
-    try:
-        data = request.get_json(force=True)
-        question = data.get('question', '').strip()
-        
-        if not question:
-            return jsonify({"error": "Question vide"}), 400
-        
-        print(f"🔄 Hybrid Search processing: {question}")
-        
-        # Try TALN + Gemini first
-        try:
-            taln_analysis = taln_service.analyze_question(question)
-            sparql_query = gemini_transformer.transform_taln_analysis_to_sparql(taln_analysis)
-            method_used = "taln_gemini"
-        except Exception as e:
-            print(f"TALN+Gemini failed, falling back to direct Gemini: {e}")
-            sparql_query = gemini_transformer.transform_question_to_sparql(question)
-            method_used = "direct_gemini"
-            taln_analysis = None
-        
-        # Heuristic override: if the user asks "who" about donations, prefer returning sponsors
-        q_lower = question.lower()
-        try:
-            if 'qui' in q_lower and 'donat' in q_lower:
-                print("DEBUG: Hybrid Search - question asks who made donations - overriding to sponsor query")
-                sparql_query = '''PREFIX eco: <http://www.semanticweb.org/eco-ontology#>
-SELECT DISTINCT ?sponsor ?companyName ?donation
-WHERE {
-  ?sponsor a eco:Sponsor .
-  OPTIONAL { ?sponsor eco:companyName ?companyName . }
-  OPTIONAL { ?sponsor eco:makesDonation ?donation . }
-}
-LIMIT 50'''
-                method_used = "heuristic_sponsor_lookup"
-        except Exception:
-            pass
-
-        if not sparql_query:
-            return jsonify({"error": "Impossible de générer une requête SPARQL"}), 400
-        
-        # Execute query
-        results = sparql_utils.execute_query(sparql_query)
-
-        response = {
-            "question": question,
-            "sparql_query": sparql_query,
-            "results": results,
-            "method": method_used,
-            "heuristic": None
-        }
-
-        if taln_analysis:
-            response["taln_analysis"] = taln_analysis
-
-        return jsonify(response)
-
-    except Exception as e:
-        print(f"❌ Error in hybrid search: {str(e)}")
-        return jsonify({"error": f"Erreur dans la recherche hybride: {str(e)}"}), 500
+    """Recherche hybride - Combine plusieurs méthodes"""
+    # Implementation for future enhancement
+    pass

@@ -3,6 +3,7 @@
 from flask import Blueprint, jsonify, request
 from sparql_utils import sparql_utils
 from modules.validators import validate_cours
+from modules.dbpedia_service import dbpedia_service
 import uuid
 
 cours_bp = Blueprint('cours', __name__)
@@ -15,13 +16,16 @@ def generate_cours_uri(code_cours: str) -> str:
 
 @cours_bp.route('/cours', methods=['GET'])
 def get_all_cours():
-    """Get all courses"""
+    """Get all courses - includes all subclasses"""
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?cours ?intitule ?codeCours ?creditsECTS ?semestre ?volumeHoraire ?langueCours
            ?specialite ?nomSpecialite
     WHERE {{
-        ?cours a ont:Cours .
+        ?cours a ?type .
+        ?type rdfs:subClassOf* ont:Cours .
         OPTIONAL {{ ?cours ont:intitule ?intitule . }}
         OPTIONAL {{ ?cours ont:codeCours ?codeCours . }}
         OPTIONAL {{ ?cours ont:creditsECTS ?creditsECTS . }}
@@ -43,13 +47,16 @@ def get_all_cours():
 
 @cours_bp.route('/cours/<cours_id>', methods=['GET'])
 def get_cours(cours_id):
-    """Get a specific course"""
+    """Get a specific course - includes all subclasses"""
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?cours ?intitule ?codeCours ?creditsECTS ?semestre ?volumeHoraire ?langueCours
            ?specialite ?nomSpecialite ?enseignant ?nomEnseignant ?prenomEnseignant
     WHERE {{
-        <{cours_id}> a ont:Cours .
+        <{cours_id}> a ?type .
+        ?type rdfs:subClassOf* ont:Cours .
         OPTIONAL {{ <{cours_id}> ont:intitule ?intitule . }}
         OPTIONAL {{ <{cours_id}> ont:codeCours ?codeCours . }}
         OPTIONAL {{ <{cours_id}> ont:creditsECTS ?creditsECTS . }}
@@ -214,9 +221,12 @@ def search_cours():
     
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?cours ?intitule ?codeCours ?creditsECTS ?semestre ?volumeHoraire ?langueCours
     WHERE {{
-        ?cours a ont:Cours .
+        ?cours a ?type .
+        ?type rdfs:subClassOf* ont:Cours .
         OPTIONAL {{ ?cours ont:intitule ?intitule . }}
         OPTIONAL {{ ?cours ont:codeCours ?codeCours . }}
         OPTIONAL {{ ?cours ont:creditsECTS ?creditsECTS . }}
@@ -240,6 +250,147 @@ def search_cours():
     try:
         results = sparql_utils.execute_query(query)
         return jsonify(results)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@cours_bp.route('/cours/facets', methods=['GET'])
+def get_cours_facets():
+    """Récupère les facettes pour la navigation filtrée - comptages par catégorie"""
+    # Facettes par semestre
+    query_semestre = f"""
+    PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    SELECT ?semestre (COUNT(DISTINCT ?cours) as ?count)
+    WHERE {{
+        ?cours a ?type .
+        ?type rdfs:subClassOf* ont:Cours .
+        ?cours ont:semestre ?semestre .
+    }}
+    GROUP BY ?semestre
+    ORDER BY DESC(?count)
+    """
+    
+    # Facettes par langue
+    query_langue = f"""
+    PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    SELECT ?langueCours (COUNT(DISTINCT ?cours) as ?count)
+    WHERE {{
+        ?cours a ?type .
+        ?type rdfs:subClassOf* ont:Cours .
+        ?cours ont:langueCours ?langueCours .
+    }}
+    GROUP BY ?langueCours
+    ORDER BY DESC(?count)
+    """
+    
+    # Facettes par spécialité
+    query_specialite = f"""
+    PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    SELECT ?specialite ?nomSpecialite (COUNT(DISTINCT ?cours) as ?count)
+    WHERE {{
+        ?cours a ?type .
+        ?type rdfs:subClassOf* ont:Cours .
+        ?cours ont:faitPartieDe ?specialite .
+        ?specialite ont:nomSpecialite ?nomSpecialite .
+    }}
+    GROUP BY ?specialite ?nomSpecialite
+    ORDER BY DESC(?count)
+    LIMIT 20
+    """
+    
+    # Facettes par crédits ECTS
+    query_credits = f"""
+    PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    SELECT ?creditsECTS (COUNT(DISTINCT ?cours) as ?count)
+    WHERE {{
+        ?cours a ?type .
+        ?type rdfs:subClassOf* ont:Cours .
+        ?cours ont:creditsECTS ?creditsECTS .
+    }}
+    GROUP BY ?creditsECTS
+    ORDER BY DESC(?count)
+    """
+    
+    try:
+        facets = {
+            "by_semestre": sparql_utils.execute_query(query_semestre),
+            "by_langue": sparql_utils.execute_query(query_langue),
+            "by_specialite": sparql_utils.execute_query(query_specialite),
+            "by_credits": sparql_utils.execute_query(query_credits)
+        }
+        return jsonify(facets)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@cours_bp.route('/cours/<path:cours_id>/dbpedia-enrich', methods=['GET'])
+def enrich_cours_with_dbpedia(cours_id):
+    """
+    Enrich cours data with DBpedia information (Linked Data integration)
+    Accepts optional 'term' query parameter to search for specific term
+    If no term provided, uses the cours intitule
+    """
+    try:
+        # Get the cours data
+        query = f"""
+        PREFIX ont: <{PREFIX}>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        SELECT ?intitule ?codeCours ?nomSpecialite
+        WHERE {{
+            <{cours_id}> a ?type .
+            ?type rdfs:subClassOf* ont:Cours .
+            OPTIONAL {{ <{cours_id}> ont:intitule ?intitule . }}
+            OPTIONAL {{ <{cours_id}> ont:codeCours ?codeCours . }}
+            OPTIONAL {{
+                <{cours_id}> ont:faitPartieDe ?specialite .
+                ?specialite ont:nomSpecialite ?nomSpecialite .
+            }}
+        }}
+        LIMIT 1
+        """
+        
+        results = sparql_utils.execute_query(query)
+        
+        if not results:
+            return jsonify({"error": "Cours non trouvé"}), 404
+        
+        cours_data = results[0]
+        
+        # Get search term from query parameter or use cours intitule
+        search_term = request.args.get('term')
+        if not search_term:
+            # Prefer intitule over codeCours for better DBpedia matching
+            search_term = cours_data.get("intitule") or cours_data.get("codeCours", "")
+        
+        enriched_data = {
+            "cours": cours_data,
+            "search_term": search_term,
+            "dbpedia_enrichment": None
+        }
+        
+        # Enrich with DBpedia using the search term
+        if search_term:
+            dbpedia_results = dbpedia_service.search_entities(search_term)
+            
+            if dbpedia_results.get("results") and len(dbpedia_results["results"]) > 0:
+                first_result = dbpedia_results["results"][0]
+                enriched_data["dbpedia_enrichment"] = {
+                    "title": first_result["title"],
+                    "uri": first_result["uri"],
+                    "all_results": dbpedia_results["results"][:5]
+                }
+            else:
+                enriched_data["dbpedia_enrichment"] = dbpedia_results
+        
+        return jsonify(enriched_data)
+        
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from sparql_utils import sparql_utils
 from modules.validators import validate_universite
+from modules.dbpedia_service import dbpedia_service
 import uuid
 
 universite_bp = Blueprint('universite', __name__)
@@ -51,12 +52,15 @@ def get_all_universites():
         print(f"Error fetching universites: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
-@universite_bp.route('/universites/<universite_id>', methods=['GET'])
+@universite_bp.route('/universites/<path:universite_id>', methods=['GET'])
 def get_universite(universite_id):
     """Récupère une université spécifique avec tous ses détails"""
+    universite_id = normalize_universite_id(universite_id)
+    
     query = f"""
     PREFIX ont: <http://www.education-intelligente.org/ontologie#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
     SELECT ?universite ?nomUniversite ?anneeFondation ?ville ?pays 
            ?nombreEtudiants ?rangNational ?siteWeb ?typeUniversite
@@ -66,8 +70,9 @@ def get_universite(universite_id):
            ?technologie ?nomTechnologie ?typeTechnologie
            ?projet ?titreProjet ?typeProjet
     WHERE {{
-        <{universite_id}> a ont:Universite ;
-               ont:nomUniversite ?nomUniversite .
+        <{universite_id}> rdf:type ?type .
+        FILTER(?type IN (ont:Universite, ont:UniversitePublique, ont:UniversitePrivee))
+        <{universite_id}> ont:nomUniversite ?nomUniversite .
         
         OPTIONAL {{ <{universite_id}> ont:anneeFondation ?anneeFondation . }}
         OPTIONAL {{ <{universite_id}> ont:ville ?ville . }}
@@ -267,9 +272,27 @@ def search_universites():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@universite_bp.route('/universites/<universite_id>/specialites', methods=['GET'])
+def normalize_universite_id(universite_id):
+    """Normalize university ID to full URI format"""
+    from urllib.parse import unquote
+    universite_id = unquote(universite_id)
+    
+    # If it's not a full URI, try to construct it
+    if not universite_id.startswith('http://') and not universite_id.startswith('https://'):
+        # It might be just the fragment (e.g., "Universite_Marakech")
+        # Try with the full prefix
+        if not universite_id.startswith(PREFIX):
+            universite_id = f"{PREFIX}{universite_id}"
+    
+    # Debug logging
+    print(f"DEBUG: Normalized universite_id: {universite_id}")
+    
+    return universite_id
+
+@universite_bp.route('/universites/<path:universite_id>/specialites', methods=['GET'])
 def get_universite_specialites(universite_id):
     """Récupère toutes les spécialités d'une université"""
+    universite_id = normalize_universite_id(universite_id)
     query = f"""
     PREFIX ont: <http://www.education-intelligente.org/ontologie#>
     SELECT ?specialite ?nomSpecialite ?codeSpecialite ?description 
@@ -293,9 +316,10 @@ def get_universite_specialites(universite_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@universite_bp.route('/universites/<universite_id>/enseignants', methods=['GET'])
+@universite_bp.route('/universites/<path:universite_id>/enseignants', methods=['GET'])
 def get_universite_enseignants(universite_id):
     """Récupère tous les enseignants d'une université"""
+    universite_id = normalize_universite_id(universite_id)
     query = f"""
     PREFIX ont: <http://www.education-intelligente.org/ontologie#>
     SELECT ?enseignant ?nom ?prenom ?email ?telephone ?dateNaissance 
@@ -326,9 +350,10 @@ def get_universite_enseignants(universite_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@universite_bp.route('/universites/<universite_id>/etudiants', methods=['GET'])
+@universite_bp.route('/universites/<path:universite_id>/etudiants', methods=['GET'])
 def get_universite_etudiants(universite_id):
     """Récupère tous les étudiants d'une université"""
+    universite_id = normalize_universite_id(universite_id)
     query = f"""
     PREFIX ont: <http://www.education-intelligente.org/ontologie#>
     SELECT ?etudiant ?nom ?prenom ?email ?telephone ?dateNaissance 
@@ -360,9 +385,10 @@ def get_universite_etudiants(universite_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@universite_bp.route('/universites/<universite_id>/technologies', methods=['GET'])
+@universite_bp.route('/universites/<path:universite_id>/technologies', methods=['GET'])
 def get_universite_technologies(universite_id):
     """Récupère toutes les technologies adoptées par une université"""
+    universite_id = normalize_universite_id(universite_id)
     query = f"""
     PREFIX ont: <http://www.education-intelligente.org/ontologie#>
     SELECT ?technologie ?nomTechnologie ?typeTechnologie ?version 
@@ -386,9 +412,10 @@ def get_universite_technologies(universite_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@universite_bp.route('/universites/<universite_id>/projets', methods=['GET'])
+@universite_bp.route('/universites/<path:universite_id>/projets', methods=['GET'])
 def get_universite_projets(universite_id):
     """Récupère tous les projets organisés par une université"""
+    universite_id = normalize_universite_id(universite_id)
     query = f"""
     PREFIX ont: <http://www.education-intelligente.org/ontologie#>
     SELECT ?projet ?titreProjet ?typeProjet ?domaineProjet ?anneeRealisation 
@@ -425,8 +452,9 @@ def get_universite_projets(universite_id):
 
 @universite_bp.route('/universites/stats', methods=['GET'])
 def get_universites_stats():
-    """Récupère les statistiques des universités"""
-    query = """
+    """Récupère les statistiques des universités avec facettes"""
+    # Stats générales
+    query_stats = """
     PREFIX ont: <http://www.education-intelligente.org/ontologie#>
     
     SELECT 
@@ -444,9 +472,83 @@ def get_universites_stats():
     }
     """
     
+    # Facettes par type
+    query_type = """
+    PREFIX ont: <http://www.education-intelligente.org/ontologie#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    
+    SELECT ?typeUniversite (COUNT(DISTINCT ?universite) as ?count)
+    WHERE {
+        ?universite rdf:type ?type .
+        FILTER(?type IN (ont:Universite, ont:UniversitePublique, ont:UniversitePrivee))
+        BIND(
+          IF(?type = ont:UniversitePublique, "Publique",
+            IF(?type = ont:UniversitePrivee, "Privée", "Générale")
+          ) AS ?typeUniversite
+        )
+    }
+    GROUP BY ?typeUniversite
+    ORDER BY DESC(?count)
+    """
+    
+    # Facettes par pays
+    query_pays = """
+    PREFIX ont: <http://www.education-intelligente.org/ontologie#>
+    
+    SELECT ?pays (COUNT(DISTINCT ?universite) as ?count)
+    WHERE {
+        ?universite a ont:Universite .
+        ?universite ont:pays ?pays .
+    }
+    GROUP BY ?pays
+    ORDER BY DESC(?count)
+    LIMIT 20
+    """
+    
+    # Facettes par ville
+    query_ville = """
+    PREFIX ont: <http://www.education-intelligente.org/ontologie#>
+    
+    SELECT ?ville (COUNT(DISTINCT ?universite) as ?count)
+    WHERE {
+        ?universite a ont:Universite .
+        ?universite ont:ville ?ville .
+    }
+    GROUP BY ?ville
+    ORDER BY DESC(?count)
+    LIMIT 20
+    """
+    
+    # Top-rated universities (rang <= 5) - Inference layer
+    query_top_rated = """
+    PREFIX ont: <http://www.education-intelligente.org/ontologie#>
+    
+    SELECT ?universite ?nomUniversite ?ville ?pays ?rangNational ?nombreEtudiants
+    WHERE {
+        ?universite a ont:Universite .
+        ?universite ont:nomUniversite ?nomUniversite .
+        ?universite ont:rangNational ?rangNational .
+        FILTER(xsd:integer(?rangNational) <= 5)
+        OPTIONAL { ?universite ont:ville ?ville . }
+        OPTIONAL { ?universite ont:pays ?pays . }
+        OPTIONAL { ?universite ont:nombreEtudiants ?nombreEtudiants . }
+    }
+    ORDER BY xsd:integer(?rangNational)
+    """
+    
     try:
-        results = sparql_utils.execute_query(query)
-        return jsonify(results[0] if results else {})
+        stats = sparql_utils.execute_query(query_stats)
+        facets = {
+            "by_type": sparql_utils.execute_query(query_type),
+            "by_pays": sparql_utils.execute_query(query_pays),
+            "by_ville": sparql_utils.execute_query(query_ville),
+            "top_rated": sparql_utils.execute_query(query_top_rated)
+        }
+        
+        return jsonify({
+            "stats": stats[0] if stats else {},
+            "facets": facets
+        })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -543,9 +645,10 @@ def create_universite():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@universite_bp.route('/universites/<universite_id>', methods=['PUT'])
+@universite_bp.route('/universites/<path:universite_id>', methods=['PUT'])
 def update_universite(universite_id):
     """Update a universite"""
+    universite_id = normalize_universite_id(universite_id)
     data = request.json
     
     errors = validate_universite(data)
@@ -596,9 +699,10 @@ def update_universite(universite_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@universite_bp.route('/universites/<universite_id>', methods=['DELETE'])
+@universite_bp.route('/universites/<path:universite_id>', methods=['DELETE'])
 def delete_universite(universite_id):
     """Delete a universite"""
+    universite_id = normalize_universite_id(universite_id)
     # Construct full URI if not already a full URI
     if universite_id.startswith('http://') or universite_id.startswith('https://'):
         universite_uri = universite_id
@@ -620,5 +724,70 @@ def delete_universite(universite_id):
         if "error" in result:
             return jsonify(result), 500
         return jsonify({"message": "Université supprimée avec succès"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@universite_bp.route('/universites/<path:universite_id>/dbpedia-enrich', methods=['GET'])
+def enrich_universite_with_dbpedia(universite_id):
+    """Enrich university data with DBpedia information (Linked Data integration)"""
+    try:
+        universite_id = normalize_universite_id(universite_id)
+        
+        # First get the university data
+        # Use rdf:type to match both Universite and its subclasses (UniversitePublique, UniversitePrivee)
+        query = f"""
+        PREFIX ont: <{PREFIX}>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        SELECT ?nomUniversite ?ville ?pays
+        WHERE {{
+            <{universite_id}> rdf:type ?type .
+            FILTER(?type IN (ont:Universite, ont:UniversitePublique, ont:UniversitePrivee))
+            OPTIONAL {{ <{universite_id}> ont:nomUniversite ?nomUniversite . }}
+            OPTIONAL {{ <{universite_id}> ont:ville ?ville . }}
+            OPTIONAL {{ <{universite_id}> ont:pays ?pays . }}
+        }}
+        """
+        
+        print(f"DEBUG: DBpedia enrich query: {query}")
+        results = sparql_utils.execute_query(query)
+        print(f"DEBUG: Query results: {results}")
+        
+        if not results:
+            return jsonify({"error": "Université non trouvée", "debug_uri": universite_id}), 404
+        
+        univ_data = results[0]
+        city_name = univ_data.get("ville")
+        
+        # Get search term from query parameter or use university name/city
+        search_term = request.args.get('term')
+        if not search_term:
+            # Prefer nomUniversite over ville for better DBpedia matching
+            search_term = univ_data.get("nomUniversite") or city_name
+        
+        enriched_data = {
+            "universite": univ_data,
+            "search_term": search_term,
+            "dbpedia_enrichment": None
+        }
+        
+        # Enrich with DBpedia using the search term (use search_entities for better results)
+        if search_term:
+            # Use search_entities to get a list of references
+            dbpedia_results = dbpedia_service.search_entities(search_term)
+            
+            # If we got results, return the first one for backward compatibility
+            if dbpedia_results.get("results") and len(dbpedia_results["results"]) > 0:
+                first_result = dbpedia_results["results"][0]
+                enriched_data["dbpedia_enrichment"] = {
+                    "title": first_result["title"],
+                    "uri": first_result["uri"],
+                    "all_results": dbpedia_results["results"][:5]  # Include top 5 for reference
+                }
+            else:
+                # Return error if no results
+                enriched_data["dbpedia_enrichment"] = dbpedia_results
+        
+        return jsonify(enriched_data)
+        
     except Exception as e:
         return jsonify({"error": str(e)}), 500

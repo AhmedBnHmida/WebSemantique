@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ressourcesAPI } from '../../../utils/api';
 import CRUDModal from '../../../components/CRUDModal';
-import DetailsModal from '../../../components/DetailsModal';
 
 const RessourcesPedagogiques = () => {
   const [ressources, setRessources] = useState([]);
@@ -24,13 +23,23 @@ const RessourcesPedagogiques = () => {
   // Details Modal state
   const [selectedRessource, setSelectedRessource] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [activeTab, setActiveTab] = useState('info');
+  const [dbpediaData, setDbpediaData] = useState(null);
+  const [loadingDBpedia, setLoadingDBpedia] = useState(false);
 
   const [stats, setStats] = useState({
     total: 0
   });
 
+  // Facets state for dynamic filters
+  const [facets, setFacets] = useState({
+    by_type: [],
+    by_technologie: []
+  });
+
   useEffect(() => {
     fetchRessources();
+    fetchFacets();
   }, []);
 
   useEffect(() => {
@@ -52,6 +61,17 @@ const RessourcesPedagogiques = () => {
       setError('Erreur lors du chargement des ressources');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchFacets = async () => {
+    try {
+      const response = await ressourcesAPI.getFacets();
+      if (response.data) {
+        setFacets(response.data);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des facettes:', error);
     }
   };
 
@@ -160,12 +180,39 @@ const RessourcesPedagogiques = () => {
     try {
       const response = await ressourcesAPI.getById(ressource.ressource);
       const details = Array.isArray(response.data) ? response.data[0] : response.data;
-      setSelectedRessource(details || ressource);
+      // Merge API response with original ressource data to ensure all fields are available
+      const mergedData = { ...ressource, ...details };
+      setSelectedRessource(mergedData);
       setShowDetailsModal(true);
+      setActiveTab('info');
+      setDbpediaData(null);
     } catch (error) {
       console.error('Erreur lors du chargement des détails:', error);
       setSelectedRessource(ressource);
       setShowDetailsModal(true);
+      setActiveTab('info');
+      setDbpediaData(null);
+    }
+  };
+
+  const fetchDBpediaEnrichment = async (ressourceId, term = null) => {
+    try {
+      setLoadingDBpedia(true);
+      setDbpediaData(null);
+      const response = await ressourcesAPI.enrichWithDBpedia(ressourceId, term);
+      if (response.data) {
+        if (response.data.dbpedia_enrichment) {
+          setDbpediaData(response.data.dbpedia_enrichment);
+          setActiveTab('dbpedia');
+        } else if (response.data.error) {
+          setDbpediaData({ error: response.data.error });
+        }
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des données DBpedia:', error);
+      setDbpediaData({ error: 'Erreur lors du chargement des données DBpedia' });
+    } finally {
+      setLoadingDBpedia(false);
     }
   };
 
@@ -247,10 +294,11 @@ const RessourcesPedagogiques = () => {
               className="filter-select"
             >
               <option value="">Tous les types</option>
-              <option value="Article scientifique">Article scientifique</option>
-              <option value="Livre">Livre</option>
-              <option value="Vidéo">Vidéo</option>
-              <option value="Documentation">Documentation</option>
+              {facets.by_type && facets.by_type.map((facet, index) => (
+                <option key={index} value={facet.typeRessource || ''}>
+                  {facet.typeRessource || 'Non spécifié'} ({facet.count || 0})
+                </option>
+              ))}
             </select>
           </div>
 
@@ -641,17 +689,235 @@ const RessourcesPedagogiques = () => {
         loading={submitLoading}
       />
 
-      {/* Details Modal */}
-      <DetailsModal
-        isOpen={showDetailsModal}
-        onClose={() => {
-          setShowDetailsModal(false);
-          setSelectedRessource(null);
-        }}
-        title={selectedRessource ? selectedRessource.titreRessource || 'Détails de la ressource' : 'Détails'}
-        data={selectedRessource}
-        fields={ressourceDetailsFields}
-      />
+      {/* Details Modal with DBpedia */}
+      {showDetailsModal && selectedRessource && (
+        <div 
+          className="modal-overlay" 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+            padding: '20px'
+          }}
+          onClick={() => {
+            setShowDetailsModal(false);
+            setSelectedRessource(null);
+            setDbpediaData(null);
+            setActiveTab('info');
+          }}
+        >
+          <div 
+            className="modal-content" 
+            style={{
+              background: 'white',
+              borderRadius: '12px',
+              width: '100%',
+              maxWidth: '800px',
+              maxHeight: '80vh',
+              overflow: 'auto',
+              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
+              zIndex: 10000,
+              position: 'relative'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="modal-header">
+              <h2>{selectedRessource.titreRessource || 'Détails de la ressource'}</h2>
+              <button 
+                className="modal-close"
+                onClick={() => {
+                  setShowDetailsModal(false);
+                  setSelectedRessource(null);
+                  setDbpediaData(null);
+                  setActiveTab('info');
+                }}
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="modal-tabs">
+              <button 
+                className={`tab-button ${activeTab === 'info' ? 'active' : ''}`}
+                onClick={() => setActiveTab('info')}
+              >
+                Informations
+              </button>
+              {dbpediaData && (
+                <button 
+                  className={`tab-button ${activeTab === 'dbpedia' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('dbpedia')}
+                >
+                  🌐 DBpedia Info
+                </button>
+              )}
+            </div>
+
+            <div className="modal-body">
+              {activeTab === 'info' && selectedRessource && (
+                <div className="tab-content">
+                  <div className="detail-section">
+                    <h3>Informations générales</h3>
+                    <div className="detail-grid">
+                      {ressourceDetailsFields.map((field) => {
+                        const value = selectedRessource[field.name];
+                        if (field.hideIfEmpty && !value) return null;
+                        
+                        return (
+                          <div key={field.name} className="detail-item">
+                            <label>{field.label}:</label>
+                            <span>
+                              {value || 'Non spécifié'}
+                              {value && typeof value === 'string' && value.length < 100 && (
+                                <button 
+                                  className="btn-enrich-inline"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    fetchDBpediaEnrichment(selectedRessource.ressource, value);
+                                  }}
+                                  title={`Enrichir "${value.length > 50 ? value.substring(0, 50) + '...' : value}" avec DBpedia`}
+                                >
+                                  🌐
+                                </button>
+                              )}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'dbpedia' && (
+                <div className="tab-content">
+                  <h3>🌐 Informations DBpedia (Linked Data)</h3>
+                  {loadingDBpedia ? (
+                    <div className="loading-state">
+                      <div className="loading-spinner-small"></div>
+                      <p>Chargement des données DBpedia...</p>
+                    </div>
+                  ) : dbpediaData ? (
+                    <div className="dbpedia-section">
+                      {dbpediaData.error ? (
+                        <div className="dbpedia-error">
+                          <p>⚠️ {dbpediaData.error}</p>
+                          <p className="help-text">Les données DBpedia ne sont pas disponibles pour "{dbpediaData.search_text || dbpediaData.term || 'ce terme'}".</p>
+                        </div>
+                      ) : (
+                        <>
+                          {dbpediaData.all_results && dbpediaData.all_results.length > 0 ? (
+                            <div className="dbpedia-results">
+                              <h4>🔍 Résultats DBpedia ({dbpediaData.all_results.length})</h4>
+                              <ol className="dbpedia-results-list">
+                                {dbpediaData.all_results.map((result, index) => (
+                                  <li key={index} className="dbpedia-result-item">
+                                    <div className="dbpedia-result-content">
+                                      <strong className="dbpedia-result-title">{result.title}</strong>
+                                      <a 
+                                        href={result.uri} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="dbpedia-result-uri"
+                                      >
+                                        {result.uri}
+                                      </a>
+                                    </div>
+                                  </li>
+                                ))}
+                              </ol>
+                            </div>
+                          ) : dbpediaData.results && dbpediaData.results.length > 0 ? (
+                            <div className="dbpedia-results">
+                              <h4>🔍 Résultats DBpedia ({dbpediaData.results.length})</h4>
+                              <ol className="dbpedia-results-list">
+                                {dbpediaData.results.map((result, index) => (
+                                  <li key={index} className="dbpedia-result-item">
+                                    <div className="dbpedia-result-content">
+                                      <strong className="dbpedia-result-title">{result.title}</strong>
+                                      <a 
+                                        href={result.uri} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="dbpedia-result-uri"
+                                      >
+                                        {result.uri}
+                                      </a>
+                                    </div>
+                                  </li>
+                                ))}
+                              </ol>
+                            </div>
+                          ) : null}
+                          
+                          {dbpediaData.title && dbpediaData.uri && (
+                            <div className="dbpedia-primary">
+                              <h4>📌 Résultat principal</h4>
+                              <div className="dbpedia-item">
+                                <label>🏷️ Titre:</label>
+                                <p className="term-text">{dbpediaData.title}</p>
+                              </div>
+                              <div className="dbpedia-item">
+                                <label>🔗 URI:</label>
+                                <a 
+                                  href={dbpediaData.uri} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="dbpedia-uri-link"
+                                >
+                                  {dbpediaData.uri}
+                                </a>
+                              </div>
+                            </div>
+                          )}
+                          
+                          <div className="dbpedia-info">
+                            <p className="info-badge">
+                              ℹ️ Ces données proviennent de DBpedia (Linked Data), démontrant l'interopérabilité du Web Sémantique.
+                            </p>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="no-dbpedia">
+                      <p>Aucune donnée DBpedia disponible. Cliquez sur l'icône 🌐 à côté d'un champ pour enrichir ce terme.</p>
+                      <button 
+                        className="btn-enrich"
+                        onClick={() => selectedRessource && fetchDBpediaEnrichment(selectedRessource.ressource, selectedRessource.titreRessource)}
+                      >
+                        🔄 Charger les données DBpedia pour "{selectedRessource?.titreRessource || 'cette ressource'}"
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="modal-footer">
+              <button 
+                className="btn-secondary"
+                onClick={() => {
+                  setShowDetailsModal(false);
+                  setSelectedRessource(null);
+                  setDbpediaData(null);
+                  setActiveTab('info');
+                }}
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

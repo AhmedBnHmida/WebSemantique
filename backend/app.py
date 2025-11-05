@@ -1,22 +1,13 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
 import logging
-from modules.campRes import api_routes
 import os
-from modules.personne import personne_bp  # Updated import
-from modules.locations import locations_bp
-from modules.specialite_bp import specialite_bp  # New import
-from modules.universite_bp import universite_bp  # New import
-from modules.users import users_bp
+import requests
+from modules.personne import personne_bp
+from modules.specialite_bp import specialite_bp
+from modules.universite_bp import universite_bp
 from modules.search import search_bp
-from modules.blogs import blogs_bp
-from modules.reservations import reservations_bp
-from modules.certifications import certifications_bp
-from modules.sponsors import sponsors_bp
-from modules.volunteers import volunteers_bp
-from modules.assignments import assignments_bp
 from sparql_utils import sparql_utils
-from modules.reviews import reviews_bp
 from modules.cours_bp import cours_bp
 from modules.competences_bp import competences_bp
 from modules.projets_bp import projets_bp
@@ -32,22 +23,11 @@ CORS(app)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Enregistrement des routes
-app.register_blueprint(api_routes, url_prefix='/api')
-app.register_blueprint(personne_bp, url_prefix='/api')  # Updated blueprint registration
-app.register_blueprint(specialite_bp, url_prefix='/api')  # New blueprint registration
-app.register_blueprint(locations_bp, url_prefix='/api')
-app.register_blueprint(universite_bp, url_prefix='/api')  # New blueprint registration
-app.register_blueprint(users_bp, url_prefix='/api')
+# Enregistrement des routes - Education domain only
+app.register_blueprint(personne_bp, url_prefix='/api')
+app.register_blueprint(specialite_bp, url_prefix='/api')
+app.register_blueprint(universite_bp, url_prefix='/api')
 app.register_blueprint(search_bp, url_prefix='/api')
-app.register_blueprint(reservations_bp, url_prefix='/api')
-app.register_blueprint(certifications_bp, url_prefix='/api')
-app.register_blueprint(sponsors_bp, url_prefix='/api')
-app.register_blueprint(volunteers_bp, url_prefix='/api')
-app.register_blueprint(assignments_bp, url_prefix='/api')
-app.register_blueprint(blogs_bp, url_prefix='/api')
-app.register_blueprint(reviews_bp, url_prefix='/api')
-# Education domain blueprints
 app.register_blueprint(cours_bp, url_prefix='/api')
 app.register_blueprint(competences_bp, url_prefix='/api')
 app.register_blueprint(projets_bp, url_prefix='/api')
@@ -369,6 +349,135 @@ def get_education_stats():
         return jsonify({
             "status": "error",
             "message": f"Erreur lors de la récupération des statistiques éducatives: {str(e)}"
+        }), 500
+
+@app.route('/api/ontology/browse', methods=['GET'])
+def browse_ontology():
+    """Browse the ontology - query all triples for a specific entity type or URI"""
+    try:
+        entity_type = request.args.get('type', '')  # e.g., 'Cours', 'Personne', etc.
+        entity_uri = request.args.get('uri', '')  # Specific entity URI
+        limit = int(request.args.get('limit', 100))
+        
+        if entity_uri:
+            # Get all triples for a specific entity
+            query = f"""
+            PREFIX ont: <http://www.education-intelligente.org/ontologie#>
+            SELECT ?p ?o WHERE {{
+                <{entity_uri}> ?p ?o .
+            }}
+            LIMIT {limit}
+            """
+        elif entity_type:
+            # Get all entities of a specific type with their properties
+            query = f"""
+            PREFIX ont: <http://www.education-intelligente.org/ontologie#>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            SELECT ?s ?p ?o WHERE {{
+                ?s a ont:{entity_type} .
+                ?s ?p ?o .
+            }}
+            LIMIT {limit}
+            """
+        else:
+            # Get all triples (limited)
+            query = f"""
+            SELECT ?s ?p ?o WHERE {{
+                ?s ?p ?o .
+            }}
+            LIMIT {limit}
+            """
+        
+        results = sparql_utils.execute_query(query)
+        return jsonify({
+            "status": "success",
+            "results": results,
+            "count": len(results)
+        })
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": f"Erreur lors de la navigation: {str(e)}"
+        }), 500
+
+@app.route('/api/ontology/query', methods=['POST'])
+def execute_sparql_query():
+    """Execute a custom SPARQL query - like phpMyAdmin query interface"""
+    try:
+        data = request.json
+        query = data.get('query', '')
+        
+        if not query:
+            return jsonify({
+                "status": "error",
+                "message": "Query is required"
+            }), 400
+        
+        # Execute the query
+        results = sparql_utils.execute_query(query)
+        return jsonify({
+            "status": "success",
+            "results": results,
+            "count": len(results)
+        })
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": f"Erreur lors de l'exécution de la requête: {str(e)}"
+        }), 500
+
+@app.route('/api/ontology/export', methods=['GET'])
+def export_ontology():
+    """Export the current ontology state from Fuseki as RDF"""
+    try:
+        # Get the Fuseki endpoint
+        fuseki_endpoint = os.getenv('FUSEKI_ENDPOINT', 'http://localhost:3030/educationInfin')
+        format_type = request.args.get('format', 'xml')  # xml, turtle, ntriples, json-ld
+        
+        # Map format types to Fuseki content types
+        format_map = {
+            'xml': 'application/rdf+xml',
+            'turtle': 'text/turtle',
+            'ntriples': 'application/n-triples',
+            'json-ld': 'application/ld+json'
+        }
+        
+        accept_header = format_map.get(format_type, 'application/rdf+xml')
+        
+        # Query Fuseki to get all data
+        query_endpoint = f"{fuseki_endpoint}/data"
+        headers = {'Accept': accept_header}
+        
+        response = requests.get(query_endpoint, headers=headers, timeout=60)
+        
+        if response.status_code == 200:
+            # Determine file extension
+            ext_map = {
+                'xml': 'rdf',
+                'turtle': 'ttl',
+                'ntriples': 'nt',
+                'json-ld': 'jsonld'
+            }
+            file_ext = ext_map.get(format_type, 'rdf')
+            
+            # Return the RDF data
+            return Response(
+                response.content,
+                mimetype=accept_header,
+                headers={
+                    'Content-Disposition': f'attachment; filename=ontology_export.{file_ext}'
+                }
+            )
+        else:
+            return jsonify({
+                "status": "error",
+                "message": f"Erreur lors de l'export: {response.status_code}"
+            }), 500
+            
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": f"Erreur lors de l'export: {str(e)}"
         }), 500
 
 if __name__ == '__main__':
