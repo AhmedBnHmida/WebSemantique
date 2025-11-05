@@ -20,11 +20,14 @@ def get_all_evaluations():
     """Get all evaluations"""
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?evaluation ?typeEvaluation ?dateEvaluation
            ?cours ?intitule ?competence ?nomCompetence
            ?technologie ?nomTechnologie
     WHERE {{
-        ?evaluation a ont:Evaluation .
+        ?evaluation a ?type .
+        ?type rdfs:subClassOf* ont:Evaluation .
         OPTIONAL {{ ?evaluation ont:typeEvaluation ?typeEvaluation . }}
         OPTIONAL {{ ?evaluation ont:dateEvaluation ?dateEvaluation . }}
         OPTIONAL {{
@@ -53,12 +56,15 @@ def get_evaluation(evaluation_id):
     """Get a specific evaluation"""
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?evaluation ?typeEvaluation ?dateEvaluation
            ?cours ?intitule ?projet ?titreProjet
            ?competence ?nomCompetence
            ?technologie ?nomTechnologie
     WHERE {{
-        <{evaluation_id}> a ont:Evaluation .
+        <{evaluation_id}> a ?type .
+        ?type rdfs:subClassOf* ont:Evaluation .
         OPTIONAL {{ <{evaluation_id}> ont:typeEvaluation ?typeEvaluation . }}
         OPTIONAL {{ <{evaluation_id}> ont:dateEvaluation ?dateEvaluation . }}
         OPTIONAL {{
@@ -217,10 +223,13 @@ def search_evaluations():
     
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     SELECT ?evaluation ?typeEvaluation ?dateEvaluation
     WHERE {{
-        ?evaluation a ont:Evaluation .
+        ?evaluation a ?type .
+        ?type rdfs:subClassOf* ont:Evaluation .
         OPTIONAL {{ ?evaluation ont:typeEvaluation ?typeEvaluation . }}
         OPTIONAL {{ ?evaluation ont:dateEvaluation ?dateEvaluation . }}
     """
@@ -246,9 +255,12 @@ def get_evaluations_facets():
     """Récupère les facettes pour la navigation filtrée"""
     query_type = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?typeEvaluation (COUNT(DISTINCT ?evaluation) as ?count)
     WHERE {{
-        ?evaluation a ont:Evaluation .
+        ?evaluation a ?type .
+        ?type rdfs:subClassOf* ont:Evaluation .
         ?evaluation ont:typeEvaluation ?typeEvaluation .
     }}
     GROUP BY ?typeEvaluation
@@ -256,9 +268,12 @@ def get_evaluations_facets():
     """
     query_cours = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?cours ?intitule (COUNT(DISTINCT ?evaluation) as ?count)
     WHERE {{
-        ?evaluation a ont:Evaluation .
+        ?evaluation a ?type .
+        ?type rdfs:subClassOf* ont:Evaluation .
         ?evaluation ont:porteSur ?cours .
         ?cours ont:intitule ?intitule .
     }}
@@ -268,9 +283,12 @@ def get_evaluations_facets():
     """
     query_competence = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?competence ?nomCompetence (COUNT(DISTINCT ?evaluation) as ?count)
     WHERE {{
-        ?evaluation a ont:Evaluation .
+        ?evaluation a ?type .
+        ?type rdfs:subClassOf* ont:Evaluation .
         ?evaluation ont:mesureCompetence ?competence .
         ?competence ont:nomCompetence ?nomCompetence .
     }}
@@ -294,9 +312,12 @@ def enrich_evaluation_with_dbpedia(evaluation_id):
     try:
         query = f"""
         PREFIX ont: <{PREFIX}>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         SELECT ?typeEvaluation ?intituleCours
         WHERE {{
-            <{evaluation_id}> a ont:Evaluation .
+            <{evaluation_id}> a ?type .
+            ?type rdfs:subClassOf* ont:Evaluation .
             OPTIONAL {{ <{evaluation_id}> ont:typeEvaluation ?typeEvaluation . }}
             OPTIONAL {{
                 <{evaluation_id}> ont:evalue ?cours .

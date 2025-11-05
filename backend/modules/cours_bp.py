@@ -16,13 +16,16 @@ def generate_cours_uri(code_cours: str) -> str:
 
 @cours_bp.route('/cours', methods=['GET'])
 def get_all_cours():
-    """Get all courses"""
+    """Get all courses - includes all subclasses"""
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?cours ?intitule ?codeCours ?creditsECTS ?semestre ?volumeHoraire ?langueCours
            ?specialite ?nomSpecialite
     WHERE {{
-        ?cours a ont:Cours .
+        ?cours a ?type .
+        ?type rdfs:subClassOf* ont:Cours .
         OPTIONAL {{ ?cours ont:intitule ?intitule . }}
         OPTIONAL {{ ?cours ont:codeCours ?codeCours . }}
         OPTIONAL {{ ?cours ont:creditsECTS ?creditsECTS . }}
@@ -44,13 +47,16 @@ def get_all_cours():
 
 @cours_bp.route('/cours/<cours_id>', methods=['GET'])
 def get_cours(cours_id):
-    """Get a specific course"""
+    """Get a specific course - includes all subclasses"""
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?cours ?intitule ?codeCours ?creditsECTS ?semestre ?volumeHoraire ?langueCours
            ?specialite ?nomSpecialite ?enseignant ?nomEnseignant ?prenomEnseignant
     WHERE {{
-        <{cours_id}> a ont:Cours .
+        <{cours_id}> a ?type .
+        ?type rdfs:subClassOf* ont:Cours .
         OPTIONAL {{ <{cours_id}> ont:intitule ?intitule . }}
         OPTIONAL {{ <{cours_id}> ont:codeCours ?codeCours . }}
         OPTIONAL {{ <{cours_id}> ont:creditsECTS ?creditsECTS . }}
@@ -215,9 +221,12 @@ def search_cours():
     
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?cours ?intitule ?codeCours ?creditsECTS ?semestre ?volumeHoraire ?langueCours
     WHERE {{
-        ?cours a ont:Cours .
+        ?cours a ?type .
+        ?type rdfs:subClassOf* ont:Cours .
         OPTIONAL {{ ?cours ont:intitule ?intitule . }}
         OPTIONAL {{ ?cours ont:codeCours ?codeCours . }}
         OPTIONAL {{ ?cours ont:creditsECTS ?creditsECTS . }}
@@ -250,9 +259,12 @@ def get_cours_facets():
     # Facettes par semestre
     query_semestre = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?semestre (COUNT(DISTINCT ?cours) as ?count)
     WHERE {{
-        ?cours a ont:Cours .
+        ?cours a ?type .
+        ?type rdfs:subClassOf* ont:Cours .
         ?cours ont:semestre ?semestre .
     }}
     GROUP BY ?semestre
@@ -262,9 +274,12 @@ def get_cours_facets():
     # Facettes par langue
     query_langue = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?langueCours (COUNT(DISTINCT ?cours) as ?count)
     WHERE {{
-        ?cours a ont:Cours .
+        ?cours a ?type .
+        ?type rdfs:subClassOf* ont:Cours .
         ?cours ont:langueCours ?langueCours .
     }}
     GROUP BY ?langueCours
@@ -274,9 +289,12 @@ def get_cours_facets():
     # Facettes par spécialité
     query_specialite = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?specialite ?nomSpecialite (COUNT(DISTINCT ?cours) as ?count)
     WHERE {{
-        ?cours a ont:Cours .
+        ?cours a ?type .
+        ?type rdfs:subClassOf* ont:Cours .
         ?cours ont:faitPartieDe ?specialite .
         ?specialite ont:nomSpecialite ?nomSpecialite .
     }}
@@ -288,9 +306,12 @@ def get_cours_facets():
     # Facettes par crédits ECTS
     query_credits = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?creditsECTS (COUNT(DISTINCT ?cours) as ?count)
     WHERE {{
-        ?cours a ont:Cours .
+        ?cours a ?type .
+        ?type rdfs:subClassOf* ont:Cours .
         ?cours ont:creditsECTS ?creditsECTS .
     }}
     GROUP BY ?creditsECTS
@@ -319,9 +340,12 @@ def enrich_cours_with_dbpedia(cours_id):
         # Get the cours data
         query = f"""
         PREFIX ont: <{PREFIX}>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         SELECT ?intitule ?codeCours ?nomSpecialite
         WHERE {{
-            <{cours_id}> a ont:Cours .
+            <{cours_id}> a ?type .
+            ?type rdfs:subClassOf* ont:Cours .
             OPTIONAL {{ <{cours_id}> ont:intitule ?intitule . }}
             OPTIONAL {{ <{cours_id}> ont:codeCours ?codeCours . }}
             OPTIONAL {{

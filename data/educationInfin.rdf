@@ -21,9 +21,39 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#adresse -->
+
+    <owl:AnnotationProperty rdf:about="http://www.education-intelligente.org/ontologie#adresse"/>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#domaine -->
 
     <owl:AnnotationProperty rdf:about="http://www.education-intelligente.org/ontologie#domaine"/>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#nomCours -->
+
+    <owl:AnnotationProperty rdf:about="http://www.education-intelligente.org/ontologie#nomCours"/>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#nomOrientation -->
+
+    <owl:AnnotationProperty rdf:about="http://www.education-intelligente.org/ontologie#nomOrientation"/>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#nombreCredits -->
+
+    <owl:AnnotationProperty rdf:about="http://www.education-intelligente.org/ontologie#nombreCredits"/>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#nombreEnseignants -->
+
+    <owl:AnnotationProperty rdf:about="http://www.education-intelligente.org/ontologie#nombreEnseignants"/>
     
 
 
@@ -1883,6 +1913,56 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Article_IA_Medicale -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Article_IA_Medicale">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ArticleScientifique"/>
+        <creePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Amrani"/>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2023</anneePublication>
+        <auteur>Dr. Ahmed Bennani et al.</auteur>
+        <description>Application de l&apos;IA pour améliorer la précision du diagnostic médical.</description>
+        <titreRessource>Deep Learning pour le Diagnostic Médical</titreRessource>
+        <typeRessource>Article Scientifique</typeRessource>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Assistant_Bennani -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Assistant_Bennani">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Assistant"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <anciennete rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</anciennete>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1990-12-03</dateNaissance>
+        <email>khalid.bennani@uh2c.ma</email>
+        <grade>Assistant</grade>
+        <nom>Bennani</nom>
+        <prenom>Khalid</prenom>
+        <role>Enseignant</role>
+        <telephone>+212688001122</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Assistant_ElHachimi -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Assistant_ElHachimi">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Assistant"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <anciennete rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">8</anciennete>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1988-05-28</dateNaissance>
+        <email>sanae.elhachimi@uir.ma</email>
+        <grade>Assistant</grade>
+        <nom>El Hachimi</nom>
+        <prenom>Sanae</prenom>
+        <role>Enseignant</role>
+        <telephone>+212699112233</telephone>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#Assistant_Karim -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Assistant_Karim">
@@ -1920,6 +2000,43 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Assistant_Rahmani -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Assistant_Rahmani">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Assistant"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <anciennete rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</anciennete>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1989-07-18</dateNaissance>
+        <email>nabila.rahmani@uir.ma</email>
+        <grade>Assistant</grade>
+        <nom>Rahmani</nom>
+        <prenom>Nabila</prenom>
+        <role>Enseignant</role>
+        <telephone>+212677990011</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Assistant_Said -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Assistant_Said">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Assistant"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <enseigne rdf:resource="http://www.education-intelligente.org/ontologie#BaseDeDonnees"/>
+        <anciennete rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</anciennete>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1991-04-12</dateNaissance>
+        <email>youssef.said@uh2c.ma</email>
+        <grade>Assistant</grade>
+        <nom>Said</nom>
+        <prenom>Youssef</prenom>
+        <role>Enseignant</role>
+        <telephone>+212666889900</telephone>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#BaseDeDonnees -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#BaseDeDonnees">
@@ -1948,6 +2065,60 @@
         <nomTechnologie>ChatGPT for Education</nomTechnologie>
         <typeTechnologie>Outil IA</typeTechnologie>
         <version>GPT-5</version>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Competence_Anglais -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Competence_Anglais">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CompetenceLinguistique"/>
+        <descriptionCompetence>Maîtrise de l&apos;anglais professionnel et technique.</descriptionCompetence>
+        <motsCles>Anglais, Communication, TOEIC</motsCles>
+        <niveauCompetence>Avancé</niveauCompetence>
+        <nomCompetence>Anglais Professionnel</nomCompetence>
+        <typeCompetence>Linguistique</typeCompetence>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Competence_DevOps -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Competence_DevOps">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CompetenceTechnique"/>
+        <recommandeePour rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Cybersecurite"/>
+        <descriptionCompetence>CI/CD, Docker, Kubernetes, automatisation.</descriptionCompetence>
+        <motsCles>Docker, Kubernetes, Jenkins, GitLab CI</motsCles>
+        <niveauCompetence>Intermédiaire</niveauCompetence>
+        <nomCompetence>DevOps</nomCompetence>
+        <typeCompetence>Technique</typeCompetence>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Competence_GestionProjet -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Competence_GestionProjet">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CompetenceTransversale"/>
+        <descriptionCompetence>Planification, organisation et suivi de projets.</descriptionCompetence>
+        <motsCles>Agile, Scrum, Management</motsCles>
+        <niveauCompetence>Intermédiaire</niveauCompetence>
+        <nomCompetence>Gestion de Projet</nomCompetence>
+        <typeCompetence>Transversale</typeCompetence>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Competence_Java -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Competence_Java">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CompetenceTechnique"/>
+        <recommandeePour rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_GenieInformatique"/>
+        <descriptionCompetence>Maîtrise de Java et des frameworks Spring, Hibernate.</descriptionCompetence>
+        <motsCles>Java, Spring, Hibernate, J2EE</motsCles>
+        <niveauCompetence>Avancé</niveauCompetence>
+        <nomCompetence>Programmation Java</nomCompetence>
+        <typeCompetence>Technique</typeCompetence>
     </owl:NamedIndividual>
     
 
@@ -2027,6 +2198,20 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Competence_React -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Competence_React">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CompetenceTechnique"/>
+        <recommandeePour rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Informatique"/>
+        <descriptionCompetence>Développement d&apos;interfaces utilisateur avec React.js.</descriptionCompetence>
+        <motsCles>React, JavaScript, Frontend</motsCles>
+        <niveauCompetence>Intermédiaire</niveauCompetence>
+        <nomCompetence>React.js</nomCompetence>
+        <typeCompetence>Technique</typeCompetence>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#Competence_Recherche -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Competence_Recherche">
@@ -2067,6 +2252,22 @@
         <recommandation>Orientation vers Master Data Science</recommandation>
         <scoreAptitude rdf:datatype="http://www.w3.org/2001/XMLSchema#float">85.0</scoreAptitude>
         <typeOrientation>Conseil d&apos;orientation</typeOrientation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Controle_Algorithmes -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Controle_Algorithmes">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ControleContinu"/>
+        <attribuePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Amrani"/>
+        <evalue rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_YoussefBerrada"/>
+        <porteSur rdf:resource="http://www.education-intelligente.org/ontologie#Cours_AlgorithmesAvances"/>
+        <coefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</coefficient>
+        <commentaire>Excellente maîtrise des algorithmes complexes.</commentaire>
+        <dateEvaluation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-05-20</dateEvaluation>
+        <noteObtenue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">14.5</noteObtenue>
+        <typeEvaluation>Contrôle Continu</typeEvaluation>
     </owl:NamedIndividual>
     
 
@@ -2138,6 +2339,45 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Cours_AlgorithmesAvances -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Cours_AlgorithmesAvances">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CoursTheorique"/>
+        <enseignePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Amrani"/>
+        <codeCours>INF401</codeCours>
+        <description>Étude approfondie des structures de données et algorithmes complexes.</description>
+        <nomCours>Algorithmes Avancés</nomCours>
+        <nombreCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</nombreCredits>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Cours_CloudComputing -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Cours_CloudComputing">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CoursEnLigne"/>
+        <enseignePar rdf:resource="http://www.education-intelligente.org/ontologie#Assistant_Rahmani"/>
+        <codeCours>INF404</codeCours>
+        <description>Architecture cloud, services AWS, Azure et GCP.</description>
+        <nomCours>Cloud Computing</nomCours>
+        <nombreCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</nombreCredits>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Cours_DeveloppementMobile -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Cours_DeveloppementMobile">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CoursPratique"/>
+        <enseignePar rdf:resource="http://www.education-intelligente.org/ontologie#Assistant_Said"/>
+        <codeCours>INF402</codeCours>
+        <description>Développement d&apos;applications mobiles iOS et Android.</description>
+        <nomCours>Développement Mobile</nomCours>
+        <nombreCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</nombreCredits>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#Cours_Entrepreneuriat -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Cours_Entrepreneuriat">
@@ -2155,6 +2395,32 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Cours_ReseauxInformatiques -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Cours_ReseauxInformatiques">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CoursTheorique"/>
+        <enseignePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Martin"/>
+        <codeCours>INF305</codeCours>
+        <description>Introduction aux réseaux informatiques et protocoles de communication.</description>
+        <nomCours>Réseaux Informatiques</nomCours>
+        <nombreCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</nombreCredits>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Cours_SecuriteInformatique -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Cours_SecuriteInformatique">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#CoursTheorique"/>
+        <enseignePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_ElFassi"/>
+        <codeCours>INF403</codeCours>
+        <description>Principes de sécurité, cryptographie et protection des systèmes.</description>
+        <nomCours>Sécurité Informatique</nomCours>
+        <nombreCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</nombreCredits>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#Cours_TheorieBD -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Cours_TheorieBD">
@@ -2168,6 +2434,39 @@
         <langueCours>Français</langueCours>
         <semestre>S4</semestre>
         <volumeHoraire rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30</volumeHoraire>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Encadrant_Bennani -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Encadrant_Bennani">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Encadrant"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1986-01-19</dateNaissance>
+        <email>souad.bennani@uir.ma</email>
+        <nom>Bennani</nom>
+        <prenom>Souad</prenom>
+        <role>Enseignant/Encadrant</role>
+        <telephone>+212633556677</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Encadrant_Berrada -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Encadrant_Berrada">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Encadrant"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <encadre rdf:resource="http://www.education-intelligente.org/ontologie#Projet_Collaboratif_Web"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1985-06-14</dateNaissance>
+        <email>mohamed.berrada@uh2c.ma</email>
+        <nom>Berrada</nom>
+        <prenom>Mohamed</prenom>
+        <role>Enseignant/Encadrant</role>
+        <telephone>+212600223344</telephone>
     </owl:NamedIndividual>
     
 
@@ -2202,6 +2501,38 @@
         <prenom>Hassan</prenom>
         <role>Enseignant/Encadrant</role>
         <telephone>+212666778899</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Encadrant_Tazi -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Encadrant_Tazi">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Encadrant"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1984-10-08</dateNaissance>
+        <email>hicham.tazi@uh2c.ma</email>
+        <nom>Tazi</nom>
+        <prenom>Hicham</prenom>
+        <role>Enseignant/Encadrant</role>
+        <telephone>+212622445566</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Encadrant_Zahra -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Encadrant_Zahra">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Encadrant"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1987-03-22</dateNaissance>
+        <email>zahra.elamrani@uir.ma</email>
+        <nom>El Amrani</nom>
+        <prenom>Zahra</prenom>
+        <role>Enseignant/Encadrant</role>
+        <telephone>+212611334455</telephone>
     </owl:NamedIndividual>
     
 
@@ -2243,6 +2574,164 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_AichaMansouri -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_AichaMansouri">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantLicence"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <specialiseEn rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Informatique"/>
+        <suitCours rdf:resource="http://www.education-intelligente.org/ontologie#BaseDeDonnees"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2004-07-15</dateNaissance>
+        <email>aicha.mansouri@uh2c.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">14.5</moyenneGenerale>
+        <niveauEtude>Licence</niveauEtude>
+        <nom>Mansouri</nom>
+        <numeroMatricule>ETU2024INF22</numeroMatricule>
+        <prenom>Aicha</prenom>
+        <role>Étudiante</role>
+        <telephone>+212611445566</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_AmalTazi -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_AmalTazi">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantDoctorat"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1995-12-05</dateNaissance>
+        <email>amal.tazi@uh2c.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">17.2</moyenneGenerale>
+        <niveauEtude>Doctorat</niveauEtude>
+        <nom>Tazi</nom>
+        <numeroMatricule>ETU2019PHD20</numeroMatricule>
+        <prenom>Amal</prenom>
+        <role>Étudiante Doctorat</role>
+        <telephone>+212600112233</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_AmineBouazza -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_AmineBouazza">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantMaster"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <specialiseEn rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Economie"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2000-11-30</dateNaissance>
+        <email>amine.bouazza@uh2c.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">14.9</moyenneGenerale>
+        <niveauEtude>Master 1</niveauEtude>
+        <nom>Bouazza</nom>
+        <numeroMatricule>ETU2022ECO25</numeroMatricule>
+        <prenom>Amine</prenom>
+        <role>Étudiant</role>
+        <telephone>+212655667788</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_BilalBennis -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_BilalBennis">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantDoctorat"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1997-02-28</dateNaissance>
+        <email>bilal.bennis@uir.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">16.3</moyenneGenerale>
+        <niveauEtude>Doctorat</niveauEtude>
+        <nom>Bennis</nom>
+        <numeroMatricule>ETU2021PHD10</numeroMatricule>
+        <prenom>Bilal</prenom>
+        <role>Étudiant Doctorat</role>
+        <telephone>+212611223344</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_FatimZahra -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_FatimZahra">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantDoctorat"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1996-01-14</dateNaissance>
+        <email>fatimazahra.elfassi@uir.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">17.0</moyenneGenerale>
+        <niveauEtude>Doctorat</niveauEtude>
+        <nom>El Fassi</nom>
+        <numeroMatricule>ETU2020PHD15</numeroMatricule>
+        <prenom>Fatima Zahra</prenom>
+        <role>Étudiante Doctorat</role>
+        <telephone>+212688990011</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_KarimEssaid -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_KarimEssaid">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantDoctorat"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <realiseProjet rdf:resource="http://www.education-intelligente.org/ontologie#Projet_These_IA"/>
+        <suitCours rdf:resource="http://www.education-intelligente.org/ontologie#MethodologieRecherche"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1994-06-25</dateNaissance>
+        <email>karim.essaid@uh2c.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">16.8</moyenneGenerale>
+        <niveauEtude>Doctorat</niveauEtude>
+        <nom>Essaid</nom>
+        <numeroMatricule>ETU2019PHD08</numeroMatricule>
+        <prenom>Karim</prenom>
+        <role>Étudiant Doctorat</role>
+        <telephone>+212677889900</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_LaylaZiani -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_LaylaZiani">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantLicence"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <specialiseEn rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Sciences"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2004-03-20</dateNaissance>
+        <email>layla.ziani@uh2c.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.2</moyenneGenerale>
+        <niveauEtude>Licence</niveauEtude>
+        <nom>Ziani</nom>
+        <numeroMatricule>ETU2024SCI18</numeroMatricule>
+        <prenom>Layla</prenom>
+        <role>Étudiante</role>
+        <telephone>+212633445566</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_MehdiCherkaoui -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_MehdiCherkaoui">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantDoctorat"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1993-08-22</dateNaissance>
+        <email>mehdi.cherkaoui@uh2c.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">16.5</moyenneGenerale>
+        <niveauEtude>Doctorat</niveauEtude>
+        <nom>Cherkaoui</nom>
+        <numeroMatricule>ETU2018PHD05</numeroMatricule>
+        <prenom>Mehdi</prenom>
+        <role>Étudiant Doctorat</role>
+        <telephone>+212699001122</telephone>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#Etudiant_MohamedTazi -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_MohamedTazi">
@@ -2259,6 +2748,26 @@
         <prenom>Mohamed</prenom>
         <role>Étudiant</role>
         <telephone>+212633445566</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_NadiaLahbabi -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_NadiaLahbabi">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantMaster"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <specialiseEn rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Lettres"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2002-04-18</dateNaissance>
+        <email>nadia.lahbabi@uh2c.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.5</moyenneGenerale>
+        <niveauEtude>Master 1</niveauEtude>
+        <nom>Lahbabi</nom>
+        <numeroMatricule>ETU2023LET30</numeroMatricule>
+        <prenom>Nadia</prenom>
+        <role>Étudiante</role>
+        <telephone>+212666778899</telephone>
     </owl:NamedIndividual>
     
 
@@ -2280,6 +2789,27 @@
         <prenom>Omar</prenom>
         <role>Étudiant</role>
         <telephone>+212612334455</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_SalmaOuazzani -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_SalmaOuazzani">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantMaster"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <realiseProjet rdf:resource="http://www.education-intelligente.org/ontologie#Memoire_Master_Omar"/>
+        <specialiseEn rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Droit"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2001-09-12</dateNaissance>
+        <email>salma.ouazzani@uir.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">16.1</moyenneGenerale>
+        <niveauEtude>Master 2</niveauEtude>
+        <nom>Ouazzani</nom>
+        <numeroMatricule>ETU2023DRT22</numeroMatricule>
+        <prenom>Salma</prenom>
+        <role>Étudiante</role>
+        <telephone>+212644556677</telephone>
     </owl:NamedIndividual>
     
 
@@ -2326,6 +2856,26 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Etudiant_YoussefBerrada -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Etudiant_YoussefBerrada">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EtudiantLicence"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <inscritDans rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <specialiseEn rdf:resource="http://www.education-intelligente.org/ontologie#Specialite_Economie"/>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2003-12-08</dateNaissance>
+        <email>youssef.berrada@uir.ma</email>
+        <moyenneGenerale rdf:datatype="http://www.w3.org/2001/XMLSchema#float">13.8</moyenneGenerale>
+        <niveauEtude>Licence</niveauEtude>
+        <nom>Berrada</nom>
+        <numeroMatricule>ETU2023ECO15</numeroMatricule>
+        <prenom>Youssef</prenom>
+        <role>Étudiant</role>
+        <telephone>+212622334455</telephone>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#Examen_ProgWeb_2025 -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Examen_ProgWeb_2025">
@@ -2340,6 +2890,22 @@
         <dateEvaluation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-06-10</dateEvaluation>
         <noteObtenue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.5</noteObtenue>
         <typeEvaluation>Examen final</typeEvaluation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Examen_Reseaux -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Examen_Reseaux">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ExamenFinal"/>
+        <attribuePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Martin"/>
+        <evalue rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_AichaMansouri"/>
+        <porteSur rdf:resource="http://www.education-intelligente.org/ontologie#Cours_ReseauxInformatiques"/>
+        <coefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</coefficient>
+        <commentaire>Bon niveau de compréhension des concepts réseaux.</commentaire>
+        <dateEvaluation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-06-15</dateEvaluation>
+        <noteObtenue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</noteObtenue>
+        <typeEvaluation>Examen Final</typeEvaluation>
     </owl:NamedIndividual>
     
 
@@ -2377,6 +2943,21 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Livre_Algorithmes -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Livre_Algorithmes">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Livre"/>
+        <creePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Martin"/>
+        <utiliseeDans rdf:resource="http://www.education-intelligente.org/ontologie#Cours_AlgorithmesAvances"/>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2009</anneePublication>
+        <auteur>Thomas H. Cormen</auteur>
+        <description>Manuel de référence pour les algorithmes et structures de données.</description>
+        <titreRessource>Introduction à l&apos;Algorithmique</titreRessource>
+        <typeRessource>Livre</typeRessource>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#Livre_HTML_CSS -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Livre_HTML_CSS">
@@ -2407,6 +2988,23 @@
         <nomTechnologie>edX MOOC Platform</nomTechnologie>
         <typeTechnologie>MOOC Platform</typeTechnologie>
         <version>3.0</version>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Memoire_Master_IA -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Memoire_Master_IA">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#MemoireDeMaster"/>
+        <encadrePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Amrani"/>
+        <estOrganisePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <realisePar rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_SalmaOuazzani"/>
+        <requiertCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_Python"/>
+        <anneeRealisation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneeRealisation>
+        <noteProjet rdf:datatype="http://www.w3.org/2001/XMLSchema#float">17.0</noteProjet>
+        <titreProjet>Intelligence Artificielle pour la Reconnaissance d&apos;Images Médicales</titreProjet>
+        <typeProjet>Mémoire Master</typeProjet>
+        <domaine>IA Médicale</domaine>
     </owl:NamedIndividual>
     
 
@@ -2479,6 +3077,58 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Orientation_Conseil_Info -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Orientation_Conseil_Info">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ConseilOrientation"/>
+        <aPourParticipant rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_AichaMansouri"/>
+        <supervisePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Martin"/>
+        <dateOrientation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-09-15</dateOrientation>
+        <description>Séance d&apos;orientation pour les étudiants en informatique.</description>
+        <nomOrientation>Conseil Orientation Informatique</nomOrientation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Orientation_Entretien_Conseiller -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Orientation_Entretien_Conseiller">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#EntretienConseiller"/>
+        <aPourParticipant rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_LaylaZiani"/>
+        <supervisePar rdf:resource="http://www.education-intelligente.org/ontologie#Assistant_Rahmani"/>
+        <dateOrientation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-11-05</dateOrientation>
+        <description>Entretien individuel pour orientation académique personnalisée.</description>
+        <nomOrientation>Entretien avec Conseiller Pédagogique</nomOrientation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Orientation_Plan_Carriere -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Orientation_Plan_Carriere">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#PlanDeCarriere"/>
+        <aPourParticipant rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_SalmaOuazzani"/>
+        <supervisePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Amrani"/>
+        <dateOrientation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-10-10</dateOrientation>
+        <description>Atelier sur la planification de carrière en ingénierie logicielle.</description>
+        <nomOrientation>Plan de Carrière - Ingénieur Logiciel</nomOrientation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Orientation_Salon_Etudiant -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Orientation_Salon_Etudiant">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SalonEtudiant"/>
+        <organise rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <supervisePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_ElFassi"/>
+        <dateOrientation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-03-20</dateOrientation>
+        <description>Salon annuel présentant les filières et opportunités académiques.</description>
+        <nomOrientation>Salon de l&apos;Étudiant 2024</nomOrientation>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#Orientation_Sara -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Orientation_Sara">
@@ -2493,6 +3143,19 @@
         <recommandation>Inscription au programme doctoral IA et Big Data.</recommandation>
         <scoreAptitude rdf:datatype="http://www.w3.org/2001/XMLSchema#float">92.5</scoreAptitude>
         <typeOrientation>Plan de carrière</typeOrientation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Orientation_Stage_Entreprise -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Orientation_Stage_Entreprise">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#StageOrientation"/>
+        <aPourParticipant rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_AmineBouazza"/>
+        <supervisePar rdf:resource="http://www.education-intelligente.org/ontologie#Encadrant_Berrada"/>
+        <dateOrientation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-07-01</dateOrientation>
+        <description>Programme de stages pour découvrir le monde professionnel.</description>
+        <nomOrientation>Stage d&apos;Orientation en Entreprise</nomOrientation>
     </owl:NamedIndividual>
     
 
@@ -2554,21 +3217,78 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Plateforme_Moodle -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Plateforme_Moodle">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#PlateformeEnLigne"/>
+        <creePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Alaoui"/>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</anneePublication>
+        <auteur>Université Hassan II</auteur>
+        <description>Plateforme LMS pour la gestion des cours en ligne.</description>
+        <titreRessource>Plateforme Moodle - UH2C</titreRessource>
+        <typeRessource>Plateforme en Ligne</typeRessource>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Professeur_Alaoui -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Professeur_Alaoui">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Professeur"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <anciennete rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">19</anciennete>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1971-09-30</dateNaissance>
+        <email>fatima.alaoui@uh2c.ma</email>
+        <grade>Professeur Titulaire</grade>
+        <nom>Alaoui</nom>
+        <prenom>Fatima</prenom>
+        <role>Enseignant</role>
+        <telephone>+212655778899</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Professeur_Amrani -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Professeur_Amrani">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Professeur"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
+        <anciennete rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">18</anciennete>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1972-03-20</dateNaissance>
+        <email>mohamed.amrani@uir.ma</email>
+        <grade>Professeur Titulaire</grade>
+        <nom>Amrani</nom>
+        <prenom>Mohamed</prenom>
+        <role>Enseignant</role>
+        <telephone>+212622445566</telephone>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#Professeur_Bennani -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Professeur_Bennani">
         <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Professeur"/>
         <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
         <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_Rabat"/>
         <enseigne rdf:resource="http://www.education-intelligente.org/ontologie#AnglaisTechnique"/>
+        <anciennete rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">17</anciennete>
         <anciennete rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">18</anciennete>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1973-11-25</dateNaissance>
         <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1975-12-03</dateNaissance>
+        <email>ahmed.bennani@uir.ma</email>
         <email>aicha.bennani@uh2c.ma</email>
         <grade>Professeur Titulaire</grade>
         <nom>Bennani</nom>
+        <prenom>Ahmed</prenom>
         <prenom>Aicha</prenom>
         <role>Enseignant</role>
         <telephone>+212644556677</telephone>
+        <telephone>+212644667788</telephone>
     </owl:NamedIndividual>
     
 
@@ -2593,6 +3313,43 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Professeur_ElFassi -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Professeur_ElFassi">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Professeur"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <anciennete rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">16</anciennete>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1975-08-10</dateNaissance>
+        <email>aicha.elfassi@uh2c.ma</email>
+        <grade>Professeur Titulaire</grade>
+        <nom>El Fassi</nom>
+        <prenom>Aicha</prenom>
+        <role>Enseignant</role>
+        <telephone>+212633556677</telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Professeur_Martin -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Professeur_Martin">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Professeur"/>
+        <affilieA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <appartientA rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <enseigne rdf:resource="http://www.education-intelligente.org/ontologie#Cours_TheorieBD"/>
+        <anciennete rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</anciennete>
+        <dateNaissance rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1970-05-15</dateNaissance>
+        <email>pierre.martin@uh2c.ma</email>
+        <grade>Professeur Titulaire</grade>
+        <nom>Martin</nom>
+        <prenom>Pierre</prenom>
+        <role>Enseignant</role>
+        <telephone>+212611334455</telephone>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#ProgrammationWeb -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#ProgrammationWeb">
@@ -2608,6 +3365,20 @@
         <langueCours>Français</langueCours>
         <semestre>S6</semestre>
         <volumeHoraire rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">60</volumeHoraire>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Projet_Collaboratif_OpenSource -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Projet_Collaboratif_OpenSource">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ProjetCollaboratif"/>
+        <encadrePar rdf:resource="http://www.education-intelligente.org/ontologie#Encadrant_Tazi"/>
+        <realisePar rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_AmineBouazza"/>
+        <anneeRealisation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneeRealisation>
+        <titreProjet>Framework Open Source pour l&apos;Éducation en Ligne</titreProjet>
+        <typeProjet>Projet Collaboratif</typeProjet>
+        <domaine>Éducation Technologique</domaine>
     </owl:NamedIndividual>
     
 
@@ -2628,6 +3399,23 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Projet_Evalue_DevOps -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Projet_Evalue_DevOps">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ProjetEvalue"/>
+        <attribuePar rdf:resource="http://www.education-intelligente.org/ontologie#Assistant_Bennani"/>
+        <evalue rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_AmineBouazza"/>
+        <mesureCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_DevOps"/>
+        <porteSur rdf:resource="http://www.education-intelligente.org/ontologie#Projet_Recherche_Cloud"/>
+        <coefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</coefficient>
+        <commentaire>Bon travail pratique, application correcte des concepts DevOps.</commentaire>
+        <dateEvaluation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-05-15</dateEvaluation>
+        <noteObtenue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.5</noteObtenue>
+        <typeEvaluation>Projet Évalué</typeEvaluation>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#Projet_Evalue_React -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Projet_Evalue_React">
@@ -2640,6 +3428,23 @@
         <dateEvaluation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-04-20</dateEvaluation>
         <noteObtenue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">16.0</noteObtenue>
         <typeEvaluation>Projet évalué</typeEvaluation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Projet_PFE_Ecommerce -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Projet_PFE_Ecommerce">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ProjetDeFinDEtudes"/>
+        <encadrePar rdf:resource="http://www.education-intelligente.org/ontologie#Encadrant_Berrada"/>
+        <estOrganisePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <realisePar rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_AichaMansouri"/>
+        <requiertCompetence rdf:resource="http://www.education-intelligente.org/ontologie#Competence_React"/>
+        <anneeRealisation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneeRealisation>
+        <noteProjet rdf:datatype="http://www.w3.org/2001/XMLSchema#float">16.5</noteProjet>
+        <titreProjet>Plateforme E-commerce avec React et Node.js</titreProjet>
+        <typeProjet>Projet de Fin d&apos;Études</typeProjet>
+        <domaine>Développement Web</domaine>
     </owl:NamedIndividual>
     
 
@@ -2660,6 +3465,20 @@
         <titreProjet>Application Web de Gestion des Cours</titreProjet>
         <typeProjet>PFE</typeProjet>
         <domaine>Développement Web</domaine>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Projet_Recherche_Cloud -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Projet_Recherche_Cloud">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ProjetDeRecherche"/>
+        <encadrePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_ElFassi"/>
+        <realisePar rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_MehdiCherkaoui"/>
+        <anneeRealisation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneeRealisation>
+        <titreProjet>Optimisation des Ressources Cloud avec Machine Learning</titreProjet>
+        <typeProjet>Projet de Recherche</typeProjet>
+        <domaine>Cloud Computing</domaine>
     </owl:NamedIndividual>
     
 
@@ -2688,6 +3507,22 @@
         <anneeRealisation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2026</anneeRealisation>
         <titreProjet>Optimisation des Réseaux Neuronaux Profonds</titreProjet>
         <domaine>Intelligence Artificielle</domaine>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Quiz_Cloud -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Quiz_Cloud">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#QuizEnLigne"/>
+        <attribuePar rdf:resource="http://www.education-intelligente.org/ontologie#Assistant_Rahmani"/>
+        <evalue rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_LaylaZiani"/>
+        <porteSur rdf:resource="http://www.education-intelligente.org/ontologie#Cours_CloudComputing"/>
+        <coefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</coefficient>
+        <commentaire>Bases maîtrisées, approfondissement nécessaire.</commentaire>
+        <dateEvaluation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-04-10</dateEvaluation>
+        <noteObtenue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">13.0</noteObtenue>
+        <typeEvaluation>Quiz en Ligne</typeEvaluation>
     </owl:NamedIndividual>
     
 
@@ -2757,6 +3592,22 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Soutenance_PFE_Mobile -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Soutenance_PFE_Mobile">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#Soutenance"/>
+        <attribuePar rdf:resource="http://www.education-intelligente.org/ontologie#Encadrant_Berrada"/>
+        <evalue rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_AichaMansouri"/>
+        <porteSur rdf:resource="http://www.education-intelligente.org/ontologie#Projet_PFE_Ecommerce"/>
+        <coefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</coefficient>
+        <commentaire>Présentation claire et maîtrise du sujet.</commentaire>
+        <dateEvaluation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-06-30</dateEvaluation>
+        <noteObtenue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">16.5</noteObtenue>
+        <typeEvaluation>Soutenance</typeEvaluation>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#Soutenance_PFE_Sara -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Soutenance_PFE_Sara">
@@ -2773,15 +3624,40 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Specialite_CommerceInternational -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Specialite_CommerceInternational">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SpecialiteEconomie"/>
+        <estOffertePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_AlAkhawayn"/>
+        <description>Économie internationale, commerce et finance.</description>
+        <nomSpecialite>Commerce International</nomSpecialite>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Specialite_Cybersecurite -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Specialite_Cybersecurite">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SpecialiteInformatique"/>
+        <estOffertePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_IbnTofail"/>
+        <description>Protection des systèmes informatiques et des données.</description>
+        <nomSpecialite>Cybersécurité</nomSpecialite>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#Specialite_DataScience -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Specialite_DataScience">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SpecialiteInformatique"/>
         <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SpecialiteIngenierie"/>
         <contient rdf:resource="http://www.education-intelligente.org/ontologie#CoursEnLigne_MachineLearning"/>
         <contient rdf:resource="http://www.education-intelligente.org/ontologie#IntroductionIA"/>
+        <estOffertePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_CadiAyyad"/>
         <formePour rdf:resource="http://www.education-intelligente.org/ontologie#Competence_ML"/>
         <suiviePar rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_OmarHaddad"/>
         <codeSpecialite>DS01</codeSpecialite>
+        <description>Science des données, machine learning et intelligence artificielle.</description>
         <description>Spécialisation en traitement de données massives et apprentissage automatique.</description>
         <dureeFormation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</dureeFormation>
         <niveauDiplome>Master</niveauDiplome>
@@ -2817,6 +3693,29 @@
         <niveauDiplome>Licence</niveauDiplome>
         <nomSpecialite>Économie et Gestion</nomSpecialite>
         <nombreModules rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">18</nombreModules>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Specialite_GenieCivil -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Specialite_GenieCivil">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SpecialiteIngenierie"/>
+        <estOffertePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_MohamedV"/>
+        <description>Construction, infrastructure et génie civil.</description>
+        <nomSpecialite>Génie Civil</nomSpecialite>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Specialite_GenieInformatique -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Specialite_GenieInformatique">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SpecialiteInformatique"/>
+        <estOffertePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_MohamedV"/>
+        <formePour rdf:resource="http://www.education-intelligente.org/ontologie#Competence_ProgrammationWeb"/>
+        <description>Formation d&apos;ingénieur en informatique avec spécialisation en développement logiciel.</description>
+        <nomSpecialite>Génie Informatique</nomSpecialite>
     </owl:NamedIndividual>
     
 
@@ -2949,6 +3848,77 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Support_Securite -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Support_Securite">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SupportCours"/>
+        <creePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_ElFassi"/>
+        <utiliseeDans rdf:resource="http://www.education-intelligente.org/ontologie#Cours_SecuriteInformatique"/>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneePublication>
+        <auteur>Professeur El Fassi</auteur>
+        <description>Présentation PowerPoint sur les principes de sécurité informatique.</description>
+        <titreRessource>Support de Cours - Sécurité Informatique</titreRessource>
+        <typeRessource>Support de Cours</typeRessource>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Techno_ChatGPT_Edu -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Techno_ChatGPT_Edu">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#OutilIAEducatif"/>
+        <description>Assistant IA pour l&apos;aide à l&apos;apprentissage et la rédaction.</description>
+        <nomTechnologie>ChatGPT pour l&apos;Éducation</nomTechnologie>
+        <typeTechnologie>Outil IA</typeTechnologie>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Techno_Coursera -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Techno_Coursera">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#MOOCPlatform"/>
+        <description>Plateforme de cours en ligne massifs ouverts (MOOC).</description>
+        <nomTechnologie>Coursera</nomTechnologie>
+        <typeTechnologie>Plateforme MOOC</typeTechnologie>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Techno_Duolingo -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Techno_Duolingo">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#SeriousGame"/>
+        <description>Application gamifiée pour l&apos;apprentissage des langues.</description>
+        <nomTechnologie>Duolingo</nomTechnologie>
+        <typeTechnologie>Jeu Sérieux</typeTechnologie>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Techno_GoogleClassroom -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Techno_GoogleClassroom">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#PlateformeLMS"/>
+        <description>Plateforme de gestion de classe en ligne par Google.</description>
+        <nomTechnologie>Google Classroom</nomTechnologie>
+        <typeTechnologie>Plateforme LMS</typeTechnologie>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Techno_Kahoot -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Techno_Kahoot">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#ApplicationMobileEducative"/>
+        <faciliteePar rdf:resource="http://www.education-intelligente.org/ontologie#Plateforme_Moodle"/>
+        <description>Plateforme de quiz interactifs pour l&apos;apprentissage.</description>
+        <nomTechnologie>Kahoot!</nomTechnologie>
+        <typeTechnologie>Application Mobile</typeTechnologie>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#Test_Orientation_Sara -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Test_Orientation_Sara">
@@ -2959,6 +3929,60 @@
         <recommandation>Approfondir Data Science</recommandation>
         <scoreAptitude rdf:datatype="http://www.w3.org/2001/XMLSchema#float">82.5</scoreAptitude>
         <typeOrientation>Test psychométrique</typeOrientation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#These_Blockchain -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#These_Blockchain">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#TheseDoctorale"/>
+        <encadrePar rdf:resource="http://www.education-intelligente.org/ontologie#Professeur_Martin"/>
+        <estOrganisePar rdf:resource="http://www.education-intelligente.org/ontologie#Universite_HassanII"/>
+        <realisePar rdf:resource="http://www.education-intelligente.org/ontologie#Etudiant_KarimEssaid"/>
+        <anneeRealisation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2025</anneeRealisation>
+        <titreProjet>Applications Blockchain pour la Sécurité des Transactions Financières</titreProjet>
+        <typeProjet>Thèse Doctorale</typeProjet>
+        <domaine>Blockchain et Finance</domaine>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Universite_AlAkhawayn -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Universite_AlAkhawayn">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#UniversitePrivee"/>
+        <description>Université privée bilingue offrant une éducation de qualité internationale.</description>
+        <nomUniversite>Université Al Akhawayn</nomUniversite>
+        <nombreEtudiants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3000</nombreEtudiants>
+        <adresse>Ifrane, Maroc</adresse>
+        <nombreEnseignants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">200</nombreEnseignants>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Universite_AlQuaraouiyine -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Universite_AlQuaraouiyine">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#UniversitePublique"/>
+        <description>Plus ancienne université au monde, spécialisée en sciences islamiques et lettres.</description>
+        <nomUniversite>Université Al Quaraouiyine</nomUniversite>
+        <nombreEtudiants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">15000</nombreEtudiants>
+        <adresse>Fès, Maroc</adresse>
+        <nombreEnseignants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">800</nombreEnseignants>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Universite_CadiAyyad -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Universite_CadiAyyad">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#UniversitePublique"/>
+        <description>Une des plus grandes universités du Maroc.</description>
+        <nomUniversite>Université Cadi Ayyad</nomUniversite>
+        <nombreEtudiants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">80000</nombreEtudiants>
+        <adresse>Marrakech, Maroc</adresse>
+        <nombreEnseignants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3500</nombreEnseignants>
     </owl:NamedIndividual>
     
 
@@ -2987,6 +4011,19 @@
     
 
 
+    <!-- http://www.education-intelligente.org/ontologie#Universite_IbnTofail -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Universite_IbnTofail">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#UniversitePublique"/>
+        <description>Université publique avec des filières d&apos;ingénierie renommées.</description>
+        <nomUniversite>Université Ibn Tofail</nomUniversite>
+        <nombreEtudiants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30000</nombreEtudiants>
+        <adresse>Kénitra, Maroc</adresse>
+        <nombreEnseignants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1800</nombreEnseignants>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.education-intelligente.org/ontologie#Universite_Marakech -->
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Universite_Marakech">
@@ -3001,6 +4038,19 @@
         <rangNational rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</rangNational>
         <siteWeb rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://www.uca.ma</siteWeb>
         <ville>Marrakech</ville>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.education-intelligente.org/ontologie#Universite_MohamedV -->
+
+    <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Universite_MohamedV">
+        <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#UniversitePublique"/>
+        <description>Université publique prestigieuse offrant une large gamme de formations.</description>
+        <nomUniversite>Université Mohammed V</nomUniversite>
+        <nombreEtudiants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">45000</nombreEtudiants>
+        <adresse>Rabat, Maroc</adresse>
+        <nombreEnseignants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2500</nombreEnseignants>
     </owl:NamedIndividual>
     
 
@@ -3044,11 +4094,18 @@
 
     <owl:NamedIndividual rdf:about="http://www.education-intelligente.org/ontologie#Video_React">
         <rdf:type rdf:resource="http://www.education-intelligente.org/ontologie#VideoCours"/>
+        <creePar rdf:resource="http://www.education-intelligente.org/ontologie#Assistant_Said"/>
+        <utiliseeDans rdf:resource="http://www.education-intelligente.org/ontologie#Cours_DeveloppementMobile"/>
         <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2023</anneePublication>
+        <anneePublication rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anneePublication>
+        <auteur>Assistant Said</auteur>
         <auteur>OpenClassrooms</auteur>
+        <description>Vidéo tutoriel sur les hooks React et Context API.</description>
         <lienAcces rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://example.com/react-tutorial</lienAcces>
+        <titreRessource>Tutoriel React.js - Hooks et Context API</titreRessource>
         <titreRessource>Tutoriel ReactJS</titreRessource>
         <typeRessource>Vidéo</typeRessource>
+        <typeRessource>Vidéo Cours</typeRessource>
     </owl:NamedIndividual>
     
 

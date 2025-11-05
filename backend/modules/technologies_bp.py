@@ -19,10 +19,13 @@ def get_all_technologies():
     """Get all educational technologies"""
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?technologie ?nomTechnologie ?typeTechnologie ?universite ?nomUniversite
            ?ressource ?titreRessource
     WHERE {{
-        ?technologie a ont:TechnologieEducative .
+        ?technologie a ?type .
+        ?type rdfs:subClassOf* ont:TechnologieEducative .
         OPTIONAL {{ ?technologie ont:nomTechnologie ?nomTechnologie . }}
         OPTIONAL {{ ?technologie ont:typeTechnologie ?typeTechnologie . }}
         OPTIONAL {{
@@ -47,12 +50,15 @@ def get_technologie(technologie_id):
     """Get a specific technology"""
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?technologie ?nomTechnologie ?typeTechnologie
            ?universite ?nomUniversite
            ?ressource ?titreRessource
            ?cours ?intitule
     WHERE {{
-        <{technologie_id}> a ont:TechnologieEducative .
+        <{technologie_id}> a ?type .
+        ?type rdfs:subClassOf* ont:TechnologieEducative .
         OPTIONAL {{ <{technologie_id}> ont:nomTechnologie ?nomTechnologie . }}
         OPTIONAL {{ <{technologie_id}> ont:typeTechnologie ?typeTechnologie . }}
         OPTIONAL {{
@@ -212,9 +218,12 @@ def search_technologies():
     
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?technologie ?nomTechnologie ?typeTechnologie
     WHERE {{
-        ?technologie a ont:TechnologieEducative .
+        ?technologie a ?type .
+        ?type rdfs:subClassOf* ont:TechnologieEducative .
         OPTIONAL {{ ?technologie ont:nomTechnologie ?nomTechnologie . }}
         OPTIONAL {{ ?technologie ont:typeTechnologie ?typeTechnologie . }}
     """
@@ -240,9 +249,12 @@ def get_technologies_facets():
     """Récupère les facettes pour la navigation filtrée"""
     query_type = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?typeTechnologie (COUNT(DISTINCT ?technologie) as ?count)
     WHERE {{
-        ?technologie a ont:TechnologieEducative .
+        ?technologie a ?type .
+        ?type rdfs:subClassOf* ont:TechnologieEducative .
         ?technologie ont:typeTechnologie ?typeTechnologie .
     }}
     GROUP BY ?typeTechnologie
@@ -274,9 +286,12 @@ def enrich_technologie_with_dbpedia(technologie_id):
     try:
         query = f"""
         PREFIX ont: <{PREFIX}>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         SELECT ?nomTechnologie ?typeTechnologie
         WHERE {{
-            <{technologie_id}> a ont:TechnologieEducative .
+            <{technologie_id}> a ?type .
+            ?type rdfs:subClassOf* ont:TechnologieEducative .
             OPTIONAL {{ <{technologie_id}> ont:nomTechnologie ?nomTechnologie . }}
             OPTIONAL {{ <{technologie_id}> ont:typeTechnologie ?typeTechnologie . }}
         }}

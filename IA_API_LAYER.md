@@ -359,3 +359,5 @@ Elle permet de :
 
 **Cette implémentation démontre parfaitement l'objectif de "Recherche sémantique"** en permettant aux utilisateurs de poser des requêtes complexes et de trouver des informations pertinentes en utilisant la sémantique des données, sans avoir besoin de connaître SPARQL ou la structure de l'ontologie.
 
+
+

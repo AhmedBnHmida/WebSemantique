@@ -19,10 +19,13 @@ def get_all_ressources():
     """Get all pedagogical resources"""
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?ressource ?titreRessource ?typeRessource ?formatRessource ?urlRessource
            ?technologie ?nomTechnologie
     WHERE {{
-        ?ressource a ont:RessourcePedagogique .
+        ?ressource a ?type .
+        ?type rdfs:subClassOf* ont:RessourcePedagogique .
         OPTIONAL {{ ?ressource ont:titreRessource ?titreRessource . }}
         OPTIONAL {{ ?ressource ont:typeRessource ?typeRessource . }}
         OPTIONAL {{ ?ressource ont:formatRessource ?formatRessource . }}
@@ -45,10 +48,13 @@ def get_ressource(ressource_id):
     """Get a specific pedagogical resource"""
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?ressource ?titreRessource ?typeRessource ?formatRessource ?urlRessource
            ?technologie ?nomTechnologie
     WHERE {{
-        <{ressource_id}> a ont:RessourcePedagogique .
+        <{ressource_id}> a ?type .
+        ?type rdfs:subClassOf* ont:RessourcePedagogique .
         OPTIONAL {{ <{ressource_id}> ont:titreRessource ?titreRessource . }}
         OPTIONAL {{ <{ressource_id}> ont:typeRessource ?typeRessource . }}
         OPTIONAL {{ <{ressource_id}> ont:formatRessource ?formatRessource . }}
@@ -77,7 +83,7 @@ def create_ressource():
     
     query = f"""
     PREFIX ont: <{PREFIX}>
-    INSERT {{
+    INSERT DATA {{
         <{ressource_uri}> a ont:RessourcePedagogique .
         <{ressource_uri}> ont:titreRessource "{data.get('titreRessource')}" .
     """
@@ -123,7 +129,7 @@ def update_ressource(ressource_id):
     # Insert new properties
     insert_query = f"""
     PREFIX ont: <{PREFIX}>
-    INSERT {{
+    INSERT DATA {{
         <{ressource_id}> a ont:RessourcePedagogique .
         <{ressource_id}> ont:titreRessource "{data.get('titreRessource')}" .
     """
@@ -183,9 +189,12 @@ def search_ressources():
     
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?ressource ?titreRessource ?typeRessource ?formatRessource ?urlRessource
     WHERE {{
-        ?ressource a ont:RessourcePedagogique .
+        ?ressource a ?type .
+        ?type rdfs:subClassOf* ont:RessourcePedagogique .
     """
     
     if data.get('titreRessource'):
@@ -217,9 +226,12 @@ def get_ressources_facets():
     """Récupère les facettes pour la navigation filtrée"""
     query_type = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?typeRessource (COUNT(DISTINCT ?ressource) as ?count)
     WHERE {{
-        ?ressource a ont:RessourcePedagogique .
+        ?ressource a ?type .
+        ?type rdfs:subClassOf* ont:RessourcePedagogique .
         ?ressource ont:typeRessource ?typeRessource .
     }}
     GROUP BY ?typeRessource
@@ -251,9 +263,12 @@ def enrich_ressource_with_dbpedia(ressource_id):
     try:
         query = f"""
         PREFIX ont: <{PREFIX}>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         SELECT ?titreRessource ?typeRessource
         WHERE {{
-            <{ressource_id}> a ont:RessourcePedagogique .
+            <{ressource_id}> a ?type .
+            ?type rdfs:subClassOf* ont:RessourcePedagogique .
             OPTIONAL {{ <{ressource_id}> ont:titreRessource ?titreRessource . }}
             OPTIONAL {{ <{ressource_id}> ont:typeRessource ?typeRessource . }}
         }}

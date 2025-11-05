@@ -19,10 +19,13 @@ def get_all_competences():
     """Get all competences"""
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?competence ?nomCompetence ?typeCompetence ?niveauCompetence ?descriptionCompetence ?motsCles
            ?specialite ?nomSpecialite
     WHERE {{
-        ?competence a ont:Competence .
+        ?competence a ?type .
+        ?type rdfs:subClassOf* ont:Competence .
         OPTIONAL {{ ?competence ont:nomCompetence ?nomCompetence . }}
         OPTIONAL {{ ?competence ont:typeCompetence ?typeCompetence . }}
         OPTIONAL {{ ?competence ont:niveauCompetence ?niveauCompetence . }}
@@ -46,10 +49,13 @@ def get_competence(competence_id):
     """Get a specific competence"""
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?competence ?nomCompetence ?typeCompetence ?niveauCompetence ?descriptionCompetence ?motsCles
            ?specialite ?nomSpecialite ?projet ?titreProjet
     WHERE {{
-        <{competence_id}> a ont:Competence .
+        <{competence_id}> a ?type .
+        ?type rdfs:subClassOf* ont:Competence .
         OPTIONAL {{ <{competence_id}> ont:nomCompetence ?nomCompetence . }}
         OPTIONAL {{ <{competence_id}> ont:typeCompetence ?typeCompetence . }}
         OPTIONAL {{ <{competence_id}> ont:niveauCompetence ?niveauCompetence . }}
@@ -195,9 +201,12 @@ def search_competences():
     
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?competence ?nomCompetence ?typeCompetence ?niveauCompetence ?descriptionCompetence
     WHERE {{
-        ?competence a ont:Competence .
+        ?competence a ?type .
+        ?type rdfs:subClassOf* ont:Competence .
         OPTIONAL {{ ?competence ont:nomCompetence ?nomCompetence . }}
         OPTIONAL {{ ?competence ont:typeCompetence ?typeCompetence . }}
         OPTIONAL {{ ?competence ont:niveauCompetence ?niveauCompetence . }}
@@ -225,9 +234,12 @@ def get_competences_facets():
     """Récupère les facettes pour la navigation filtrée"""
     query_type = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?typeCompetence (COUNT(DISTINCT ?competence) as ?count)
     WHERE {{
-        ?competence a ont:Competence .
+        ?competence a ?type .
+        ?type rdfs:subClassOf* ont:Competence .
         ?competence ont:typeCompetence ?typeCompetence .
     }}
     GROUP BY ?typeCompetence
@@ -235,9 +247,12 @@ def get_competences_facets():
     """
     query_niveau = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?niveauCompetence (COUNT(DISTINCT ?competence) as ?count)
     WHERE {{
-        ?competence a ont:Competence .
+        ?competence a ?type .
+        ?type rdfs:subClassOf* ont:Competence .
         ?competence ont:niveauCompetence ?niveauCompetence .
     }}
     GROUP BY ?niveauCompetence
@@ -270,9 +285,12 @@ def enrich_competence_with_dbpedia(competence_id):
     try:
         query = f"""
         PREFIX ont: <{PREFIX}>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         SELECT ?nomCompetence ?typeCompetence
         WHERE {{
-            <{competence_id}> a ont:Competence .
+            <{competence_id}> a ?type .
+            ?type rdfs:subClassOf* ont:Competence .
             OPTIONAL {{ <{competence_id}> ont:nomCompetence ?nomCompetence . }}
             OPTIONAL {{ <{competence_id}> ont:typeCompetence ?typeCompetence . }}
         }}

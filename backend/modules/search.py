@@ -16,7 +16,7 @@ if gemini_api_key:
     taln_service = GeminiTALNService()
 else:
     print("⚠️ Using TALNService with pattern-based fallback (no Gemini API key)")
-    taln_service = TALNService()
+taln_service = TALNService()
 
 gemini_transformer = GeminiSPARQLTransformer()
 

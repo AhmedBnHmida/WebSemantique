@@ -18,7 +18,7 @@ def generate_orientation_uri(objectif: str) -> str:
 def get_all_orientations():
     """Get all academic orientations"""
     # Build query as a single continuous line - ensure no newlines or extra whitespace
-    query = f"PREFIX ont: <{PREFIX}> SELECT ?orientation ?objectifOrientation ?typeOrientation ?dateOrientation ?personne ?nomPersonne ?prenomPersonne ?specialite ?nomSpecialite ?cours ?intitule ?projet ?titreProjet WHERE {{ ?orientation a ont:OrientationAcademique . OPTIONAL {{ ?orientation ont:objectifOrientation ?objectifOrientation . }} OPTIONAL {{ ?orientation ont:typeOrientation ?typeOrientation . }} OPTIONAL {{ ?orientation ont:dateOrientation ?dateOrientation . }} OPTIONAL {{ ?personne ont:participeA ?orientation . ?personne ont:nom ?nomPersonne . ?personne ont:prenom ?prenomPersonne . }} OPTIONAL {{ ?orientation ont:recommandeSpecialite ?specialite . ?specialite ont:nomSpecialite ?nomSpecialite . }} OPTIONAL {{ ?orientation ont:recommandeCours ?cours . ?cours ont:intitule ?intitule . }} OPTIONAL {{ ?orientation ont:proposeStage ?projet . ?projet ont:titreProjet ?titreProjet . }} }} ORDER BY DESC(?dateOrientation)"
+    query = f"PREFIX ont: <{PREFIX}> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?orientation ?objectifOrientation ?typeOrientation ?dateOrientation ?personne ?nomPersonne ?prenomPersonne ?specialite ?nomSpecialite ?cours ?intitule ?projet ?titreProjet WHERE {{ ?orientation a ?type . ?type rdfs:subClassOf* ont:OrientationAcademique . OPTIONAL {{ ?orientation ont:objectifOrientation ?objectifOrientation . }} OPTIONAL {{ ?orientation ont:typeOrientation ?typeOrientation . }} OPTIONAL {{ ?orientation ont:dateOrientation ?dateOrientation . }} OPTIONAL {{ ?personne ont:participeA ?orientation . ?personne ont:nom ?nomPersonne . ?personne ont:prenom ?prenomPersonne . }} OPTIONAL {{ ?orientation ont:recommandeSpecialite ?specialite . ?specialite ont:nomSpecialite ?nomSpecialite . }} OPTIONAL {{ ?orientation ont:recommandeCours ?cours . ?cours ont:intitule ?intitule . }} OPTIONAL {{ ?orientation ont:proposeStage ?projet . ?projet ont:titreProjet ?titreProjet . }} }} ORDER BY DESC(?dateOrientation)"
     # Remove any potential newlines and normalize whitespace
     query = query.replace('\n', ' ').replace('\r', ' ').strip()
     # Replace multiple spaces with single space
@@ -34,7 +34,7 @@ def get_all_orientations():
 def get_orientation(orientation_id):
     """Get a specific orientation"""
     # Build query as a single continuous line - ensure no newlines or extra whitespace
-    query = f"PREFIX ont: <{PREFIX}> SELECT ?orientation ?objectifOrientation ?typeOrientation ?dateOrientation ?personne ?nomPersonne ?prenomPersonne ?specialite ?nomSpecialite ?cours ?intitule ?projet ?titreProjet WHERE {{ <{orientation_id}> a ont:OrientationAcademique . OPTIONAL {{ <{orientation_id}> ont:objectifOrientation ?objectifOrientation . }} OPTIONAL {{ <{orientation_id}> ont:typeOrientation ?typeOrientation . }} OPTIONAL {{ <{orientation_id}> ont:dateOrientation ?dateOrientation . }} OPTIONAL {{ ?personne ont:participeA <{orientation_id}> . ?personne ont:nom ?nomPersonne . ?personne ont:prenom ?prenomPersonne . }} OPTIONAL {{ <{orientation_id}> ont:recommandeSpecialite ?specialite . ?specialite ont:nomSpecialite ?nomSpecialite . }} OPTIONAL {{ <{orientation_id}> ont:recommandeCours ?cours . ?cours ont:intitule ?intitule . }} OPTIONAL {{ <{orientation_id}> ont:proposeStage ?projet . ?projet ont:titreProjet ?titreProjet . }} }}"
+    query = f"PREFIX ont: <{PREFIX}> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?orientation ?objectifOrientation ?typeOrientation ?dateOrientation ?personne ?nomPersonne ?prenomPersonne ?specialite ?nomSpecialite ?cours ?intitule ?projet ?titreProjet WHERE {{ <{orientation_id}> a ?type . ?type rdfs:subClassOf* ont:OrientationAcademique . OPTIONAL {{ <{orientation_id}> ont:objectifOrientation ?objectifOrientation . }} OPTIONAL {{ <{orientation_id}> ont:typeOrientation ?typeOrientation . }} OPTIONAL {{ <{orientation_id}> ont:dateOrientation ?dateOrientation . }} OPTIONAL {{ ?personne ont:participeA <{orientation_id}> . ?personne ont:nom ?nomPersonne . ?personne ont:prenom ?prenomPersonne . }} OPTIONAL {{ <{orientation_id}> ont:recommandeSpecialite ?specialite . ?specialite ont:nomSpecialite ?nomSpecialite . }} OPTIONAL {{ <{orientation_id}> ont:recommandeCours ?cours . ?cours ont:intitule ?intitule . }} OPTIONAL {{ <{orientation_id}> ont:proposeStage ?projet . ?projet ont:titreProjet ?titreProjet . }} }}"
     # Remove any potential newlines and normalize whitespace
     query = query.replace('\n', ' ').replace('\r', ' ').strip()
     # Replace multiple spaces with single space
@@ -240,9 +240,12 @@ def search_orientations():
     
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?orientation ?objectifOrientation ?typeOrientation ?dateOrientation
     WHERE {{
-        ?orientation a ont:OrientationAcademique .
+        ?orientation a ?type .
+        ?type rdfs:subClassOf* ont:OrientationAcademique .
         OPTIONAL {{ ?orientation ont:objectifOrientation ?objectifOrientation . }}
         OPTIONAL {{ ?orientation ont:typeOrientation ?typeOrientation . }}
         OPTIONAL {{ ?orientation ont:dateOrientation ?dateOrientation . }}
@@ -269,9 +272,12 @@ def get_orientations_facets():
     """Récupère les facettes pour la navigation filtrée"""
     query_type = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?typeOrientation (COUNT(DISTINCT ?orientation) as ?count)
     WHERE {{
-        ?orientation a ont:OrientationAcademique .
+        ?orientation a ?type .
+        ?type rdfs:subClassOf* ont:OrientationAcademique .
         ?orientation ont:typeOrientation ?typeOrientation .
     }}
     GROUP BY ?typeOrientation
@@ -279,9 +285,12 @@ def get_orientations_facets():
     """
     query_specialite = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?specialite ?nomSpecialite (COUNT(DISTINCT ?orientation) as ?count)
     WHERE {{
-        ?orientation a ont:OrientationAcademique .
+        ?orientation a ?type .
+        ?type rdfs:subClassOf* ont:OrientationAcademique .
         ?orientation ont:recommandeSpecialite ?specialite .
         ?specialite ont:nomSpecialite ?nomSpecialite .
     }}
@@ -304,9 +313,12 @@ def enrich_orientation_with_dbpedia(orientation_id):
     try:
         query = f"""
         PREFIX ont: <{PREFIX}>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         SELECT ?objectifOrientation ?typeOrientation
         WHERE {{
-            <{orientation_id}> a ont:OrientationAcademique .
+            <{orientation_id}> a ?type .
+            ?type rdfs:subClassOf* ont:OrientationAcademique .
             OPTIONAL {{ <{orientation_id}> ont:objectifOrientation ?objectifOrientation . }}
             OPTIONAL {{ <{orientation_id}> ont:typeOrientation ?typeOrientation . }}
         }}

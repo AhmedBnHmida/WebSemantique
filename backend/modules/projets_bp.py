@@ -19,10 +19,13 @@ def get_all_projets():
     """Get all academic projects"""
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?projet ?titreProjet ?domaineProjet ?typeProjet ?noteProjet ?etudiant ?nomEtudiant ?prenomEtudiant
            ?universite ?nomUniversite
     WHERE {{
-        ?projet a ont:ProjetAcademique .
+        ?projet a ?type .
+        ?type rdfs:subClassOf* ont:ProjetAcademique .
         OPTIONAL {{ ?projet ont:titreProjet ?titreProjet . }}
         OPTIONAL {{ ?projet ont:domaineProjet ?domaineProjet . }}
         OPTIONAL {{ ?projet ont:typeProjet ?typeProjet . }}
@@ -62,12 +65,15 @@ def get_projet(projet_id):
     projet_id = normalize_projet_id(projet_id)
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?projet ?titreProjet ?domaineProjet ?typeProjet ?noteProjet
            ?etudiant ?nomEtudiant ?prenomEtudiant
            ?competence ?nomCompetence
            ?orientation ?objectifOrientation
     WHERE {{
-        <{projet_id}> a ont:ProjetAcademique .
+        <{projet_id}> a ?type .
+        ?type rdfs:subClassOf* ont:ProjetAcademique .
         OPTIONAL {{ <{projet_id}> ont:titreProjet ?titreProjet . }}
         OPTIONAL {{ <{projet_id}> ont:domaineProjet ?domaineProjet . }}
         OPTIONAL {{ <{projet_id}> ont:typeProjet ?typeProjet . }}
@@ -223,9 +229,12 @@ def search_projets():
     
     query = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?projet ?titreProjet ?domaineProjet ?typeProjet ?noteProjet
     WHERE {{
-        ?projet a ont:ProjetAcademique .
+        ?projet a ?type .
+        ?type rdfs:subClassOf* ont:ProjetAcademique .
         OPTIONAL {{ ?projet ont:titreProjet ?titreProjet . }}
         OPTIONAL {{ ?projet ont:domaineProjet ?domaineProjet . }}
         OPTIONAL {{ ?projet ont:typeProjet ?typeProjet . }}
@@ -255,9 +264,12 @@ def get_projets_facets():
     """Récupère les facettes pour la navigation filtrée"""
     query_type = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?typeProjet (COUNT(DISTINCT ?projet) as ?count)
     WHERE {{
-        ?projet a ont:ProjetAcademique .
+        ?projet a ?type .
+        ?type rdfs:subClassOf* ont:ProjetAcademique .
         ?projet ont:typeProjet ?typeProjet .
     }}
     GROUP BY ?typeProjet
@@ -265,9 +277,12 @@ def get_projets_facets():
     """
     query_domaine = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?domaineProjet (COUNT(DISTINCT ?projet) as ?count)
     WHERE {{
-        ?projet a ont:ProjetAcademique .
+        ?projet a ?type .
+        ?type rdfs:subClassOf* ont:ProjetAcademique .
         ?projet ont:domaineProjet ?domaineProjet .
     }}
     GROUP BY ?domaineProjet
@@ -275,9 +290,12 @@ def get_projets_facets():
     """
     query_universite = f"""
     PREFIX ont: <{PREFIX}>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?universite ?nomUniversite (COUNT(DISTINCT ?projet) as ?count)
     WHERE {{
-        ?projet a ont:ProjetAcademique .
+        ?projet a ?type .
+        ?type rdfs:subClassOf* ont:ProjetAcademique .
         ?projet ont:estOrganisePar ?universite .
         ?universite ont:nomUniversite ?nomUniversite .
     }}
@@ -304,9 +322,12 @@ def enrich_projet_with_dbpedia(projet_id):
         # First get the projet and its university's city
         query = f"""
         PREFIX ont: <{PREFIX}>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         SELECT ?titreProjet ?ville ?pays ?nomUniversite
         WHERE {{
-            <{projet_id}> a ont:ProjetAcademique .
+            <{projet_id}> a ?type .
+            ?type rdfs:subClassOf* ont:ProjetAcademique .
             OPTIONAL {{ <{projet_id}> ont:titreProjet ?titreProjet . }}
             OPTIONAL {{
                 <{projet_id}> ont:estOrganisePar ?universite .
